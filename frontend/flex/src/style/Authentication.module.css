@@ -1,0 +1,95 @@
+#authWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.absolute {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#authForm {
+  flex-grow: 1;
+  max-width: 350px;
+  margin: 16px;
+}
+
+#authForm > div {
+  margin-bottom: 1em;
+}
+
+h1 {
+  margin: 0;
+}
+
+label, input {
+  display: block;
+}
+
+input {
+  padding: 0.6em;
+  outline: none;
+  background: none;
+  border: none;
+}
+
+input::placeholder {
+  color: #aaa;
+}
+
+.input {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: var(--rounded-border);
+  transition: 0.2s;
+  display: grid;
+  grid-template-columns: 1fr auto;
+}
+
+.input:focus-within {
+  border-color: var(--accent-color);
+  background-color: rgba(var(--accent-rgb), 0.05);
+}
+
+.input button {
+  background: none;
+  padding: 0.5em;
+  display: grid;
+  align-items: center;
+}
+
+p {
+  margin: 0 0 2em 0;
+}
+
+#switchPage {
+  border: none;
+  outline: none;
+  background: none;
+  color: var(--accent-color);
+  padding: .5em;
+  font-size: inherit;
+}
+
+#switchPage:hover {
+  text-decoration: underline;
+}
+
+button[type="submit"] {
+  display: block;
+  width: 100%;
+  margin-top: 2em;
+}
+
+.error {
+  border-color: red;
+  background-color:rgba(255, 0, 0, 0.05);
+}
+
+.errorMessage {
+  font-size: var(--small-text);
+  color: red;
+}

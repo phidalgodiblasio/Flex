@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  --text-color: #555;
+  --accent-color: rgb(var(--accent-rgb));
+  --accent-rgb: 119, 38, 205;
+
+  --rounded-border: 6px;
+
+  --smallest-text: 8pt;
+  --small-text: 10pt;
+  --medium-text: 12pt;
+  --semi-large-text: 18pt;
+  --large-text: 24pt;
+  --largest-text: 32pt;
+}
+
+p, span, label {
+  color: var(--text-color);
+}
+
+p, span, button, input {
+  font-size: var(--medium-text);
+}
+
+label {
+  font-size: var(--small-text);
+  margin-bottom: 0.5em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
+  margin-bottom: 0.3em;
+}
+
+h1 {
+  font-size: var(--largest-text);
+}
+
+h2 {
+  font-size: var(--large-text);
+}
+
+h3, h4, h5, h6 {
+  font-size: var(--semi-large-text);
+}
+
+input, button, a {
+  transition: opacity 0.2s, background-color 0.2s;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+.solid-button {
+  background-color: var(--accent-color);
+  color: white;
+  padding: 0.8em;
+  border-radius: var(--rounded-border);
+}
+
+.solid-button:hover {
+  opacity: 0.85;
+}
+
+#logo {
+  height: 14pt;
+  margin: 0.5em;
+}
+
