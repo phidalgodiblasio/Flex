@@ -31,7 +31,8 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public ResponseEntity<String> loginUser(LoginDTO loginDTO) {
+    public ResponseEntity<String> loginUser(LoginDTO loginDTO) 
+    {
         // Message and status
         String message;
         HttpStatus status;
@@ -40,11 +41,13 @@ public class UserServiceImpl implements UserService{
         User user = userRepository.findByUsername(loginDTO.getUsername());
         
         // If user found, authenticate password 
-        if (user != null && passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())) {
+        if (user != null && passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())) 
+        {
             message = "Login successful";
             status = HttpStatus.OK;
         }
-        else {
+        else 
+        {
             message = "Login unsuccessful: Invalid username or password";
             status = HttpStatus.BAD_REQUEST;
         }
