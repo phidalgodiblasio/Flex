@@ -1,6 +1,6 @@
 import styles from '../style/Authentication.module.css';
 import React, { Component } from 'react';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { FaEye, FaEyeSlash, FaTimes } from 'react-icons/fa';
 import { ReactComponent as Logo } from '../assets/flex-logo.svg';
 
 export default class Authentication extends Component {
@@ -16,6 +16,8 @@ export default class Authentication extends Component {
       usernameError: false,
       passwordError: false,
       passwordMatch: true,
+      showErrorMessage: false,
+      errorMessage: ""
     }
   }
 
@@ -45,12 +47,20 @@ export default class Authentication extends Component {
       })
       ok = false;
     }
+
+    // Don't need to check the retyped password if on the login page
+    if(this.state.onLoginPage) return ok;
+
     // Check if password = retyped password on register page only
-    if(!this.state.onLoginPage && this.state.password !== this.state.retypePassword) {
+    if(this.state.password !== this.state.retypePassword) {
       this.setState({
         passwordMatch: false
       })
       ok = false;
+    } else {
+      this.setState({
+        passwordMatch: true
+      })
     }
     return ok;
   }
@@ -84,9 +94,9 @@ export default class Authentication extends Component {
           // response.text() to get text of response; response.json() if it's in json format
           this.props.authenticated(this.state.username);
         } else if(response.status == 400) {
-          // TODO: Figure out what response statuses
+          this.showErrorMessage("Incorrect username or password.")
         } else {
-          
+          this.showErrorMessage("Something went wrong.")
         }
         // TODO: Catch other response errors
       }
@@ -116,10 +126,26 @@ export default class Authentication extends Component {
         if(response.status == 200) {
           // response.text() to get text of response; response.json() if it's in json format
           this.props.authenticated(this.state.username);
+        } else if(response.status == 400) {
+          this.showErrorMessage("An account already exists with this username.")
+        } else {
+          this.showErrorMessage("Something went wrong.")
         }
-        // TODO: Catch other response errors
       }
     );
+  }
+
+  showErrorMessage(message) {
+    this.setState({
+      showErrorMessage: true,
+      errorMessage: message,
+    })
+  }
+
+  hideErrorMessage() {
+    this.setState({
+      showErrorMessage: false,
+    })
   }
 
   handleUsernameChange(username) {
@@ -149,16 +175,6 @@ export default class Authentication extends Component {
   handleRetypePasswordChange(password) {
     this.setState({
       retypePassword: password
-    }, () => {
-      if(this.state.password !== this.state.retypePassword) {
-        this.setState({
-          passwordMatch: false
-        })
-      } else {
-        this.setState({
-          passwordMatch: true
-        })
-      }
     })
   }
 
@@ -243,10 +259,25 @@ export default class Authentication extends Component {
       </form>
     )
 
+    let errorMessageRender;
+    if(this.state.showErrorMessage) {
+      errorMessageRender = (
+        <div id={styles.errorBox}>
+          <p>{this.state.errorMessage}</p>
+          <button type="button" onClick={() => this.hideErrorMessage()}>
+            <FaTimes></FaTimes>
+          </button>
+        </div>
+      )
+    }
+
     return (
-      <div id={styles.authWrapper}>
+      <div id={styles.outerAuthWrapper}>
         <Logo className={styles.absolute} id="logo" />
-        {authRender}
+        <div id={styles.innerAuthWrapper}>
+          {errorMessageRender}
+          {authRender}
+        </div>
       </div>
     )
   }
