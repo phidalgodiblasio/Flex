@@ -6,6 +6,6 @@ import edu.pitt.flex.DTO.LoginDTO;
 import edu.pitt.flex.DTO.UserDTO;
 
 public interface UserService {
-    public String addUser(UserDTO userDTO);
+    public ResponseEntity<String> addUser(UserDTO userDTO);
     public ResponseEntity<String> loginUser(LoginDTO loginDTO);
 }
