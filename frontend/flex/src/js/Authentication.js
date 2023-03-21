@@ -100,7 +100,10 @@ export default class Authentication extends Component {
         }
         // TODO: Catch other response errors
       }
-    );
+    )
+    .catch(error => {
+      this.showErrorMessage("Couldn't establish a connection to the database.")
+    })
   }
 
   register(e) {
@@ -132,7 +135,10 @@ export default class Authentication extends Component {
           this.showErrorMessage("Something went wrong.")
         }
       }
-    );
+    )
+    .catch(error => {
+      this.showErrorMessage("Couldn't establish a connection to the database.")
+    })
   }
 
   showErrorMessage(message) {
