@@ -63,15 +63,63 @@ export default class Authentication extends Component {
       usernameError: false,
       passwordError: false,
     })
-    // TODO: Send a request using fetch() to login
-    console.log(`Logging in using username: ${this.state.username}, password: ${this.state.password}`);
+
+    let user = {
+      username: this.state.username,
+      password: this.state.password,
+    }
+    
+    fetch(
+      'http://localhost:8080/login',
+      { 
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(user)
+      }
+    )
+    .then(response => {
+        if(response.status == 200) {
+          // response.text() to get text of response; response.json() if it's in json format
+          this.props.authenticated(this.state.username);
+        } else if(response.status == 400) {
+          // TODO: Figure out what response statuses
+        } else {
+          
+        }
+        // TODO: Catch other response errors
+      }
+    );
   }
 
   register(e) {
     e.preventDefault();
     if(!this.checkInputOk()) return;
-    // TODO: Send a request using fetch() to register
-    console.log(`Registering using username: ${this.state.username}, password: ${this.state.password}`);
+
+    let user = {
+      username: this.state.username,
+      password: this.state.password,
+    }
+
+    fetch(
+      'http://localhost:8080/save',
+      { 
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(user)
+      }
+    )
+    .then(response => {
+        if(response.status == 200) {
+          // response.text() to get text of response; response.json() if it's in json format
+          this.props.authenticated(this.state.username);
+        }
+        // TODO: Catch other response errors
+      }
+    );
   }
 
   handleUsernameChange(username) {

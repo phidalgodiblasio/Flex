@@ -15,7 +15,7 @@ export default class Homepage extends Component {
 
   render() {
     return (
-      <div>Homepage</div>
+      <div>Hi, {this.props.username}</div>
     )
   }
 }

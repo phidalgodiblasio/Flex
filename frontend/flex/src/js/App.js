@@ -9,11 +9,19 @@ export default class App extends Component {
     
     // TODO: implement sessions and save the user's logged in state within the browser
     this.state = {
-      loggedIn: false
+      loggedIn: false,
+      username: ""
     }
   }
 
+  authenticated(username) {
+    this.setState({
+      loggedIn: true,
+      username: username,
+    })
+  }
+
   render() {
-    return this.state.loggedIn ? <Homepage></Homepage> : <Authentication></Authentication>;
+    return this.state.loggedIn ? <Homepage username={this.state.username}></Homepage> : <Authentication authenticated={(username) => this.authenticated(username)}></Authentication>;
   }
 }
