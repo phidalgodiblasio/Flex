@@ -18,7 +18,7 @@ public class AuthController {
 	private UserService userService;
 
 	@PostMapping("/save")
-	public String saveUser(@RequestBody UserDTO userDTO)
+	public ResponseEntity<String> saveUser(@RequestBody UserDTO userDTO)
 	{ 
 		return userService.addUser(userDTO);
 	}
