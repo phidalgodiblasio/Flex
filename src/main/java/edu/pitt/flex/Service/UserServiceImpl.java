@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
         HttpStatus status;
 
         // Search to see if username is taken
-        if (userRepository.findByUsername(userDTO.getPassword()) == null) {
+        if (userRepository.findByUsername(userDTO.getUsername()) == null) {
             // Create new user and add to repository
             User user = new User(userDTO.getId(), userDTO.getUsername(), this.passwordEncoder.encode(userDTO.getPassword()));
             userRepository.save(user);
