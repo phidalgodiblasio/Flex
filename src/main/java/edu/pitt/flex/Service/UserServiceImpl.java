@@ -13,8 +13,7 @@ import edu.pitt.flex.Repository.UserRepository;
 
 
 @Service
-public class UserServiceImpl implements UserService{
-
+public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
@@ -22,35 +21,53 @@ public class UserServiceImpl implements UserService{
     PasswordEncoder passwordEncoder;
 
     @Override
-    public String addUser(UserDTO userDTO)
+    public ResponseEntity<String> addUser(UserDTO userDTO)
     {
-        User user = new User(userDTO.getId(), userDTO.getUsername(), this.passwordEncoder.encode(userDTO.getPassword()));
+        // Response body and status
+        String body;
+        HttpStatus status;
+
+        // Search to see if username is taken
+        if (userRepository.findByUsername(userDTO.getUsername()) == null) {
+            // Create new user and add to repository
+            User user = new User(userDTO.getId(), userDTO.getUsername(), this.passwordEncoder.encode(userDTO.getPassword()));
+            userRepository.save(user);
+
+            body = "Registration successful";
+            status = HttpStatus.OK;
+        }
+        else {
+            body = "Registration unsuccessful: username already taken";
+            status = HttpStatus.BAD_REQUEST;
+        }
         
-        userRepository.save(user);
-        return user.getUsername();
+        // Return response
+        return new ResponseEntity<>(body, status);
     }
 
     @Override
-    public ResponseEntity<String> loginUser(LoginDTO loginDTO) {
-        // Message and status
-        String message;
+    public ResponseEntity<String> loginUser(LoginDTO loginDTO) 
+    {
+        // Response body and status
+        String body;
         HttpStatus status;
         
         // Search for user in db
         User user = userRepository.findByUsername(loginDTO.getUsername());
         
         // If user found, authenticate password 
-        if (user != null && passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())) {
-            message = "Login successful";
+        if (user != null && passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())) 
+        {
+            body = "Login successful";
             status = HttpStatus.OK;
         }
-        else {
-            message = "Login unsuccessful: Invalid username or password";
+        else 
+        {
+            body = "Login unsuccessful: Invalid username or password";
             status = HttpStatus.BAD_REQUEST;
         }
 
-        // Return message and status
-        return new ResponseEntity<>(message, status);
+        // Return response
+        return new ResponseEntity<>(body, status);
     }
-    
 }

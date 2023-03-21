@@ -16,14 +16,15 @@ public class User{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @Column(length = 30)
+    @Column(length = 30, unique = true, nullable = false)
     private String username;
 
-    @Column(length = 255)
+    @Column(length = 255, nullable = false)
     private String password;
    
     public User()
     {
+        // Empty constructor
     }
 
     public User(int id, String username, String password)
@@ -63,6 +64,4 @@ public class User{
     {
         this.password = password;
     }
-
-
 }

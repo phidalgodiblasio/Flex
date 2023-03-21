@@ -3,7 +3,6 @@ package edu.pitt.flex.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,19 +18,14 @@ public class AuthController {
 	private UserService userService;
 
 	@PostMapping("/save")
-	public String saveUser(@RequestBody UserDTO userDTO)
-	{
-		String id = userService.addUser(userDTO);
-		return id;
+	public ResponseEntity<String> saveUser(@RequestBody UserDTO userDTO)
+	{ 
+		return userService.addUser(userDTO);
 	}
 
 	@PostMapping("/login")
 	public ResponseEntity<String> loginUser(@RequestBody LoginDTO loginDTO)
 	{
-		userService.loginUser(loginDTO);
-
-		//fix later
-		return null;
-		
+		return userService.loginUser(loginDTO);
 	}
 }

@@ -8,6 +8,7 @@ public class UserDTO {
    
     public UserDTO()
     {
+        // Empty constructor
     }
 
     public UserDTO(int id, String username, String password)
@@ -46,5 +47,4 @@ public class UserDTO {
     {
         this.password = password;
     }
-
 }
