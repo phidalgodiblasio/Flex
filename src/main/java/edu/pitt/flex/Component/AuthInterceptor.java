@@ -13,13 +13,13 @@ public class AuthInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
 
-        // If user id not in session, intercept request and return forbidden error code
+        // If user id not in session, intercept request and return unauthorized error code
         if (request.getSession().getAttribute("USER_ID") == null) {
             response.getWriter().write("ERROR: User not authenticated");
-            response.setStatus(HttpStatus.FORBIDDEN.value());
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
             return false;
         }
-        
+
         // User id is in session, continue to handle request
         return true;
     }
