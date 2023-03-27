@@ -10,6 +10,7 @@ import edu.pitt.flex.DTO.LoginDTO;
 import edu.pitt.flex.DTO.UserDTO;
 import edu.pitt.flex.Entity.User;
 import edu.pitt.flex.Repository.UserRepository;
+import jakarta.servlet.http.HttpServletRequest;
 
 
 @Service
@@ -46,7 +47,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity<String> loginUser(LoginDTO loginDTO) 
+    public ResponseEntity<String> loginUser(LoginDTO loginDTO, HttpServletRequest request) 
     {
         // Response body and status
         String body;
@@ -56,17 +57,39 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByUsername(loginDTO.getUsername());
         
         // If user found, authenticate password 
-        if (user != null && passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())) 
-        {
+        if (user != null && passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())) {
+            // Add user id to sessions
+            request.getSession().setAttribute("USER_ID", user.getId());
+
+            // Update response to show success
             body = "Login successful";
             status = HttpStatus.OK;
-        }
-        else 
-        {
+        } else {
+            // Update response to show failure
             body = "Login unsuccessful: Invalid username or password";
             status = HttpStatus.BAD_REQUEST;
         }
 
+        // Return response
+        return new ResponseEntity<>(body, status);
+    }
+
+    @Override
+    public ResponseEntity<String> logoutUser(HttpServletRequest request) {
+        // Response body and status
+        String body;
+        HttpStatus status;
+        
+        // Invalidate user session
+        try {
+            request.getSession().invalidate();
+            body = "Logout successful";
+            status = HttpStatus.OK;
+        } catch (IllegalStateException e) {
+            body = "Logout unsuccessful: " + e.getMessage();
+            status = HttpStatus.BAD_REQUEST;
+        }
+        
         // Return response
         return new ResponseEntity<>(body, status);
     }

@@ -4,8 +4,10 @@ import org.springframework.http.ResponseEntity;
 
 import edu.pitt.flex.DTO.LoginDTO;
 import edu.pitt.flex.DTO.UserDTO;
+import jakarta.servlet.http.HttpServletRequest;
 
 public interface UserService {
     public ResponseEntity<String> addUser(UserDTO userDTO);
-    public ResponseEntity<String> loginUser(LoginDTO loginDTO);
+    public ResponseEntity<String> loginUser(LoginDTO loginDTO, HttpServletRequest request);
+    public ResponseEntity<String> logoutUser(HttpServletRequest request);
 }
