@@ -86,7 +86,7 @@ public class UserServiceImpl implements UserService {
             body = "Logout successful";
             status = HttpStatus.OK;
         } catch (IllegalStateException e) {
-            body = "Logout unsuccessful: " + e;
+            body = "Logout unsuccessful: " + e.getMessage();
             status = HttpStatus.BAD_REQUEST;
         }
         
