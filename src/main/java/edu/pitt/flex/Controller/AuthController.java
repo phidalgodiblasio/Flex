@@ -3,6 +3,7 @@ package edu.pitt.flex.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,6 +12,7 @@ import edu.pitt.flex.DTO.LoginDTO;
 import edu.pitt.flex.DTO.UserDTO;
 import edu.pitt.flex.Service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 @RestController
 @CrossOrigin
@@ -31,5 +33,11 @@ public class AuthController {
 	@PostMapping("/logout")
 	public ResponseEntity<String> logOutUser(HttpServletRequest request) {
 		return userService.logoutUser(request);
-	}	
+	}
+
+	// THIS METHOD IS FOR TESTING ONLY. DELETE LATER.
+	@GetMapping("/get-id")
+	public String getId(HttpSession session) {
+		return session.getAttribute("USER_ID").toString();
+	}
 }
