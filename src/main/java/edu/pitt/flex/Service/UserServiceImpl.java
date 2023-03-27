@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
     PasswordEncoder passwordEncoder;
 
     @Override
-    public ResponseEntity<String> addUser(UserDTO userDTO)
+    public ResponseEntity<String> addUser(UserDTO userDTO, HttpServletRequest request)
     {
         // Response body and status
         String body;
@@ -34,10 +34,15 @@ public class UserServiceImpl implements UserService {
             User user = new User(userDTO.getId(), userDTO.getUsername(), this.passwordEncoder.encode(userDTO.getPassword()));
             userRepository.save(user);
 
+            // Add user id to sessions
+            request.getSession().setAttribute("USER_ID", user.getId());
+
+            // Update response to show success
             body = "Registration successful";
             status = HttpStatus.OK;
         }
         else {
+            // Update response to show failure
             body = "Registration unsuccessful: username already taken";
             status = HttpStatus.BAD_REQUEST;
         }

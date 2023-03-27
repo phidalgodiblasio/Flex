@@ -21,8 +21,8 @@ public class AuthController {
 	private UserService userService;
 
 	@PostMapping("/save")
-	public ResponseEntity<String> saveUser(@RequestBody UserDTO userDTO) {
-		return userService.addUser(userDTO);
+	public ResponseEntity<String> saveUser(@RequestBody UserDTO userDTO, HttpServletRequest request) {
+		return userService.addUser(userDTO, request);
 	}
 
 	@PostMapping("/login")
