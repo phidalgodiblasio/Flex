@@ -9,4 +9,5 @@ import edu.pitt.flex.Entity.User;
 public interface UserRepository extends JpaRepository<User, Integer>{
     public User findOneByUsernameAndPassword(String username, String password);
     public User findByUsername(String username);
+    public User findOneById(int id);
 }
