@@ -1,0 +1,69 @@
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+h1 {
+  margin: 25px 0;
+}
+
+h2 {
+  margin: 0;
+}
+
+#innerBody {
+  max-width: 450px; /* Max width of sections */
+  margin: auto;
+}
+
+#innerBody > div {
+  flex-grow: 1;
+}
+
+#innerBody > div:not(:last-of-type) {
+  margin-bottom: 25px;
+}
+
+@media (width > 800px) {
+  #innerBody {
+    max-width: none;
+    display: grid;
+    gap: 25px;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  #innerBody > div {
+    margin: 0 !important;
+  }
+
+  #innerBody > div:nth-of-type(2) {
+    grid-row: 1 / span 3; /* Honestly this is still magic to me I'm not totally sure why it works */
+    grid-column: 2;
+  }
+}
+
+.editButton {
+  background: none;
+  font-size: var(--semi-large-text);
+  line-height: 0.5em;
+  padding: 0.25em;
+  border-radius: var(--rounded-border);
+  transform: translateX(0.25em);
+}
+
+.editButton svg {
+  transition: 0.2s linear;
+  fill: var(--on-background-color);
+}
+
+.editButton:hover {
+  background-color: var(--transparent-button-hover);
+}
+
+#tall {
+  height: 1500px;
+  width: 100%;
+  background-color: #0001;
+}

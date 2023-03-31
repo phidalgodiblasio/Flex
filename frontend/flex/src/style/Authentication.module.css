@@ -1,24 +1,27 @@
 #outerAuthWrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  margin: auto;
+  max-width: 400px;
   height: 100vh;
+  position: relative;
 }
 
 #innerAuthWrapper {
-  position: relative;
-  flex-grow: 1;
-  max-width: 350px;
+  height: 100%;
+  display: flex;
+  align-items: center;
 }
 
 .absolute {
   position: absolute;
   top: 0;
   left: 0;
+  margin: 25px;
 }
 
 #authForm {
-  margin: 16px;
+  position: relative;
+  margin: 25px;
+  flex-grow: 1;
 }
 
 #authForm > div {
@@ -54,7 +57,7 @@ input::placeholder {
 }
 
 .input:focus-within {
-  border-color: var(--accent-color);
+  border-color: var(--primary-color);
   background-color: rgba(var(--accent-rgb), 0.05);
 }
 
@@ -73,7 +76,7 @@ p {
   border: none;
   outline: none;
   background: none;
-  color: var(--accent-color);
+  color: var(--primary-color);
   padding: .5em;
   font-size: inherit;
 }
@@ -103,12 +106,11 @@ button[type="submit"] {
   position: absolute;
   display: flex;
   align-items: center;
-  width: calc(100% - 32px);
-  left: 16px;
+  width: 100%;
   padding: 1em;
+  margin-top: 25px;
   background-color: red;
   border-radius: var(--rounded-border);
-  top: 100%;
   animation: errorAnimation 0.3s ease-out;
 }
 

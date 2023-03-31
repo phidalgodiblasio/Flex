@@ -7,10 +7,10 @@ export default class App extends Component {
   constructor(props) {
     super(props)
     
-    // TODO: implement sessions and save the user's logged in state within the browser
+    // TODO: reset values after testing homepage
     this.state = {
-      loggedIn: false,
-      username: ""
+      loggedIn: true, 
+      username: "Pierce"
     }
   }
 
