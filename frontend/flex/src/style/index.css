@@ -6,26 +6,72 @@
 
 body {
   margin: 0;
+  background-color: #F1F6FA;
   font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  --text-color: #555;
-  --accent-color: rgb(var(--accent-rgb));
-  --accent-rgb: 119, 38, 205;
+  --on-background-color: #000;
+  --text-color: #0009;
+  --primary-color: rgb(var(--primary-rgb));
+  --primary-rgb: 87, 0, 229;
+  --primary-light: #F7F2FE;
+  --secondary-color: rgb(var(--secondary-rgb));
+  --secondary-rgb: 56, 183, 255;
+  --secondary-light: #F1FAFF;
+  --tertiary-color: rgb(var(--tertiary-rgb));
+  --tertiary-rgb: 45, 189, 9;
+  --tertiary-light: #F0FAEE;
+  --fourth-color: rgb(var(--fourth-rgb));
+  --fourth-rgb: 255, 56, 56;
+  --fourth-light: #FFF1F1;
+
+  --button-gradient: linear-gradient(to bottom right, var(--secondary-color), var(--primary-color));
+  --transparent-button-hover: #0001;
 
   --rounded-border: 6px;
 
   --smallest-text: 8pt;
   --small-text: 10pt;
   --medium-text: 12pt;
-  --semi-large-text: 18pt;
+  --semi-large-text: 16pt;
   --large-text: 24pt;
   --largest-text: 32pt;
 }
 
+.container {
+  padding: 25px;
+  max-width: 950px;
+  margin:auto;
+}
+
+.section {
+  background-color: white;
+  border-radius: 12px;
+  min-width: 350px;
+  max-width: 450px;
+  height: min-content;
+}
+
+.section-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.large-padding {
+  padding: 25px;
+}
+
+.small-padding {
+  padding: 12px;
+}
+
 p, span, label {
   color: var(--text-color);
+  margin: 0;
 }
 
 p, span, button, input {
@@ -38,6 +84,7 @@ label {
 }
 
 h1, h2, h3, h4, h5, h6 {
+  color: var(--on-background-color);
   margin-top: 0;
   margin-bottom: 0.3em;
 }
@@ -64,8 +111,25 @@ button {
   outline: none;
 }
 
+.primary-button {
+  background: var(--button-gradient);
+  color: white;
+  border-radius: var(--rounded-border);
+  padding: 8px 12px;
+  transition: 0.2s ease-out;
+}
+
+.primary-button:hover {
+  opacity: 0.92;
+}
+
+.primary-button:focus {
+  opacity: 1;
+}
+
+/* TODO: Deprecate this */
 .solid-button {
-  background-color: var(--accent-color);
+  background-color: var(--primary-color);
   color: white;
   padding: 0.8em;
   border-radius: var(--rounded-border);
@@ -77,6 +141,5 @@ button {
 
 #logo {
   height: 14pt;
-  margin: 0.5em;
 }
 

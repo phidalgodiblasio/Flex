@@ -1,0 +1,114 @@
+.outerWrap {
+  display: flex;
+}
+
+.outerWrap:not(:last-of-type) {
+  margin-bottom: 12px;
+}
+
+.innerWrap {
+  flex-grow: 1;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttonsWrap {
+  display:flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin-right: 8px;
+}
+
+.buttonsWrap button {
+  padding: 8px;
+  font-size: var(--semi-large-text);
+  background: none;
+  line-height: 0.5;
+  border-radius: var(--rounded-border);
+}
+
+.buttonsWrap button svg {
+  transition: 0.2s linear;
+  fill: var(--on-background-color);
+}
+
+.buttonsWrap button:hover {
+  background-color: var(--transparent-button-hover);
+}
+
+.calories {
+  background-color: var(--primary-light);
+}
+
+.protein {
+  background-color: var(--secondary-light);
+}
+
+.carbs {
+  background-color: var(--tertiary-light);
+}
+
+.fats {
+  background-color: var(--fourth-light);
+}
+
+/* When the user reaches their goals, the color of the text changes to the intake's color */ 
+.goalReached.calories span, .goalReached.calories label {
+  color: var(--primary-color);
+}
+
+.goalReached.protein span, .goalReached.protein label {
+  color: var(--secondary-color);
+}
+
+.goalReached.carbs span, .goalReached.carbs label {
+  color: var(--tertiary-color);
+}
+
+.goalReached.fats span, .goalReached.fats label {
+  color: var(--fourth-color);
+}
+
+label {
+  color: var(--on-background-color);
+  font-weight: bold;
+  font-size: var(--medium-text);
+  margin: 0;
+}
+
+.current {
+  font-weight: bold;
+  font-size: var(--large-text);
+  color: var(--on-background-color);
+}
+
+.goal {
+  padding-left: 0.1em;
+  font-size: var(--semi-large-text);
+}
+
+.progress {
+  aspect-ratio: 1 / 1;
+  width: auto;
+  height: 100%;
+  border-radius: 999px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.progressInner {
+  width: 75%;
+  height: 75%;
+  border-radius: 999px;
+  position: absolute;
+  left: 12.5%;
+  top: 12.5%;
+}
+
+.progress svg {
+  fill: white;
+  font-size: var(--semi-large-text);
+}

@@ -220,6 +220,18 @@ export default class Authentication extends Component {
       )
     }
 
+    let errorMessageRender;
+    if(this.state.showErrorMessage) {
+      errorMessageRender = (
+        <div id={styles.errorBox}>
+          <p>{this.state.errorMessage}</p>
+          <button type="button" onClick={() => this.hideErrorMessage()}>
+            <FaTimes></FaTimes>
+          </button>
+        </div>
+      )
+    }
+
     let authRender = this.state.onLoginPage ? (
       <form id={styles.authForm} onSubmit={(e) => this.login(e)}>
         <h1>Login</h1>
@@ -238,6 +250,7 @@ export default class Authentication extends Component {
           {passwordErrorMessage}
         </div>
         <button className="solid-button" type="submit">Login</button>
+        {errorMessageRender}
       </form>
     ) : (
       <form id={styles.authForm} onSubmit={(e) => this.register(e)}>
@@ -265,23 +278,10 @@ export default class Authentication extends Component {
       </form>
     )
 
-    let errorMessageRender;
-    if(this.state.showErrorMessage) {
-      errorMessageRender = (
-        <div id={styles.errorBox}>
-          <p>{this.state.errorMessage}</p>
-          <button type="button" onClick={() => this.hideErrorMessage()}>
-            <FaTimes></FaTimes>
-          </button>
-        </div>
-      )
-    }
-
     return (
       <div id={styles.outerAuthWrapper}>
         <Logo className={styles.absolute} id="logo" />
         <div id={styles.innerAuthWrapper}>
-          {errorMessageRender}
           {authRender}
         </div>
       </div>
