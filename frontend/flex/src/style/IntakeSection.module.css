@@ -2,10 +2,6 @@
   display: flex;
 }
 
-.outerWrap:not(:last-of-type) {
-  margin-bottom: 12px;
-}
-
 .innerWrap {
   flex-grow: 1;
   border-radius: 8px;

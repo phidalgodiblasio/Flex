@@ -12,6 +12,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 
   --on-background-color: #000;
+  --section-color: #fff;
   --text-color: #0009;
   --primary-color: rgb(var(--primary-rgb));
   --primary-rgb: 87, 0, 229;
@@ -51,6 +52,10 @@ body {
   min-width: 350px;
   max-width: 450px;
   height: min-content;
+}
+
+.section > div {
+  margin-bottom: 12px;
 }
 
 .section-header {
@@ -112,6 +117,10 @@ button {
   transition: 0.2s linear;
 }
 
+button svg {
+  height: 0.8em;
+}
+
 .primary-button {
   background: var(--button-gradient);
   color: white;
@@ -120,11 +129,11 @@ button {
 }
 
 .primary-button:hover {
-  opacity: 0.92;
+  box-shadow:inset 2px 2px 8px #fff5;
 }
 
 .primary-button:focus {
-  opacity: 1;
+  box-shadow:inset 2px 2px 8px #0005;
 }
 
 .secondary-button {
@@ -140,6 +149,11 @@ button {
   -webkit-text-fill-color: transparent;
 }
 
+.secondary-button svg {
+  fill: var(--primary-color);
+  transform: translate(0, .075em);
+}
+
 .secondary-button span::before {
   content: "";
   position: absolute;
@@ -148,7 +162,7 @@ button {
   width: 0;
   height: 1px;
   background: linear-gradient(to right, var(--secondary-color), var(--primary-color));
-  transition: 0.2s cubic-bezier(0.165, 0.84, 0.44, 1)
+  transition: 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 .secondary-button:hover span::before {
@@ -218,4 +232,40 @@ input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+
+/* I use the clicked class so that the animation doesn't play on the page load */
+nav[aria-expanded="false"]:not(.clicked) {
+  display: none;
+}
+
+nav[aria-expanded="false"].clicked {
+  animation: closeMenu 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  animation-fill-mode: forwards;
+}
+
+nav[aria-expanded="true"] {
+  display: block;
+  animation: openMenu 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+  animation-fill-mode: forwards;
+}
+
+@keyframes closeMenu {
+  from {
+    
+  } to {
+    opacity: 0;
+    transform:  translateY(-10px);
+    display: none;
+  }
+}
+
+@keyframes openMenu {
+  from {
+    opacity: 0;
+    transform:  translateY(-10px);
+  } to {
+    opacity: 1;
+    transform: none;
+  }
 }

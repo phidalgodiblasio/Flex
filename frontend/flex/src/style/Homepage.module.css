@@ -77,7 +77,6 @@
 }
 
 #weightGoal {
-  margin-top: 12px;
   border-radius: var(--rounded-border);
   background: linear-gradient(to bottom, var(--primary-light), var(--tertiary-light));
 }
@@ -122,4 +121,34 @@
   color: var(--on-background-color);
   margin: 0;
   font-weight: bold;
+}
+
+#workoutButtons > * {
+  display: inline-block;
+  position: relative;
+}
+
+#workoutButtons nav {
+  background-color: var(--section-color);
+  border-radius: var(--rounded-border);
+  position: absolute;
+  top: 125%;
+  z-index: 98;
+  box-shadow: 2px 2px 12px #0003;
+}
+
+#workoutButtons nav button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 12px;
+  background: none;
+}
+
+#workoutButtons nav button:hover {
+  background-color: var(--transparent-button-hover);
+}
+
+#workoutButtons nav button:not(:last-of-type) {
+  border-bottom: 1px solid #ccc;
 }

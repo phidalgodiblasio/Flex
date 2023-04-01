@@ -2,14 +2,12 @@ import React, { Component } from 'react';
 import styles from '../style/Homepage.module.css';
 import { ReactComponent as Logo } from '../assets/flex-logo.svg';
 import IntakeSection from './IntakeSection';
-import { FaPen, FaXMark } from 'react-icons/fa';
+import { FaPen, FaArrowRight, FaPlus } from 'react-icons/fa';
 import Section from './Section';
 import SecondaryButton from './SecondaryButton';
 import IntakePopUp from './IntakePopUp';
 
 export default class Homepage extends Component {
-
-  // TODO: Implement homepage
 
   constructor(props) {
     super(props)
@@ -46,7 +44,9 @@ export default class Homepage extends Component {
       enteredWeight: "",
       weightGoal: 150,
       popUpState: popUpState,
-      intakeValues: intakeValues
+      intakeValues: intakeValues,
+      workoutMenuOpen: false,
+      workoutMenuHasBeenOpened: false,
     }
   }
 
@@ -149,6 +149,39 @@ export default class Homepage extends Component {
     this.closePopUp();
   }
 
+  pushIntakeGraphsPage() {
+    console.log("TODO: Implement intake graphs page");
+  }
+
+  pushExerciseLogPage() {
+    console.log("TODO: Implement exercise log page");
+  }
+
+  pushWeightProgressPage() {
+    console.log("TODO: Implement weight progress page");
+  }
+
+  pushTemplatesPage(editing) {
+    console.log("TODO: Implement templates page");
+  }
+
+  toggleWorkoutMenu() {
+    this.setState({
+      workoutMenuOpen: !this.state.workoutMenuOpen,
+      workoutMenuHasBeenOpened: true
+    })
+  }
+
+  // All mouse clicks are intercepted and sent to this function
+  // If the workout menu is open and the user isn't clicking on the menu, close the menu
+  checkIfToggleWorkoutMenu(target) {
+    if(target.className != "workout-menu-item" && this.state.workoutMenuOpen) {
+      this.setState({
+        workoutMenuOpen: false
+      })
+    }
+  }
+
   render() {
     let popUpRender = this.state.popUpState.active ? (
       <IntakePopUp 
@@ -186,8 +219,11 @@ export default class Homepage extends Component {
 
     let pushPopUp = (adding, type, current) => this.pushPopUp(adding, type, current);
 
+    let workoutMenuClasses;
+    if(this.state.workoutMenuHasBeenOpened) workoutMenuClasses = "clicked";
+
     return (
-      <>
+      <div onClick={(e) => this.checkIfToggleWorkoutMenu(e.target)}>
         {popUpRender}
         <div className="container">
           <header className={styles.header}>
@@ -222,20 +258,34 @@ export default class Homepage extends Component {
                 goal={this.state.intakeValues.fats.goal} 
                 pushPopUp={pushPopUp}
               />
+              <SecondaryButton className="left-secondary-button" onClick={() => this.pushIntakeGraphsPage()}>View Progress <FaArrowRight /></SecondaryButton>
             </Section>
+
             <Section title="Workouts">
-          
+              <div id={styles.workoutButtons}>
+                <div>
+                  <button className="primary-button" onClick={() => this.toggleWorkoutMenu()}><FaPlus /> Add New Workout</button>
+                  <nav className={workoutMenuClasses} aria-expanded={this.state.workoutMenuOpen}>
+                    <button className="workout-menu-item">Start From Scratch</button>
+                    <button className="workout-menu-item">Use A Template</button>
+                  </nav>
+                </div>
+                <SecondaryButton onClick={() => this.pushTemplatesPage(true)}>Edit Templates</SecondaryButton>
+              </div>
+              <SecondaryButton className="left-secondary-button" onClick={() => this.pushExerciseLogPage()}>View Exercise Log <FaArrowRight /></SecondaryButton>
             </Section>
+
             <Section title="Weight">
               {todaysWeight}
               <div className="small-padding" id={styles.weightGoal}>
                 <label>Your Goal</label>
                 <h3>{`${this.state.weightGoal} lbs`}</h3>
               </div>
+              <SecondaryButton className="left-secondary-button" onClick={() => this.pushWeightProgressPage()}>View Progress <FaArrowRight /></SecondaryButton>
             </Section>
           </div>
         </div>
-      </>
+      </div>
     )
   }
 }
