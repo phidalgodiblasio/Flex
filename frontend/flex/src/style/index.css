@@ -54,7 +54,7 @@ body {
   height: min-content;
 }
 
-.section > div {
+.section > div, .section > form {
   margin-bottom: 12px;
 }
 
@@ -210,6 +210,36 @@ button svg {
   justify-content: center;
 }
 
+#popup-background:not(.hasBeenOpened) {
+  display: none;
+}
+
+#popup-background[aria-hidden="true"] {
+  animation: hidePopUp 0.2s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+
+#popup-background[aria-hidden="false"] {
+  animation: showPopUp 0.2s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+
+@keyframes showPopUp {
+  from {
+    visibility: visible;
+    opacity: 0;
+  } to {
+    opacity: 1;
+  }
+}
+
+@keyframes hidePopUp {
+  from {
+    opacity: 1;
+  } to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
 #popup-container {
   background-color: white;
   border-radius: 12px;
@@ -238,12 +268,12 @@ input[type="number"]::-webkit-inner-spin-button {
 I use the clicked class so that the animation doesn't play on the page load 
 clicked is added once the button to open the menu is clicked the first time
 */
-nav[aria-expanded="false"]:not(.clicked) {
-  visibility: hidden;
+nav[aria-expanded="false"]:not(.hasBeenOpened) {
+  display: none;
 }
 
-nav[aria-expanded="false"].clicked {
-  animation: closeMenu 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+nav[aria-expanded="false"] {
+  animation: closeMenu 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
   animation-fill-mode: forwards;
 }
 

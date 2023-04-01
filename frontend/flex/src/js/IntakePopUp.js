@@ -26,18 +26,29 @@ export default class IntakePopUp extends Component {
       return;
     }
 
+    if(this.state.value < 0) {
+      console.log("Can't use negative numbers.");
+      return;
+    }
+
+    this.setState({
+      value: ""
+    })
+
     updateIntake(adding, type, this.state.value)
   }
 
   render() {
-    const {closePopUp, adding, type, currentIntakeValue} = this.props;
+    const {hasBeenOpened, visible, closePopUp, adding, type, currentIntakeValue} = this.props;
 
     let addOrSubText = adding ? "Add" : "Remove";
     let currentIntakeText = currentIntakeValue;
     if(type != "Calories") currentIntakeText += "g";
 
+    let classes = hasBeenOpened ? "hasBeenOpened" : "";
+
     return (
-      <div id="popup-background">
+      <div className={classes} aria-hidden={!visible} id="popup-background">
         <form id="popup-container" className="large-padding" onSubmit={(e) => this.updateIntakeIfValid(e)}>
           <h2 style={{margin: 0}}>{addOrSubText} {type}</h2>
           <span style={{marginBottom: "12px", display: "block"}}>Currently: {currentIntakeText}</span>

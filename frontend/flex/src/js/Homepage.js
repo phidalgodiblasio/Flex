@@ -16,7 +16,8 @@ export default class Homepage extends Component {
       active: false,
       adding: false,
       type: "",
-      currentIntakeValue: -1
+      currentIntakeValue: -1,
+      hasBeenOpened: false
     }
 
     let intakeValues = {
@@ -93,31 +94,23 @@ export default class Homepage extends Component {
         active: true,
         adding: adding,
         type: type,
-        currentIntakeValue: currentIntakeValue
+        currentIntakeValue: currentIntakeValue,
+        hasBeenOpened: true
       }
     })
   }
 
   closePopUp() {
+    let newPopUpState = this.state.popUpState;
+    newPopUpState.active = false;
     this.setState({
-      popUpState: {
-        active: false,
-        adding: false,
-        type: "",
-        currentIntakeValue: -1
-      }
+      popUpState: newPopUpState
     })
   }
 
   // Called when user clicks "Save" inside the intake add/subtract popup
   updateIntake(adding, type, amount) {
     // TODO: Database calls instead of local changes
-    console.log(`${adding} ${type} ${amount}`)
-
-    // Should always be a positive number
-    // TODO: show the user an error instead
-    if(adding < 0) return;
-
     amount = parseInt(amount);
 
     // subtract the amount if subtracting
@@ -174,26 +167,26 @@ export default class Homepage extends Component {
 
   // All mouse clicks are intercepted and sent to this function
   // If the workout menu is open and the user isn't clicking on the menu, close the menu
-  checkIfToggleWorkoutMenu(target) {
+  // If the intake popup is open and the user is clicking on the background, close the popup
+  checkIfToggling(target) {
     if(target.className != "workout-menu-item" && this.state.workoutMenuOpen) {
       this.setState({
         workoutMenuOpen: false
+      })
+      return;
+    }
+
+    // Only possible when the popup is open, so I'm not gonna check that
+    if(target.id == "popup-background") {
+      let newPopUpState = this.state.popUpState;
+      newPopUpState.active = false;
+      this.setState({
+        popUpState: newPopUpState
       })
     }
   }
 
   render() {
-    let popUpRender = this.state.popUpState.active ? (
-      <IntakePopUp 
-        currentIntakeValue={this.state.popUpState.currentIntakeValue} 
-        adding={this.state.popUpState.adding} type={this.state.popUpState.type} 
-        closePopUp={() => this.closePopUp()} 
-        updateIntake={(adding, type, amount) => this.updateIntake(adding, type, amount)} 
-      />
-    ) : (
-      null
-    );
-
     // Render the form for the user to enter their weight if they haven't already;
     // Otherwise, show their weight today
     let todaysWeight = this.state.todaysWeightEntered ? (
@@ -222,11 +215,18 @@ export default class Homepage extends Component {
     // This is for animation stuff.
     // The workout menu won't render until it has the 'clicked' class as well. This is to avoid the animation playing on page load
     let workoutMenuClasses;
-    if(this.state.workoutMenuHasBeenOpened) workoutMenuClasses = "clicked";
+    if(this.state.workoutMenuHasBeenOpened) workoutMenuClasses = "hasBeenOpened";
 
     return (
-      <div onClick={(e) => this.checkIfToggleWorkoutMenu(e.target)}>
-        {popUpRender}
+      <div onClick={(e) => this.checkIfToggling(e.target)}>
+        <IntakePopUp
+          hasBeenOpened={this.state.popUpState.hasBeenOpened}
+          visible={this.state.popUpState.active}
+          currentIntakeValue={this.state.popUpState.currentIntakeValue} 
+          adding={this.state.popUpState.adding} type={this.state.popUpState.type} 
+          closePopUp={() => this.closePopUp()} 
+          updateIntake={(adding, type, amount) => this.updateIntake(adding, type, amount)} 
+        />
         <div className="container">
           <header className={styles.header}>
             <Logo id="logo" />
