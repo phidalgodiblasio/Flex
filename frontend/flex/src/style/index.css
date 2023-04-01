@@ -234,9 +234,12 @@ input[type="number"]::-webkit-inner-spin-button {
   margin: 0;
 }
 
-/* I use the clicked class so that the animation doesn't play on the page load */
+/* 
+I use the clicked class so that the animation doesn't play on the page load 
+clicked is added once the button to open the menu is clicked the first time
+*/
 nav[aria-expanded="false"]:not(.clicked) {
-  display: none;
+  visibility: hidden;
 }
 
 nav[aria-expanded="false"].clicked {
@@ -245,25 +248,23 @@ nav[aria-expanded="false"].clicked {
 }
 
 nav[aria-expanded="true"] {
-  display: block;
+  visibility: visible;
   animation: openMenu 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
   animation-fill-mode: forwards;
 }
 
 @keyframes closeMenu {
-  from {
-    
-  } to {
+  to {
     opacity: 0;
-    transform:  translateY(-10px);
-    display: none;
+    transform: translateY(-10px);
+    visibility: hidden;
   }
 }
 
 @keyframes openMenu {
   from {
     opacity: 0;
-    transform:  translateY(-10px);
+    transform: translateY(-10px);
   } to {
     opacity: 1;
     transform: none;

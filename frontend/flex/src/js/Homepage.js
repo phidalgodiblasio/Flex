@@ -219,6 +219,8 @@ export default class Homepage extends Component {
 
     let pushPopUp = (adding, type, current) => this.pushPopUp(adding, type, current);
 
+    // This is for animation stuff.
+    // The workout menu won't render until it has the 'clicked' class as well. This is to avoid the animation playing on page load
     let workoutMenuClasses;
     if(this.state.workoutMenuHasBeenOpened) workoutMenuClasses = "clicked";
 
