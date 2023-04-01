@@ -6,7 +6,7 @@ export default function Section({title, editFunction, children}) {
   return (
     <div className="section large-padding">
       <div className="section-header">
-        <h2>{title}</h2>
+        <h2 className={styles.h2}>{title}</h2>
         <div>
           <button className={styles.editButton} onClick={() => editFunction()}>
             <FaPen />

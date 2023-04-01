@@ -197,9 +197,9 @@ export default class Authentication extends Component {
 
     let passwordType = this.state.showPassword ? "text" : "password";
 
-    let usernameInputClasses = `${styles.input}`;
-    let passwordInputClasses = `${styles.input}`;
-    let retypePasswordInputClasses = `${styles.input}`;
+    let usernameInputClasses = `${styles.input} form-input`;
+    let passwordInputClasses = `${styles.input} form-input ${styles.noPadding}`;
+    let retypePasswordInputClasses = `${styles.input} form-input`;
     let usernameErrorMessage, passwordErrorMessage, retypePasswordErrorMessage;
     if(this.state.usernameError) {
       usernameInputClasses += ` ${styles.error}`;
@@ -249,7 +249,7 @@ export default class Authentication extends Component {
           </div>
           {passwordErrorMessage}
         </div>
-        <button className="solid-button" type="submit">Login</button>
+        <button className="primary-button" type="submit">Login</button>
         {errorMessageRender}
       </form>
     ) : (
@@ -274,7 +274,8 @@ export default class Authentication extends Component {
           <input type={passwordType} className={retypePasswordInputClasses} placeholder="Confirm your password..." value={this.state.retypePassword} onChange={(e) => this.handleRetypePasswordChange(e.target.value)}></input>
           {retypePasswordErrorMessage}
         </div>
-        <button className="solid-button" type="submit">Register</button>
+        <button className="primary-button" type="submit">Register</button>
+        {errorMessageRender}
       </form>
     )
 

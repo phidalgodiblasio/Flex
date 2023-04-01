@@ -109,6 +109,7 @@ button {
   cursor: pointer;
   border: none;
   outline: none;
+  transition: 0.2s linear;
 }
 
 .primary-button {
@@ -127,19 +128,24 @@ button {
   opacity: 1;
 }
 
-/* TODO: Deprecate this */
-.solid-button {
-  background-color: var(--primary-color);
-  color: white;
-  padding: 0.8em;
-  border-radius: var(--rounded-border);
-}
-
-.solid-button:hover {
-  opacity: 0.85;
-}
-
 #logo {
-  height: 14pt;
+  height: 16pt;
 }
 
+.form-input {
+  border: 1px solid #ccc;
+  border-radius: var(--rounded-border);
+  transition: 0.2s;
+  padding: 0.6em;
+  background: none;
+  outline: none;
+}
+
+.form-input::placeholder {
+  color: #aaa;
+}
+
+.form-input:focus-within {
+  border-color: var(--secondary-color);
+  background: var(--secondary-light);
+}

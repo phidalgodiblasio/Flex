@@ -1,6 +1,6 @@
 #outerAuthWrapper {
   margin: auto;
-  max-width: 400px;
+  max-width: 450px;
   height: 100vh;
   position: relative;
 }
@@ -22,43 +22,42 @@
   position: relative;
   margin: 25px;
   flex-grow: 1;
+  background-color: white;
+  padding: 25px;
+  border-radius: 12px;
 }
 
 #authForm > div {
   margin-bottom: 1em;
 }
 
-h1 {
+#authForm h1 {
   margin: 0;
 }
 
-label, input {
+#authForm label, #authForm input {
   display: block;
-}
-
-input {
-  padding: 0.6em;
-  outline: none;
-  background: none;
-  border: none;
-}
-
-input::placeholder {
-  color: #aaa;
 }
 
 .input {
   width: 100%;
+  display: grid;
+  grid-template-columns: 1fr auto;
   border: 1px solid #ccc;
   border-radius: var(--rounded-border);
   transition: 0.2s;
-  display: grid;
-  grid-template-columns: 1fr auto;
 }
 
-.input:focus-within {
-  border-color: var(--primary-color);
-  background-color: rgba(var(--accent-rgb), 0.05);
+/* Targets the password input, since it has .input applied to the div around the input and icon button */
+.input input {
+  background: none;
+  border: none;
+  outline: none;
+  padding: 0.6em;
+}
+
+.noPadding {
+  padding: 0;
 }
 
 .input button {
@@ -68,7 +67,7 @@ input::placeholder {
   align-items: center;
 }
 
-p {
+#authForm p {
   margin: 0 0 2em 0;
 }
 
@@ -76,7 +75,7 @@ p {
   border: none;
   outline: none;
   background: none;
-  color: var(--primary-color);
+  color: var(--secondary-color);
   padding: .5em;
   font-size: inherit;
 }
@@ -85,10 +84,11 @@ p {
   text-decoration: underline;
 }
 
-button[type="submit"] {
+#authForm button[type="submit"] {
   display: block;
   width: 100%;
   margin-top: 2em;
+  padding: 0.6em;
 }
 
 .error {
@@ -108,7 +108,8 @@ button[type="submit"] {
   align-items: center;
   width: 100%;
   padding: 1em;
-  margin-top: 25px;
+  margin-top: 37px;
+  left: 0;
   background-color: red;
   border-radius: var(--rounded-border);
   animation: errorAnimation 0.3s ease-out;
@@ -116,7 +117,7 @@ button[type="submit"] {
 
 @keyframes errorAnimation {
   0% {
-    transform: translateX(2px);
+    transform: translateX(-0px);
   } 20% {
     transform: translateX(-4px);
   } 40% {
