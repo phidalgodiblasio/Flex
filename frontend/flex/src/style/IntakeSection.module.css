@@ -112,3 +112,7 @@
   fill: white;
   font-size: var(--semi-large-text);
 }
+
+.goalReached .progressInner {
+  display: none;
+}

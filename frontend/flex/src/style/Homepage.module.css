@@ -76,13 +76,6 @@
   flex-grow: 1;
 }
 
-/* Get rid of number up and down buttons */
-#weightForm input::-webkit-outer-spin-button,
-#weightForm input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
 #weightGoal {
   margin-top: 12px;
   border-radius: var(--rounded-border);

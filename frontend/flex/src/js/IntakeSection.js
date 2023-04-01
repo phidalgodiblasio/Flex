@@ -6,7 +6,8 @@ export default function IntakeSection(
   {
     type, // What type of intake section this is (Calories, Protein, Fats, Carbs)
     current, // Current intake value
-    goal // Goal intake value
+    goal, // Goal intake value
+    pushPopUp // function to call when adding/subtracting to an intake
   }
   ) {
   let innerClasses = `small-padding ${styles.innerWrap}`;
@@ -41,7 +42,6 @@ export default function IntakeSection(
 
   // Hide the thing that makes the progress circle look like a border (so it'll look filled)
   if(current >= goal) {
-    innerProgressColor = "none";
     innerClasses += ` ${styles.goalReached}`;
   }
 
@@ -56,10 +56,10 @@ export default function IntakeSection(
   return (
     <div className={styles.outerWrap}>
       <div className={styles.buttonsWrap}>
-        <button>
+        <button onClick={() => pushPopUp(true, type, current)}>
           <FaPlus />
         </button>
-        <button>
+        <button onClick={() => pushPopUp(false, type, current)}>
           <FaMinus />
         </button>
       </div>      

@@ -2,6 +2,7 @@ import styles from '../style/Authentication.module.css';
 import React, { Component } from 'react';
 import { FaEye, FaEyeSlash, FaTimes } from 'react-icons/fa';
 import { ReactComponent as Logo } from '../assets/flex-logo.svg';
+import SecondaryButton from './SecondaryButton';
 
 export default class Authentication extends Component {
   constructor(props) {
@@ -235,7 +236,7 @@ export default class Authentication extends Component {
     let authRender = this.state.onLoginPage ? (
       <form id={styles.authForm} onSubmit={(e) => this.login(e)}>
         <h1>Login</h1>
-        <p>Don't have an account? <button type="button" id={styles.switchPage} onClick={() => this.switchPage()}>Register</button></p>
+        <p>Don't have an account? <SecondaryButton className="secondary-button" onClick={() => this.switchPage()}>Register</SecondaryButton></p>
         <div>
           <label>Username</label>
           <input className={usernameInputClasses} placeholder="Enter your username..." value={this.state.username} onChange={(e) => this.handleUsernameChange(e.target.value)}></input>
@@ -255,7 +256,7 @@ export default class Authentication extends Component {
     ) : (
       <form id={styles.authForm} onSubmit={(e) => this.register(e)}>
         <h1>Register</h1>
-        <p>Already have an account? <button type="button" id={styles.switchPage} onClick={() => this.switchPage()}>Login</button></p>
+        <p>Already have an account? <SecondaryButton className="secondary-button" onClick={() => this.switchPage()}>Login</SecondaryButton></p>
         <div>
           <label>Username</label>
           <input className={usernameInputClasses} placeholder="Enter your username..." value={this.state.username} onChange={(e) => this.handleUsernameChange(e.target.value)}></input>

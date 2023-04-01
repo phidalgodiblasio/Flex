@@ -117,7 +117,6 @@ button {
   color: white;
   border-radius: var(--rounded-border);
   padding: 8px 12px;
-  transition: 0.2s ease-out;
 }
 
 .primary-button:hover {
@@ -126,6 +125,42 @@ button {
 
 .primary-button:focus {
   opacity: 1;
+}
+
+.secondary-button {
+  padding: 8px 12px;
+  background: none;
+}
+
+.secondary-button span {
+  position: relative;
+  background: var(--button-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.secondary-button span::before {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: linear-gradient(to right, var(--secondary-color), var(--primary-color));
+  transition: 0.2s cubic-bezier(0.165, 0.84, 0.44, 1)
+}
+
+.secondary-button:hover span::before {
+  width: 100%;
+}
+
+.left-secondary-button {
+  transform: translateX(-12px);
+}
+
+.right-secondary-button {
+  transform: translateX(12px);
 }
 
 #logo {
@@ -141,11 +176,46 @@ button {
   outline: none;
 }
 
-.form-input::placeholder {
+*::placeholder {
   color: #aaa;
 }
 
 .form-input:focus-within {
   border-color: var(--secondary-color);
   background: var(--secondary-light);
+}
+
+#popup-background {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 99;
+  background-color: #0006;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#popup-container {
+  background-color: white;
+  border-radius: 12px;
+  min-width: 300px;
+}
+
+#popup-container input {
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+#popup-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Get rid of number up and down buttons */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
