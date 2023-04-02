@@ -9,6 +9,6 @@ import edu.pitt.flex.Entity.Workout;
 import jakarta.servlet.http.HttpServletRequest;
 
 public interface WorkoutService {
-    public ResponseEntity<String> addWorkout(WorkoutDTO workoutDTO);
+    public ResponseEntity<String> addWorkout(WorkoutDTO workoutDTO, HttpServletRequest request);
     public ResponseEntity<List<Workout>> getWorkouts(HttpServletRequest request);
 }

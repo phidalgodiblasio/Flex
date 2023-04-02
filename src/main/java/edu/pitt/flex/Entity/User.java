@@ -32,10 +32,13 @@ public class User{
     @JoinColumn(name = "fk_userId", referencedColumnName = "id")
     private List<Intake> intakes;
 
-
     @OneToMany(cascade = CascadeType.ALL, targetEntity = Weight.class)
     @JoinColumn(name = "fk_userId", referencedColumnName = "id")
     private List<Weight> weights;
+
+    @OneToMany(cascade = CascadeType.ALL, targetEntity = Workout.class)
+    @JoinColumn(name = "fk_userId", referencedColumnName = "id")
+    private List<Workout> workouts;
     
    
     public User()
@@ -50,6 +53,7 @@ public class User{
         this.password = password;
         intakes = new ArrayList<>();
         weights=new ArrayList<>();
+        workouts = new ArrayList<>();
     }
 
     public List<Weight> getAllWeights()
@@ -62,7 +66,6 @@ public class User{
         weights.add(weight);
     }
 
-
     public List<Intake> getAllIntakes()
     {
         return intakes;
@@ -73,6 +76,13 @@ public class User{
         intakes.add(intake);
     }
 
+    public void addWorkout(Workout workout) {
+        workouts.add(workout);
+    }
+
+    public List<Workout> getAllWorkouts() {
+        return workouts;
+    }
 
     public int getId()
     {

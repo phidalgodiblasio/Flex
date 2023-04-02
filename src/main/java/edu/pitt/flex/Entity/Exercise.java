@@ -23,7 +23,7 @@ public class Exercise {
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, targetEntity = Set.class)
     @JoinColumn(name = "fk_exercise_id", referencedColumnName = "id")
     private List<Set> sets;
 

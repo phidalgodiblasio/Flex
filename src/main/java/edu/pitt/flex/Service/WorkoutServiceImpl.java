@@ -13,21 +13,25 @@ import edu.pitt.flex.DTO.SetDTO;
 import edu.pitt.flex.DTO.WorkoutDTO;
 import edu.pitt.flex.Entity.Exercise;
 import edu.pitt.flex.Entity.Set;
+import edu.pitt.flex.Entity.User;
 import edu.pitt.flex.Entity.Workout;
-import edu.pitt.flex.Repository.WorkoutRepository;
+import edu.pitt.flex.Repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Service
 public class WorkoutServiceImpl implements WorkoutService {
     @Autowired
-    private WorkoutRepository workoutRepository;
+    private UserRepository userRepository;
 
     @Override
-    public ResponseEntity<String> addWorkout(WorkoutDTO workoutDTO) {
-        // Create list of exercises
+    public ResponseEntity<String> addWorkout(WorkoutDTO workoutDTO, HttpServletRequest request) {
+        // Get user
+        User user = userRepository.findOneById((int)request.getSession().getAttribute("USER_ID"));
+
+        // Create list of exercises and add to user
         List<Exercise> exercises = createExercises(workoutDTO.getExercises());
         Workout workout = new Workout(workoutDTO.getId(), workoutDTO.getDate(), exercises);
-        workoutRepository.save(workout);
+        user.addWorkout(workout);
 
         // Return response
         return new ResponseEntity<>("Workout added successfuly", HttpStatus.OK);
@@ -35,8 +39,9 @@ public class WorkoutServiceImpl implements WorkoutService {
 
     @Override
     public ResponseEntity<List<Workout>> getWorkouts(HttpServletRequest request) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getWorkouts'");
+        // Get user from repository and return workouts
+        User user = userRepository.findOneById((int)request.getSession().getAttribute("USER_ID"));
+        return new ResponseEntity<>(user.getAllWorkouts(), HttpStatus.OK);
     }
 
     private List<Set> createSets(List<SetDTO> setDTOList) {

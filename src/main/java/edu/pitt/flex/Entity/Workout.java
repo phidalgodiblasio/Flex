@@ -23,7 +23,7 @@ public class Workout {
     @Column(nullable = false)
     private int date;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, targetEntity = Exercise.class)
     @JoinColumn(name = "fk_workout_id", referencedColumnName = "id")
     private List<Exercise> exercises;
 
