@@ -26,8 +26,8 @@ export default class IntakePopUp extends Component {
       return;
     }
 
-    if(this.state.value < 0) {
-      console.log("Can't use negative numbers.");
+    if(this.state.value < 0 || this.state.value == "") {
+      console.log("Please enter a valid number.");
       return;
     }
 
@@ -36,6 +36,11 @@ export default class IntakePopUp extends Component {
     })
 
     updateIntake(adding, type, this.state.value)
+  }
+
+  // Close the popup if clicking on the background
+  checkClosePopUp(target) {
+    if(target.id == "popup-background") this.props.closePopUp();
   }
 
   render() {
@@ -48,7 +53,7 @@ export default class IntakePopUp extends Component {
     let classes = hasBeenOpened ? "hasBeenOpened" : "";
 
     return (
-      <div className={classes} aria-hidden={!visible} id="popup-background">
+      <div className={classes} aria-hidden={!visible} id="popup-background" onClick={(e) => this.checkClosePopUp(e.target)}>
         <form id="popup-container" className="large-padding" onSubmit={(e) => this.updateIntakeIfValid(e)}>
           <h2 style={{margin: 0}}>{addOrSubText} {type}</h2>
           <span style={{marginBottom: "12px", display: "block"}}>Currently: {currentIntakeText}</span>
