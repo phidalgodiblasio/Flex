@@ -14,6 +14,6 @@ public class AuthConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(authInterceptor).addPathPatterns("/get-id"); // Change this later
+        registry.addInterceptor(authInterceptor).addPathPatterns("/flex/**");
     }
 }
