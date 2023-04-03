@@ -1,6 +1,7 @@
 package edu.pitt.flex.Service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,32 @@ public class IntakeServiceImpl implements IntakeService {
         else{
             List<Intake> intakes = new ArrayList<Intake>();
             return intakes;
+        }
+    }
+
+    @Override
+    public Intake getIntake(HttpServletRequest request) {
+        User user = userRepository.findOneById((int)request.getSession().getAttribute("USER_ID"));
+
+
+        //get today's date
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        String stringDate = "" + year + month + day;
+        int date = Integer.parseInt(stringDate);
+
+        Intake lastIntake = user.getLastIntake();
+
+        //if there is already an intake looged today
+        if(lastIntake != null && lastIntake.getDate() == date){
+            //IntakeDTO intakeDTO = new IntakeDTO(lastIntake.getId(), lastIntake.getCalorieSum(), lastIntake.getCarbSum(), lastIntake.getProteinSum(), lastIntake.getFatSum());
+            //return intakeDTO;
+            return lastIntake;
+        }
+        else{
+            return null;
         }
     }
     
