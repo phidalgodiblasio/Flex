@@ -29,6 +29,7 @@ body {
 
   --button-gradient: linear-gradient(to bottom right, var(--secondary-color), var(--primary-color));
   --transparent-button-hover: #0001;
+  --transparent-button-active: #0002;
   --bezier-animation: 0.2s cubic-bezier(.5,0,.5,.5);
 
   --rounded-border: 6px;
@@ -85,10 +86,6 @@ body {
   fill: var(--on-background-color);
 }
 
-.section-header button:hover {
-  background-color: var(--transparent-button-hover);
-}
-
 .large-padding {
   padding: 25px;
 }
@@ -97,7 +94,7 @@ body {
   padding: 12px;
 }
 
-p, span, label {
+p, span, label, td {
   color: var(--text-color);
   margin: 0;
 }
@@ -142,6 +139,18 @@ button {
 
 button svg {
   height: 0.8em;
+}
+
+.transparent-button {
+  background: none;
+}
+
+.transparent-button:hover {
+  background: var(--transparent-button-hover);
+}
+
+.transparent-button:active {
+  background: var(--transparent-button-active);
 }
 
 .primary-button {
