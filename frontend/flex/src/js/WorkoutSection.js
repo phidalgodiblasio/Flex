@@ -3,15 +3,40 @@ import SectionHeader from './SectionHeader'
 import { FaPlus, FaArrowRight } from 'react-icons/fa'
 import SecondaryButton from './SecondaryButton'
 import styles from '../style/WorkoutSection.module.css'
+import Workout from './Workout'
 
 export default class WorkoutSection extends Component {
   constructor(props) {
     super(props)
+
+    let todaysWorkouts = [
+      {
+        id: 0,
+        name: "Bench Press",
+        sets: [
+          { weight: 145, reps: 10 },
+          { weight: 145, reps: 10 },
+          { weight: 150, reps: 10 },
+          { weight: 150, reps: 8 }
+        ]
+      },
+      {
+        id: 1,
+        name: "Fly Machine",
+        sets: [
+          { weight: 115, reps: 10 },
+          { weight: 115, reps: 10 },
+          { weight: 115, reps: 10 },
+          { weight: 115, reps: 8 }
+        ]
+      }
+    ]
   
     this.state = {
       editing: false,
       workoutMenuOpen: false,
       workoutMenuHasBeenOpened: false,
+      todaysWorkouts: todaysWorkouts
     }
   }
 
@@ -48,6 +73,10 @@ export default class WorkoutSection extends Component {
     let workoutMenuClasses;
     if(this.state.workoutMenuHasBeenOpened) workoutMenuClasses = "hasBeenOpened";
 
+    let todaysWorkoutsRender = this.state.todaysWorkouts.map(workout => {
+      return <Workout workout={workout} />
+    })
+
     return (
       <div className="section large-padding" onClick={(e) => this.checkCloseWorkoutMenu(e.target)}>
         <SectionHeader title="Workouts" edit={() => this.edit()} editing={this.state.editing} />
@@ -61,6 +90,8 @@ export default class WorkoutSection extends Component {
           </div>
           <SecondaryButton onClick={() => this.pushTemplatesPage(true)}>Edit Templates</SecondaryButton>
         </div>
+        <h4 id={styles.today}>Today</h4>
+        {todaysWorkoutsRender}
         <SecondaryButton className="left-secondary-button" onClick={() => this.pushExerciseLogPage()}>View Exercise Log <FaArrowRight /></SecondaryButton>
       </div>
     )
