@@ -16,6 +16,7 @@ export default class Homepage extends Component {
   }
 
   handleLogout() {
+    // TODO: fetch request to logout
     console.log("TODO: Implement logout");
   }
 

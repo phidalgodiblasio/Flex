@@ -6,9 +6,14 @@ import styles from '../style/WorkoutSection.module.css'
 import Workout from './Workout'
 
 export default class WorkoutSection extends Component {
+  componentDidMount() {
+    // TODO: fetch user's workouts from today
+  }
+
   constructor(props) {
     super(props)
 
+    // TODO: get todaysWorkouts from DB instead (in componentDidMount())
     let todaysWorkouts = [
       {
         id: 0,

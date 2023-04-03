@@ -7,10 +7,16 @@ import SecondaryButton from './SecondaryButton';
 import SectionHeader from './SectionHeader';
 
 export default class IntakeSection extends Component {
+  componentDidMount() {
+    // TODO: fetch user's intake goals
+    // TODO: fetch user's intake for today
+  }
+
   constructor(props) {
     super(props)
 
-    // TODO: Get this values from the DB instead (in componentWillMount())
+    // TODO: Get intakeValues from the DB instead (in componentDidMount())
+    // TODO: Split intakeValues into intakeDailyValues and intakeGoals since that's how they'll be sent and received from the DB
     let intakeValues = {
       calories: {
         current: 1600,
@@ -84,7 +90,6 @@ export default class IntakeSection extends Component {
 
     let intakeValues = this.state.intakeValues;
 
-    // TODO: Database calls instead of local changes
     switch(type) {
       case "Calories":
         intakeValues.calories.current += amount;
@@ -101,6 +106,8 @@ export default class IntakeSection extends Component {
       default:
         console.log("SOMETHING WENT VERY WRONG (Intake value update attempted with unknown type (not Calories, Protein, Carbs, or Fats?))");
     }
+
+    // TODO: fetch() to set today's intake values instead of just setting the state
 
     this.setState({
       intakeValues: intakeValues

@@ -26,7 +26,7 @@ export default class Workout extends Component {
       return (
         <tr>
           <td>{index}</td>
-          <td>{set.weight}</td>
+          <td>{set.weight} lbs</td>
           <td>{set.reps}</td>
         </tr>
       )

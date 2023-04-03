@@ -5,6 +5,11 @@ import { FaPen, FaArrowRight } from 'react-icons/fa'
 import styles from '../style/WeightSection.module.css'
 
 export default class WeightSection extends Component {
+  componentDidMount() {
+    // TODO: fetch user's weight goal
+    // TODO: fetch user's weight for today
+  }
+
   constructor(props) {
     super(props)
   
