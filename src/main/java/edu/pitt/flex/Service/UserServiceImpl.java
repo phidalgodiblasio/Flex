@@ -103,10 +103,7 @@ public class UserServiceImpl implements UserService {
 
         // TODO: look into sessions, first case is returning null, so this only works
         // when userDTO has username
-        User currUser = userRepository.findOneByID((int) request.getSession().getAttribute("USER_ID"));
-
-        if (currUser == null)
-            currUser = userRepository.findByUsername(userDTO.getUsername());
+        User currUser = userRepository.findOneById((int) request.getSession().getAttribute("USER_ID"));
 
         // Search to see if username exists
         if (userRepository.findByUsername(currUser.getUsername()) == null) {
@@ -114,8 +111,6 @@ public class UserServiceImpl implements UserService {
             body = "Update unsuccessful: username not found";
             status = HttpStatus.BAD_REQUEST;
         } else {
-            // Update user value
-
             // update intake goals
             currUser.setCalGoal(userDTO.getCalGoal());
             currUser.setCarbGoal(userDTO.getCarbGoal());
@@ -140,10 +135,7 @@ public class UserServiceImpl implements UserService {
 
         // TODO: look into sessions, first case is returning null, so this only works
         // when userDTO has username
-        User currUser = userRepository.findByUsername((String) request.getSession().getAttribute("USER_NAME"));
-        // for debugging
-        if (currUser == null)
-            currUser = userRepository.findByUsername(userDTO.getUsername());
+        User currUser = userRepository.findOneById((int) request.getSession().getAttribute("USER_ID"));
 
         // Search to see if username exists
         if (userRepository.findByUsername(currUser.getUsername()) == null) {
