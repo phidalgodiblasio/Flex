@@ -84,15 +84,6 @@ public class User {
         return intakes;
     }
 
-    //returns the intake added most recently
-    public Intake getLastIntake()
-    {
-        if(intakes.size() == 0)
-            return null;
-        else
-            return intakes.get(intakes.size() - 1);
-    }
-
     public void addIntake(Intake intake) {
         intakes.add(intake);
     }

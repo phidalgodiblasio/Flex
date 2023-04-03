@@ -11,5 +11,5 @@ import jakarta.servlet.http.HttpServletRequest;
 public interface IntakeService {
     public ResponseEntity<String> addIntake(IntakeDTO intakeDTO, HttpServletRequest request);
     public List<Intake> getIntakes(HttpServletRequest request);
-    public Intake getIntake(HttpServletRequest request);    
+    
 }
