@@ -35,7 +35,7 @@ public class WeightController {
         return weightService.getWeights(request);
     }
 
-    // for goals
+    // for goals.
     @PostMapping("/weight-goal")
     public ResponseEntity<String> setWeightGoals(@RequestBody UserDTO userDTO, HttpServletRequest request) {
         return userService.setWeightGoal(userDTO, request);

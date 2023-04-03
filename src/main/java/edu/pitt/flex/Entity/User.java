@@ -28,7 +28,7 @@ public class User {
     @Column(length = 255, nullable = false)
     private String password;
 
-    // goals
+    // goals.
     @Column
     private int weightGoal;
     @Column
