@@ -1,0 +1,55 @@
+#weightForm {
+  display: flex;
+  gap: 12px;
+}
+
+#weightForm input {
+  flex-grow: 1;
+}
+
+#weightGoal {
+  border-radius: var(--rounded-border);
+  background: linear-gradient(to bottom, var(--primary-light), var(--tertiary-light));
+}
+
+#weightGoal label, #todaysWeight label {
+  font-size: var(--medium-text);
+}
+
+#weightGoal h3 {
+  font-size: 20pt;
+}
+
+#todaysWeight {
+  background-color: var(--secondary-light);
+  border-radius: var(--rounded-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#todaysWeight h2 {
+  font-size: var(--largest-text);
+}
+
+#todaysWeight button {
+  background: none;
+  padding: 0.5em;
+  font-size: var(--semi-large-text);
+  line-height: 0.5em;
+}
+
+#todaysWeight button:hover svg {
+  fill: var(--secondary-color);
+}
+
+#todaysWeight svg {
+  fill: rgba(var(--secondary-rgb), 0.5);
+  transition: 0.2s linear;
+}
+
+#weightGoal label, #weightGoal h3, #todaysWeight label, #todaysWeight h2 {
+  color: var(--on-background-color);
+  margin: 0;
+  font-weight: bold;
+}

@@ -1,84 +1,157 @@
-import React from 'react';
-import styles from '../style/IntakeSection.module.css';
-import { FaPlus, FaMinus, FaCheck, FaExclamation } from 'react-icons/fa';
+import React, { Component } from 'react';
+import { FaArrowRight } from 'react-icons/fa';
+import styles from '../style/Homepage.module.css';
+import IntakePopUp from './IntakePopUp';
+import IntakeType from './IntakeType';
+import SecondaryButton from './SecondaryButton';
+import SectionHeader from './SectionHeader';
 
-export default function IntakeSection(
-  {
-    type, // What type of intake section this is (Calories, Protein, Fats, Carbs)
-    current, // Current intake value
-    goal, // Goal intake value
-    pushPopUp // function to call when adding/subtracting to an intake
-  }
-  ) {
-  let innerClasses = `small-padding ${styles.innerWrap}`;
-  let colorRGB; // color to associate with this intake
-  let innerProgressColor; // matches the background color (light version of colorRGB)
-  let progressIcon = <FaCheck />;
-  if(type == "Calories") {
-    innerClasses += ` ${styles.calories}`;
-    colorRGB = "var(--primary-rgb)";
-    innerProgressColor = "var(--primary-light)";
-  } else if(type == "Protein") {
-    innerClasses += ` ${styles.protein}`;
-    colorRGB = "var(--secondary-rgb)";
-    innerProgressColor = "var(--secondary-light";
-  } else if(type == "Carbs") {
-    innerClasses += ` ${styles.carbs}`;
-    colorRGB = "var(--tertiary-rgb)";
-    innerProgressColor = "var(--tertiary-light";
-  } else if(type == "Fats") {
-    innerClasses += ` ${styles.fats}`;
-    colorRGB = "var(--fourth-rgb)";
-    innerProgressColor = "var(--fourth-light";
-  }
+export default class IntakeSection extends Component {
+  constructor(props) {
+    super(props)
 
-  // Since protein, carbs, and fats are in grams, add a g to the end of those for the display
-  let currentText = current;
-  let goalText = `/${goal}`;
-  if(type != "Calories") {
-    currentText += "g";
-    goalText += "g";
-  }
-
-  // Hide the thing that makes the progress circle look like a border (so it'll look filled)
-  if(current >= goal) {
-    innerClasses += ` ${styles.goalReached}`;
+    // TODO: Get this values from the DB instead (in componentWillMount())
+    let intakeValues = {
+      calories: {
+        current: 1600,
+        goal: 2200
+      },
+      protein: {
+        current: 45,
+        goal: 50
+      },
+      carbs: {
+        current: 280,
+        goal: 275
+      },
+      fats: {
+        current: 75,
+        goal: 60
+      }
+    }
+  
+    this.state = {
+      editing: false,
+      popUpState: {
+        active: false,
+        adding: false,
+        type: "",
+        currentIntakeValue: "",
+        hasBeenOpened: false
+      },
+      intakeValues: intakeValues,
+    }
   }
 
-  // Warn the user if the current intake is >= 1.25 times their goal value
-  if(current >= 1.25 * goal) {
-    progressIcon = <FaExclamation />
+  edit() {
+    this.setState({
+      editing: !this.state.editing
+    })
   }
 
-  // Calculate the arc of the progress circle
-  let progressDegrees = `${current / goal * 360}deg`;
+  pushIntakeGraphsPage() {
+    console.log("TODO: Implement intake graphs page");
+  }
 
-  return (
-    <div className={styles.outerWrap}>
-      <div className={styles.buttonsWrap}>
-        <button onClick={() => pushPopUp(true, type, current)}>
-          <FaPlus />
-        </button>
-        <button onClick={() => pushPopUp(false, type, current)}>
-          <FaMinus />
-        </button>
-      </div>      
-      <div className={innerClasses}>
-        <div>
-          <label>{type}</label>
-          <div>
-            <span className={styles.current}>{currentText}</span>
-            <span className={styles.goal}>{goalText}</span>
-          </div>
+  // adding: true if adding to the value, false if subtracting
+  // type: Calories, Protein, Carbs, or Fats
+  pushPopUp(adding, type, currentIntakeValue) {
+    this.setState({
+      popUpState: {
+        active: true,
+        adding: adding,
+        type: type,
+        currentIntakeValue: currentIntakeValue,
+        hasBeenOpened: true
+      }
+    })
+  }
+
+  closePopUp() {
+    let newPopUpState = this.state.popUpState;
+    newPopUpState.active = false;
+    this.setState({
+      popUpState: newPopUpState
+    })
+  }
+
+  // Called when user clicks "Save" inside the intake add/subtract popup
+  updateIntake(adding, type, amount) {
+    amount = parseInt(amount);
+
+    // subtract the amount if subtracting
+    if(!adding) amount = -amount;
+
+    let intakeValues = this.state.intakeValues;
+
+    // TODO: Database calls instead of local changes
+    switch(type) {
+      case "Calories":
+        intakeValues.calories.current += amount;
+        break;
+      case "Protein":
+        intakeValues.protein.current += amount;
+        break;
+      case "Carbs":
+        intakeValues.carbs.current += amount;
+        break;
+      case "Fats":
+        intakeValues.fats.current += amount;
+        break;
+      default:
+        console.log("SOMETHING WENT VERY WRONG (Intake value update attempted with unknown type (not Calories, Protein, Carbs, or Fats?))");
+    }
+
+    this.setState({
+      intakeValues: intakeValues
+    })
+
+    this.closePopUp();
+  }
+
+  render() {
+    
+    let pushPopUp = (adding, type, current) => this.pushPopUp(adding, type, current);
+
+    return (
+      <>
+        <IntakePopUp
+          hasBeenOpened={this.state.popUpState.hasBeenOpened}
+          visible={this.state.popUpState.active}
+          currentIntakeValue={this.state.popUpState.currentIntakeValue} 
+          adding={this.state.popUpState.adding} type={this.state.popUpState.type} 
+          closePopUp={() => this.closePopUp()} 
+          updateIntake={(adding, type, amount) => this.updateIntake(adding, type, amount)} 
+        />
+        <div className="section large-padding">
+          <SectionHeader title="Intake" edit={() => this.edit()} editing={this.state.editing} />
+          <IntakeType 
+            type="Calories" 
+            current={this.state.intakeValues.calories.current} 
+            goal={this.state.intakeValues.calories.goal} 
+            pushPopUp={pushPopUp}
+          />
+          <IntakeType 
+            type="Protein" 
+            current={this.state.intakeValues.protein.current} 
+            goal={this.state.intakeValues.protein.goal} 
+            pushPopUp={pushPopUp}
+          />
+          <IntakeType 
+            type="Carbs" 
+            current={this.state.intakeValues.carbs.current} 
+            goal={this.state.intakeValues.carbs.goal} 
+            pushPopUp={pushPopUp}
+          />
+          <IntakeType 
+            type="Fats" 
+            current={this.state.intakeValues.fats.current} 
+            goal={this.state.intakeValues.fats.goal} 
+            pushPopUp={pushPopUp}
+          />
+          <SecondaryButton className="left-secondary-button" onClick={() => this.pushIntakeGraphsPage()}>View Progress <FaArrowRight /></SecondaryButton>
         </div>
-        <div
-        className={styles.progress} 
-        style={{background:`conic-gradient(rgb(${colorRGB}) ${progressDegrees}, rgba(${colorRGB}, 0.2) 0deg)`}}>
-          {progressIcon}
-          <div className={styles.progressInner} style={{backgroundColor:`${innerProgressColor}`}}/>
-        </div>
-      </div>
-    </div>
-  )
+      </>
+    )
+  }
 }
-
