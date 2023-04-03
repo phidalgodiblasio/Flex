@@ -80,7 +80,19 @@ public class User {
         weights.add(weight);
     }
 
+
+    public Weight getLastWeight(){
+        if (weights.size()==0){
+            return null;
+        }
+        return weights.get(weights.size()-1);
+    }
+
+
+   
+
     public List<Intake> getAllIntakes() {
+
         return intakes;
     }
 
