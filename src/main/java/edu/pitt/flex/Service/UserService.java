@@ -13,6 +13,7 @@ public interface UserService {
 
     public ResponseEntity<String> logoutUser(HttpServletRequest request);
 
+    // goal setting
     public ResponseEntity<String> setIntakeGoal(UserDTO userDTO, HttpServletRequest request);
 
     public ResponseEntity<String> setWeightGoal(UserDTO userDTO, HttpServletRequest request);

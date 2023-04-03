@@ -30,6 +30,7 @@ public class IntakeController {
         return intakeService.addIntake(intakeDTO, request);
     }
 
+    // for goals
     @PostMapping("/intake-goal")
     public ResponseEntity<String> setIntakeGoals(@RequestBody UserDTO userDTO, HttpServletRequest request) {
         return userService.setIntakeGoal(userDTO, request);

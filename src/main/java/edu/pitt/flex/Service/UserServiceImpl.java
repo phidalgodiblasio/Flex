@@ -111,7 +111,7 @@ public class UserServiceImpl implements UserService {
             body = "Update unsuccessful: username not found";
             status = HttpStatus.BAD_REQUEST;
         } else {
-            // update intake goals
+            // update intake goals all goals need to be set each time
             currUser.setCalGoal(userDTO.getCalGoal());
             currUser.setCarbGoal(userDTO.getCarbGoal());
             currUser.setFatGoal(userDTO.getFatGoal());
