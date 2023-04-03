@@ -27,11 +27,3 @@
 #workoutButtons nav button:not(:last-of-type) {
   border-bottom: 1px solid #ccc;
 }
-
-#workoutWrapper h4 {
-  margin-bottom: 12px;
-}
-
-#today {
-  margin-bottom: 12px;
-}

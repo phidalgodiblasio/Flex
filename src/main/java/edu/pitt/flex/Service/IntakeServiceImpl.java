@@ -1,6 +1,6 @@
 package edu.pitt.flex.Service;
 
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,67 +25,33 @@ public class IntakeServiceImpl implements IntakeService {
         String body;
         HttpStatus status;
 
-        //get today's date
-        Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH) + 1;
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        String stringDate = "" + year + month + day;
-        int date = Integer.parseInt(stringDate);
-
         User user = userRepository.findOneById((int)request.getSession().getAttribute("USER_ID"));
-        Intake lastIntake = user.getLastIntake();
 
-        //if there is already an intake looged today
-        if(lastIntake != null && lastIntake.getDate() == date){
-            //update today's intake values
-            lastIntake.setCalorieSum(intakeDTO.getCalorieSum());
-            lastIntake.setCarbSum(lastIntake.getCarbSum());
-            lastIntake.setProteinSum(intakeDTO.getProteinSum());
-            lastIntake.setFatSum(intakeDTO.getFatSum());
+        if(user == null){
+            body = "User not logged in";
+            status = HttpStatus.BAD_REQUEST;
         }
         else{
-            //create new intake and add it to the user's list
-            Intake intake = new Intake(intakeDTO.getId(), date, intakeDTO.getCalorieSum(), intakeDTO.getCarbSum(), intakeDTO.getProteinSum(), intakeDTO.getFatSum());
+            Intake intake = new Intake(intakeDTO.getId(), intakeDTO.getDate(), intakeDTO.getCalorieSum(), intakeDTO.getCarbSum(), intakeDTO.getProteinSum(), intakeDTO.getFatSum());
+
             user.addIntake(intake);
+
+            body = "intake added";
+            status = HttpStatus.OK;
         }
-            
-        body = "intake added/updated";
-        status = HttpStatus.OK;
-        
         return new ResponseEntity<>(body, status);
     }
     
     public List<Intake> getIntakes(HttpServletRequest request){
         User user = userRepository.findOneById((int)request.getSession().getAttribute("USER_ID"));
-        return user.getAllIntakes();
-    }
 
-    @Override
-    public Intake getIntake(HttpServletRequest request) {
-        User user = userRepository.findOneById((int)request.getSession().getAttribute("USER_ID"));
-
-
-        //get today's date
-        Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH) + 1;
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        String stringDate = "" + year + month + day;
-        int date = Integer.parseInt(stringDate);
-
-        Intake lastIntake = user.getLastIntake();
-
-        //if there is already an intake looged today
-        if(lastIntake != null && lastIntake.getDate() == date){
-            //IntakeDTO intakeDTO = new IntakeDTO(lastIntake.getId(), lastIntake.getCalorieSum(), lastIntake.getCarbSum(), lastIntake.getProteinSum(), lastIntake.getFatSum());
-            //return intakeDTO;
-            return lastIntake;
+        if(user != null){
+           return user.getAllIntakes();
         }
         else{
-            return null;
+            List<Intake> intakes = new ArrayList<Intake>();
+            return intakes;
         }
-
     }
     
 }

@@ -9,7 +9,7 @@ export default function SectionHeader({title, edit, editing}) {
     <header className="section-header">
       <h2>{title}</h2>
       <div>
-        <button className="transparent-button" onClick={() => edit()}>
+        <button onClick={() => edit()}>
           {buttonIcon}
         </button>
       </div>

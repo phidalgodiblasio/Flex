@@ -37,11 +37,7 @@
     margin: 0 !important;
   }
 
-  /* 
-   * Puts the workout section on the right column and lets it expand as far as necessary
-   * #3 because intake popup and intake are above it in the DOM
-   */
-  #innerBody > div:nth-of-type(3) {
+  #innerBody > div:nth-of-type(2) {
     grid-row: 1 / span 3; /* Honestly this is still magic to me I'm not totally sure why it works */
     grid-column: 2;
   }

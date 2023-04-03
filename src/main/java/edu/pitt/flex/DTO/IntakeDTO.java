@@ -3,22 +3,11 @@ package edu.pitt.flex.DTO;
 public class IntakeDTO {
     
     private int id;
+    private int date;
     private int calorieSum;
     private int carbSum;
     private int proteinSum;
     private int fatSum;
-
-    public IntakeDTO() {
-        //empty constructor
-    }
-
-    public IntakeDTO(int id, int calorieSum, int carbSum, int proteinSum, int fatSum) {
-        this.id = id;
-        this.calorieSum = calorieSum;
-        this.carbSum = carbSum;
-        this.proteinSum = proteinSum;
-        this.fatSum = fatSum;
-    }
 
     public int getId() {
         return this.id;
@@ -26,6 +15,14 @@ public class IntakeDTO {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getDate() {
+        return this.date;
+    }
+
+    public void setDate(int date) {
+        this.date = date;
     }
 
     public int getCalorieSum() {
