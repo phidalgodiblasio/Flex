@@ -63,11 +63,22 @@ public class User{
     }
 
 
+    //Returns list of all intakes
     public List<Intake> getAllIntakes()
     {
         return intakes;
     }
 
+    //returns the intake added most recently
+    public Intake getLastIntake()
+    {
+        if(intakes.size() == 0)
+            return null;
+        else
+            return intakes.get(intakes.size() - 1);
+    }
+
+    //adds intake to the list
     public void addIntake(Intake intake)
     {
         intakes.add(intake);

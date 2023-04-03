@@ -22,13 +22,22 @@ public class IntakeController {
     @Autowired
     private IntakeService intakeService;
 
+    //API call to either add or update today's intake values
     @PostMapping("/intake")
     public ResponseEntity<String> addIntake(@RequestBody IntakeDTO intakeDTO, HttpServletRequest request){
         return intakeService.addIntake(intakeDTO, request);
     }
 
-    @GetMapping("/intake")
+    //API call to retrieve a list of all intakes for a user
+    @GetMapping("/intake/all")
     public List<Intake> getIntakes(HttpServletRequest request){
         return intakeService.getIntakes(request);
     }
+
+    //API call to retrieve today's intake values
+    @GetMapping("/intake/one")
+    public Intake getIntake(HttpServletRequest request){
+        return intakeService.getIntake(request);
+    }
+    
 }
