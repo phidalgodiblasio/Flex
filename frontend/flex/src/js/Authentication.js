@@ -93,13 +93,12 @@ export default class Authentication extends Component {
     .then(response => {
         if(response.status == 200) {
           // response.text() to get text of response; response.json() if it's in json format
-          this.props.authenticated(this.state.username);
+          this.props.userLogin(this.state.username);
         } else if(response.status == 400) {
           this.showErrorMessage("Incorrect username or password.")
         } else {
           this.showErrorMessage("Something went wrong.")
         }
-        // TODO: Catch other response errors
       }
     )
     .catch(error => {
@@ -129,7 +128,7 @@ export default class Authentication extends Component {
     .then(response => {
         if(response.status == 200) {
           // response.text() to get text of response; response.json() if it's in json format
-          this.props.authenticated(this.state.username);
+          this.props.userLogin(this.state.username);
         } else if(response.status == 400) {
           this.showErrorMessage("An account already exists with this username.")
         } else {
@@ -224,7 +223,7 @@ export default class Authentication extends Component {
     let errorMessageRender;
     if(this.state.showErrorMessage) {
       errorMessageRender = (
-        <div id={styles.errorBox}>
+        <div className="error" id={styles.errorBox}>
           <p>{this.state.errorMessage}</p>
           <button type="button" onClick={() => this.hideErrorMessage()}>
             <FaTimes></FaTimes>

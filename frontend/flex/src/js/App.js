@@ -7,21 +7,27 @@ export default class App extends Component {
   constructor(props) {
     super(props)
     
-    // TODO: reset values after testing homepage
     this.state = {
       loggedIn: true, 
-      username: "Pierce"
+      username: ""
     }
   }
 
-  authenticated(username) {
+  userLogin(username) {
     this.setState({
       loggedIn: true,
-      username: username,
+      username: username
+    })
+  }
+
+  userLogout() {
+    this.setState({
+      loggedIn: false,
+      username: ""
     })
   }
 
   render() {
-    return this.state.loggedIn ? <Homepage username={this.state.username}></Homepage> : <Authentication authenticated={(username) => this.authenticated(username)}></Authentication>;
+    return this.state.loggedIn ? <Homepage userLogout={() => this.userLogout()} username={this.state.username}></Homepage> : <Authentication userLogin={(username) => this.userLogin(username)}></Authentication>;
   }
 }
