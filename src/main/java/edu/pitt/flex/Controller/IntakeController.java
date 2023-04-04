@@ -30,13 +30,20 @@ public class IntakeController {
         return intakeService.addIntake(intakeDTO, request);
     }
 
-    @GetMapping("/intake")
-    public List<Intake> getIntakes(HttpServletRequest request) {
-        return intakeService.getIntakes(request);
-    }
-
     @PostMapping("/intake-goal")
     public ResponseEntity<String> setIntakeGoals(@RequestBody UserDTO userDTO, HttpServletRequest request) {
         return userService.setIntakeGoal(userDTO, request);
     }
+
+    @GetMapping("/intake-all")
+    public List<Intake> getIntakes(HttpServletRequest request) {
+        return intakeService.getIntakes(request);
+    }
+
+    @GetMapping("intake-one")
+    public Intake getIntake(HttpServletRequest request){
+        return intakeService.getIntake(request);
+    }
+
+    
 }
