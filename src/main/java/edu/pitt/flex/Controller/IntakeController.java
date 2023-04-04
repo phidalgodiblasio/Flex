@@ -14,21 +14,29 @@ import edu.pitt.flex.DTO.IntakeDTO;
 import edu.pitt.flex.Entity.Intake;
 import edu.pitt.flex.Service.IntakeService;
 import jakarta.servlet.http.HttpServletRequest;
-
+import edu.pitt.flex.DTO.UserDTO;
+import edu.pitt.flex.Service.UserService;
 
 @RestController
 @CrossOrigin
 public class IntakeController {
     @Autowired
     private IntakeService intakeService;
+    @Autowired
+    private UserService userService;
 
     @PostMapping("/intake")
-    public ResponseEntity<String> addIntake(@RequestBody IntakeDTO intakeDTO, HttpServletRequest request){
+    public ResponseEntity<String> addIntake(@RequestBody IntakeDTO intakeDTO, HttpServletRequest request) {
         return intakeService.addIntake(intakeDTO, request);
     }
 
     @GetMapping("/intake")
-    public List<Intake> getIntakes(HttpServletRequest request){
+    public List<Intake> getIntakes(HttpServletRequest request) {
         return intakeService.getIntakes(request);
+    }
+
+    @PostMapping("/intake-goal")
+    public ResponseEntity<String> setIntakeGoals(@RequestBody UserDTO userDTO, HttpServletRequest request) {
+        return userService.setIntakeGoal(userDTO, request);
     }
 }
