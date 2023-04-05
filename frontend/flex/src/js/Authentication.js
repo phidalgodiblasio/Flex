@@ -84,8 +84,9 @@ export default class Authentication extends Component {
       'http://localhost:8080/login',
       { 
         method: 'POST',
+        credentials: 'include',
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(user)
       }
@@ -119,6 +120,7 @@ export default class Authentication extends Component {
       'http://localhost:8080/save',
       { 
         method: 'POST',
+        credentials: 'include',
         headers: {
           "Content-Type": "application/json"
         },

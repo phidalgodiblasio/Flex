@@ -5,11 +5,39 @@ import IntakePopUp from './IntakePopUp';
 import IntakeType from './IntakeType';
 import SecondaryButton from './SecondaryButton';
 import SectionHeader from './SectionHeader';
+import Cookies from 'js-cookie';
 
 export default class IntakeSection extends Component {
   componentDidMount() {
     // TODO: fetch user's intake goals
-    // TODO: fetch user's intake for today
+    // fetch user's intake for today
+    fetch(
+      'http://localhost:8080/flex/intake-one',
+      {
+        method: 'GET',
+        credentials: 'include'
+      }
+    ).then(response => {
+      if(response.status == 200) {
+        console.log("Fetch user's daily intake SUCCESS")
+        response.json().then(intakes => {
+          let intakeValues = this.state.intakeValues;
+          intakeValues.calories.current = intakes.calorieSum;
+          intakeValues.protein.current = intakes.proteinSum;
+          intakeValues.carbs.current = intakes.carbSum;
+          intakeValues.fats.current = intakes.fatSum;
+          this.setState({
+            intakeValues: intakeValues
+          })
+        });
+      } else {
+        response.text().then(body => {
+          this.props.showErrorMessage(body);
+        })
+      }
+    }).catch(error => {
+      this.props.showErrorMessage(error.toString());
+    })
   }
 
   constructor(props) {
@@ -19,20 +47,20 @@ export default class IntakeSection extends Component {
     // TODO: Split intakeValues into intakeDailyValues and intakeGoals since that's how they'll be sent and received from the DB
     let intakeValues = {
       calories: {
-        current: 1600,
-        goal: 2200
+        current: 0,
+        goal: 0
       },
       protein: {
-        current: 45,
-        goal: 50
+        current: 0,
+        goal: 0
       },
       carbs: {
-        current: 280,
-        goal: 275
+        current: 0,
+        goal: 0
       },
       fats: {
-        current: 75,
-        goal: 60
+        current: 0,
+        goal: 0
       }
     }
   
@@ -107,7 +135,39 @@ export default class IntakeSection extends Component {
         console.log("SOMETHING WENT VERY WRONG (Intake value update attempted with unknown type (not Calories, Protein, Carbs, or Fats?))");
     }
 
-    // TODO: fetch() to set today's intake values instead of just setting the state
+    let intakesToBackend = {
+      calorieSum: intakeValues.calories.current,
+      proteinSum: intakeValues.protein.current,
+      carbSum: intakeValues.carbs.current,
+      fatSum: intakeValues.fats.current,
+    }
+
+    // Not working for some reason :(
+
+    // fetch(
+    //   'http://localhost:8080/flex/intake',
+    //   {
+    //     method: 'POST',
+    //     credentials: 'include',
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify(intakesToBackend)
+    //   }
+    // ).then(response => {
+    //   if(response.status == 200) {
+    //     response.text().then(x => console.log(x));
+    //     this.setState({
+    //       intakeValues: intakeValues
+    //     })
+    //   } else {
+    //     response.text().then(body => {
+    //       this.props.showErrorMessage(body);
+    //     })
+    //   }
+    // }).catch(error => {
+    //   this.props.showErrorMessage(error.toString());
+    // })
 
     this.setState({
       intakeValues: intakeValues

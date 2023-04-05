@@ -46,12 +46,14 @@ export default function IntakeType(
   }
 
   // Warn the user if the current intake is >= 1.25 times their goal value
-  if(current >= 1.25 * goal) {
+  // Ignore when goal == 0
+  if(current >= 1.25 * goal && goal != 0) {
     progressIcon = <FaExclamation />
   }
 
   // Calculate the arc of the progress circle
-  let progressDegrees = `${current / goal * 360}deg`;
+  // Make sure to catch goal == 0 to avoid divide by 0 errors
+  let progressDegrees = goal > 0 ? `${current / goal * 360}deg` : "360deg";
 
   return (
     <div className={styles.outerWrap}>

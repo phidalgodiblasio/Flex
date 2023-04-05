@@ -18,7 +18,7 @@ import edu.pitt.flex.Service.WeightService;
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 public class WeightController {
     @Autowired
     private WeightService weightService;

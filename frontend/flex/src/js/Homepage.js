@@ -5,8 +5,9 @@ import IntakeSection from './IntakeSection';
 import WorkoutSection from './WorkoutSection';
 import WeightSection from './WeightSection';
 import { FaTimes } from 'react-icons/fa';
+import { withRouter } from './withRouter';
 
-export default class Homepage extends Component {
+class Homepage extends Component {
 
   constructor(props) {
     super(props)
@@ -21,19 +22,27 @@ export default class Homepage extends Component {
     fetch(
       'http://localhost:8080/logout',
       {
-        method: 'POST'
+        method: 'POST',
+        credentials: 'include'
       }
     ).then(response => {
       if(response.status == 200) {
         this.props.userLogout();
+        this.props.navigate('/auth');
       } else {
         response.text().then(body => {
-          this.setState({
-            showErrorMessage: true,
-            errorMessage: body
-          })
+          this.showErrorMessage(body);
         })
       }
+    }).catch(error => {
+      this.showErrorMessage("Couldn't establish a connection to the database.")
+    })
+  }
+
+  showErrorMessage(message) {
+    this.setState({
+      showErrorMessage: true,
+      errorMessage: message
     })
   }
 
@@ -68,11 +77,13 @@ export default class Homepage extends Component {
         <h1 className={styles.h1}>Hi, {this.props.username}!</h1>
 
         <div id={styles.innerBody}>
-          <IntakeSection />
-          <WorkoutSection />
-          <WeightSection />
+          <IntakeSection showErrorMessage={msg => this.showErrorMessage(msg)} />
+          <WorkoutSection showErrorMessage={msg => this.showErrorMessage(msg)} />
+          <WeightSection showErrorMessage={msg => this.showErrorMessage(msg)} />
         </div>
       </div>
     )
   }
 }
+
+export default withRouter(Homepage);
