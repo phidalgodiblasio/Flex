@@ -38,8 +38,8 @@ public class IntakeController {
     }
 
     @GetMapping("/intake-goal")
-    public String getIntakeGoals(@RequestBody UserDTO userDTO, HttpServletRequest request) {
-        return userService.getIntakeGoal(userDTO, request);
+    public String getIntakeGoals(HttpServletRequest request) {
+        return userService.getIntakeGoal(request);
     }
 
     @GetMapping("/intake-all")

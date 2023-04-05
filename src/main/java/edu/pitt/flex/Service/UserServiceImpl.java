@@ -1,5 +1,7 @@
 package edu.pitt.flex.Service;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -157,7 +159,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String getIntakeGoal(UserDTO userDTO, HttpServletRequest request) {
+    public String getIntakeGoal(HttpServletRequest request) {
         String body;
 
         // TODO: look into sessions, first case is returning null, so this only works
@@ -166,7 +168,9 @@ public class UserServiceImpl implements UserService {
 
         // body = '{"calGoal":"'+currUser.getCalGoal()+'",}';
 
-        return "";
+        body = "{\"calGoal\":\"" + currUser.getCalGoal() + "\",\"proteinGoal\":\"" + currUser.getProteinGoal()
+                + "\",\"carbGoal\":\"" + currUser.getCarbGoal() + "\",\"fatGoal\":\"" + currUser.getFatGoal() + "\"}";
+        return body;
 
         // // Search to see if username exists
         // if (userRepository.findByUsername(currUser.getUsername()) == null) {

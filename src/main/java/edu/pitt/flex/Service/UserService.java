@@ -17,7 +17,7 @@ public interface UserService {
 
     public ResponseEntity<String> setWeightGoal(UserDTO userDTO, HttpServletRequest request);
 
-    public String getIntakeGoal(UserDTO userDTO, HttpServletRequest request);
+    public String getIntakeGoal(HttpServletRequest request);
 
     public int getWeightGoal(UserDTO userDTO, HttpServletRequest request);
 }
