@@ -155,4 +155,61 @@ public class UserServiceImpl implements UserService {
         // Return response
         return new ResponseEntity<>(body, status);
     }
+
+    @Override
+    public String getIntakeGoal(UserDTO userDTO, HttpServletRequest request) {
+        String body;
+
+        // TODO: look into sessions, first case is returning null, so this only works
+        // when userDTO has username
+        User currUser = userRepository.findOneById((int) request.getSession().getAttribute("USER_ID"));
+
+        // body = '{"calGoal":"'+currUser.getCalGoal()+'",}';
+
+        return "";
+
+        // // Search to see if username exists
+        // if (userRepository.findByUsername(currUser.getUsername()) == null) {
+        // // Update response to show failure
+        // body = "Update unsuccessful: username not found";
+        // status = HttpStatus.BAD_REQUEST;
+        // } else {
+        // // update weight goals
+        // currUser.setWeightGoal(userDTO.getWeightGoal());
+        // userRepository.save(currUser);
+
+        // // Update response to show success
+        // body = "Weight goal set";
+        // status = HttpStatus.OK;
+        // }
+        // return "";
+    }
+
+    @Override
+    public int getWeightGoal(UserDTO userDTO, HttpServletRequest request) {
+        String body;
+        HttpStatus status;
+
+        // TODO: look into sessions, first case is returning null, so this only works
+        // when userDTO has username
+        User currUser = userRepository.findOneById((int) request.getSession().getAttribute("USER_ID"));
+        return currUser.getWeightGoal();
+        // Search to see if username exists
+        // if (userRepository.findByUsername(currUser.getUsername()) == null) {
+        // // Update response to show failure
+        // body = "Update unsuccessful: username not found";
+        // status = HttpStatus.BAD_REQUEST;
+        // } else {
+        // // update weight goals
+        // currUser.setWeightGoal(userDTO.getWeightGoal());
+        // userRepository.save(currUser);
+
+        // // Update response to show success
+        // body = "Weight goal set";
+        // status = HttpStatus.OK;
+        // }
+
+        // // Return response
+        // return 0;
+    }
 }

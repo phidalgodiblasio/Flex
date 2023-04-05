@@ -37,15 +37,18 @@ public class IntakeController {
         return userService.setIntakeGoal(userDTO, request);
     }
 
+    @GetMapping("/intake-goal")
+    public String getIntakeGoals(@RequestBody UserDTO userDTO, HttpServletRequest request) {
+        return userService.getIntakeGoal(userDTO, request);
+    }
+
     @GetMapping("/intake-all")
     public List<Intake> getIntakes(HttpServletRequest request) {
         return intakeService.getIntakes(request);
     }
 
     @GetMapping("intake-one")
-    public Intake getIntake(HttpServletRequest request){
+    public Intake getIntake(HttpServletRequest request) {
         return intakeService.getIntake(request);
     }
-
-    
 }
