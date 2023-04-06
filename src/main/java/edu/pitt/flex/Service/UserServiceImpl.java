@@ -1,7 +1,5 @@
 package edu.pitt.flex.Service;
 
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -103,7 +101,6 @@ public class UserServiceImpl implements UserService {
         String body;
         HttpStatus status;
 
-        // TODO: look into sessions, first case is returning null, so this only works
         // when userDTO has username
         User currUser = userRepository.findOneById((int) request.getSession().getAttribute("USER_ID"));
 
@@ -135,7 +132,6 @@ public class UserServiceImpl implements UserService {
         String body;
         HttpStatus status;
 
-        // TODO: look into sessions, first case is returning null, so this only works
         // when userDTO has username
         User currUser = userRepository.findOneById((int) request.getSession().getAttribute("USER_ID"));
 
@@ -162,7 +158,6 @@ public class UserServiceImpl implements UserService {
     public String getIntakeGoal(HttpServletRequest request) {
         String body;
 
-        // TODO: look into sessions, first case is returning null, so this only works
         // when userDTO has username
         User currUser = userRepository.findOneById((int) request.getSession().getAttribute("USER_ID"));
 
