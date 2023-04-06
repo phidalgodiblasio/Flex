@@ -19,7 +19,10 @@ public class Workout {
     @Column
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    
+
+    @Column(nullable = false)
+    private String name;
+
     @Column(nullable = false)
     private int date;
 
@@ -31,8 +34,9 @@ public class Workout {
         // Empty constructor
     }
 
-    public Workout(int id, int date, List<Exercise> exercises) {
+    public Workout(int id, String name, int date, List<Exercise> exercises) {
         this.id = id;
+        this.name = name;
         this.date = date;
         this.exercises = exercises;
     }
@@ -45,6 +49,14 @@ public class Workout {
         this.id = id;
     }
 
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public int getDate() {
         return date;
     }
@@ -55,5 +67,9 @@ public class Workout {
 
     public List<Exercise> getExercises() {
         return exercises;
+    }
+
+    public void setExercises(List<Exercise> exercises) {
+        this.exercises = exercises;
     }
 }
