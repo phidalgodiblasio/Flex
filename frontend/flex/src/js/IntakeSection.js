@@ -19,7 +19,6 @@ export default class IntakeSection extends Component {
       }
     ).then(response => {
       if(response.status == 200) {
-        console.log("Fetch user's daily intake SUCCESS")
         response.json().then(intakes => {
           let intakeValues = this.state.intakeValues;
           intakeValues.calories.current = intakes.calorieSum;
@@ -144,30 +143,30 @@ export default class IntakeSection extends Component {
 
     // Not working for some reason :(
 
-    // fetch(
-    //   'http://localhost:8080/flex/intake',
-    //   {
-    //     method: 'POST',
-    //     credentials: 'include',
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify(intakesToBackend)
-    //   }
-    // ).then(response => {
-    //   if(response.status == 200) {
-    //     response.text().then(x => console.log(x));
-    //     this.setState({
-    //       intakeValues: intakeValues
-    //     })
-    //   } else {
-    //     response.text().then(body => {
-    //       this.props.showErrorMessage(body);
-    //     })
-    //   }
-    // }).catch(error => {
-    //   this.props.showErrorMessage(error.toString());
-    // })
+    fetch(
+      'http://localhost:8080/flex/intake',
+      {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(intakesToBackend)
+      }
+    ).then(response => {
+      if(response.status == 200) {
+        response.text().then(x => console.log(x));
+        this.setState({
+          intakeValues: intakeValues
+        })
+      } else {
+        response.text().then(body => {
+          this.props.showErrorMessage(body);
+        })
+      }
+    }).catch(error => {
+      this.props.showErrorMessage(error.toString());
+    })
 
     this.setState({
       intakeValues: intakeValues
