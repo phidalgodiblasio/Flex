@@ -19,8 +19,6 @@ export default class WorkoutSection extends Component {
           this.setState({
             todaysWorkouts: workouts
           });
-
-          console.log(workouts);
         })
       } else {
         response.text().then(body => {
@@ -32,43 +30,12 @@ export default class WorkoutSection extends Component {
 
   constructor(props) {
     super(props)
-
-    // TODO: get todaysWorkouts from DB instead (in componentDidMount())
-    let todaysWorkouts = [
-      {
-        name: "Chest & Back",
-        date: 40623,
-        id: 0,
-        exercises: [
-          {
-            id: 0,
-            name: "Bench Press",
-            sets: [
-              { weight: 145, reps: 10 },
-              { weight: 145, reps: 10 },
-              { weight: 150, reps: 10 },
-              { weight: 150, reps: 8 }
-            ]
-          },
-          {
-            id: 1,
-            name: "Fly Machine",
-            sets: [
-              { weight: 115, reps: 10 },
-              { weight: 115, reps: 10 },
-              { weight: 115, reps: 10 },
-              { weight: 115, reps: 8 }
-            ]
-          }
-        ]
-      },
-    ]
   
     this.state = {
       editing: false,
       workoutMenuOpen: false,
       workoutMenuHasBeenOpened: false,
-      todaysWorkouts: todaysWorkouts
+      todaysWorkouts: []
     }
   }
 
@@ -122,7 +89,9 @@ export default class WorkoutSection extends Component {
           </div>
           <SecondaryButton onClick={() => this.pushTemplatesPage(true)}>Edit Templates</SecondaryButton>
         </div>
-        <h4 id={styles.today}>Today</h4>
+        <h4 id={styles.today}>
+          {this.state.todaysWorkouts.length == 0 ? "No workouts logged today" : "Today"}
+        </h4>
         {todaysWorkoutsRender}
         <SecondaryButton className="left-secondary-button" onClick={() => this.pushExerciseLogPage()}>View Exercise Log <FaArrowRight /></SecondaryButton>
       </div>
