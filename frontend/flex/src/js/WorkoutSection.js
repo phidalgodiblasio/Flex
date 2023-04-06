@@ -5,9 +5,29 @@ import SecondaryButton from './SecondaryButton'
 import styles from '../style/WorkoutSection.module.css'
 import Workout from './Workout'
 
-export default class WorkoutSection extends Component {
+export default class WorkoutSection extends Component {  
   componentDidMount() {
-    // TODO: fetch user's workouts from today
+    // // Get today's workouts
+    fetch('http://localhost:8080/flex/workout-today', 
+      {
+        method: 'GET',
+        credentials: 'include'
+      }
+    ).then(response => {
+      if (response.status == 200) {
+        response.json().then(workouts => {
+          this.setState({
+            todaysWorkouts: workouts
+          });
+
+          console.log(workouts);
+        })
+      } else {
+        response.text().then(body => {
+          this.props.showErrorMessage(body);
+        });
+      }
+    })
   }
 
   constructor(props) {
