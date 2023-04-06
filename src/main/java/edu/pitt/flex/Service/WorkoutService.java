@@ -10,5 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 public interface WorkoutService {
     public ResponseEntity<String> addWorkout(WorkoutDTO workoutDTO, HttpServletRequest request);
-    public ResponseEntity<List<Workout>> getWorkouts(HttpServletRequest request);
+    public ResponseEntity<String> deleteWorkout(int id, HttpServletRequest request);
+    public ResponseEntity<List<Workout>> getAllWorkouts(HttpServletRequest request);
+    public ResponseEntity<List<Workout>> getTodaysWorkouts(HttpServletRequest request);
 }

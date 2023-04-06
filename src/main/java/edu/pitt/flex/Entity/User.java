@@ -99,6 +99,20 @@ public class User {
         return workouts;
     }
 
+    public List<Workout> getWorkoutsOnDate(int workoutDate) {
+        // Create empty workout array list to return
+        List<Workout> output = new ArrayList<>();
+
+        // Add workouts on date
+        for (Workout workout : workouts) {
+            if (workout.getDate() == workoutDate) {
+                output.add(workout);
+            } 
+        }
+
+        return output;
+    }
+
     public int getId() {
         return id;
     }

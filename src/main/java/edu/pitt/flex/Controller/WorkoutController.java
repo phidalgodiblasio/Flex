@@ -28,8 +28,18 @@ public class WorkoutController {
         return workoutService.addWorkout(workoutDTO, request);
     }
 
-    @GetMapping("/workout")
-    public ResponseEntity<List<Workout>> getWorkouts(HttpServletRequest request) {
-        return workoutService.getWorkouts(request);
+    @PostMapping("/workout-delete")
+    public ResponseEntity<String> deleteWorkout(@RequestBody int id, HttpServletRequest request) {
+        return workoutService.deleteWorkout(id, request); // Need to parse to int since JSON sends over String
+    }
+
+    @GetMapping("/workout-all")
+    public ResponseEntity<List<Workout>> getAllWorkouts(HttpServletRequest request) {
+        return workoutService.getAllWorkouts(request);
+    }
+
+    @GetMapping("/workout-today")
+    public ResponseEntity<List<Workout>> getTodaysWorkouts(HttpServletRequest request) {
+        return workoutService.getTodaysWorkouts(request);
     }
 }
