@@ -64,18 +64,10 @@ public class WorkoutServiceImpl implements WorkoutService {
 
     @Override
     public ResponseEntity<List<Workout>> getTodaysWorkouts(HttpServletRequest request) {
-        // Get user
+        // Get user and and return today's workouts
         User user = userRepository.findOneById((int) request.getSession().getAttribute("USER_ID"));
-
-        // Get today's date
         int date = getTodaysDate();
-
-        // Get workouts, if no workout logged for today, return empty list
-        // Else, return workout
-        List<Workout> workouts = user.getWorkoutsOnDate(date);
-        return workouts.isEmpty()
-                ? new ResponseEntity<>(workouts, HttpStatus.BAD_REQUEST)
-                : new ResponseEntity<>(workouts, HttpStatus.OK);
+        return new ResponseEntity<>(user.getWorkoutsOnDate(date), HttpStatus.OK);
     }
 
     private int getTodaysDate() {
