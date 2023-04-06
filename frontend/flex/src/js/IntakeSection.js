@@ -37,6 +37,38 @@ export default class IntakeSection extends Component {
     }).catch(error => {
       this.props.showErrorMessage(error.toString());
     })
+    //get goals
+    fetch(
+      'http://localhost:8080/flex/intake-goal',
+      {
+        method: 'GET',
+        credentials: 'include'
+      }
+    ).then(response => {
+      if(response.status == 200) {
+        response.json().then(intakes => {
+          let intakeValues = this.state.intakeValues;
+          intakeValues.calories.goal = intakes.calGoal;
+          //decided to use a tilde if there is no current set intake goal
+          if(intakes.calGoal == 0) intakeValues.calories.goal = '~';
+          intakeValues.protein.goal = intakes.proteinGoal;
+          if(intakes.proteinGoal == 0) intakeValues.protein.goal = '~';
+          intakeValues.carbs.goal = intakes.carbGoal;
+          if(intakes.carbGoal == 0) intakeValues.carbs.goal = '~';
+          intakeValues.fats.goal = intakes.fatGoal;
+          if(intakes.fatGoal == 0) intakeValues.fats.goal = '~';
+          this.setState({
+            intakeValues: intakeValues
+          })
+        });
+      } else {
+        response.text().then(body => {
+          this.props.showErrorMessage(body);
+        })
+      }
+    }).catch(error => {
+      this.props.showErrorMessage(error.toString());
+    })
   }
 
   constructor(props) {
