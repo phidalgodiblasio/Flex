@@ -16,25 +16,32 @@ export default class WorkoutSection extends Component {
     // TODO: get todaysWorkouts from DB instead (in componentDidMount())
     let todaysWorkouts = [
       {
+        name: "Chest & Back",
+        date: 40623,
         id: 0,
-        name: "Bench Press",
-        sets: [
-          { weight: 145, reps: 10 },
-          { weight: 145, reps: 10 },
-          { weight: 150, reps: 10 },
-          { weight: 150, reps: 8 }
+        exercises: [
+          {
+            id: 0,
+            name: "Bench Press",
+            sets: [
+              { weight: 145, reps: 10 },
+              { weight: 145, reps: 10 },
+              { weight: 150, reps: 10 },
+              { weight: 150, reps: 8 }
+            ]
+          },
+          {
+            id: 1,
+            name: "Fly Machine",
+            sets: [
+              { weight: 115, reps: 10 },
+              { weight: 115, reps: 10 },
+              { weight: 115, reps: 10 },
+              { weight: 115, reps: 8 }
+            ]
+          }
         ]
       },
-      {
-        id: 1,
-        name: "Fly Machine",
-        sets: [
-          { weight: 115, reps: 10 },
-          { weight: 115, reps: 10 },
-          { weight: 115, reps: 10 },
-          { weight: 115, reps: 8 }
-        ]
-      }
     ]
   
     this.state = {

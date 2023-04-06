@@ -2,83 +2,20 @@
   background-color: var(--secondary-light);
   border-radius: var(--rounded-border);
   margin-bottom: 12px;
-  /* overflow: hidden; */
 }
 
-.workoutWrapper[aria-expanded="true"] .workoutButtonWrapper {
+.workoutWrapper[aria-expanded="true"] .exerciseButtonWrapper {
   background-color: rgba(var(--secondary-rgb), 0.1);
 }
 
-.workoutButtonWrapper {
-  background: none;
-  display: block;
-  width: 100%;
-  border-radius: var(--rounded-border);
-}
-
-.workoutButtonWrapper:hover {
-  background-color: rgba(var(--secondary-rgb), 0.2) !important;
-}
-
-.workoutButtonWrapper header {
+.workoutWrapper > header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 12px;
 }
 
-.workoutButtonWrapper header span {
-  font-weight: bold;
-  color: rgba(var(--secondary-rgb), 0.7);
+.workoutWrapper > header > span {
+  font-weight: 700;
+  color: rgba(var(--secondary-rgb), 0.5);
 }
-
-.workoutButtonWrapper header svg {
-  fill: rgba(var(--secondary-rgb), 0.7);
-  margin-left: 4px;
-}
-
-.workoutButtonWrapper h3 {
-  margin: 0;
-}
-
-.workoutWrapper div {
-  position: relative;
-}
-
-.dataTable {
-  width: 100%;
-  text-align: center;
-  line-height: 1.4em;
-  padding-bottom: 12px;
-}
-
-.dataTableWrapper {
-  z-index: 0;
-}
-
-.workoutWrapper[aria-expanded="true"] .dataTableWrapper {
-  display: block;
-  /* animation: showTable var(--bezier-animation) forwards; */
-}
-
-.workoutWrapper[aria-expanded="false"] .dataTableWrapper {
-  display: none;
-  /* animation: hideTable var(--bezier-animation) forwards; */
-}
-
-/* @keyframes showTable {
-  from {
-    margin-top: -100%;
-    visibility: visible;
-  } to {
-    margin-top: 0;
-  }
-}
-
-@keyframes hideTable {
-  from {
-    margin-top: 0;
-  } to {
-    margin-top: -100%;
-    visibility: hidden;
-  }
-} */

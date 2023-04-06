@@ -1,0 +1,87 @@
+.exerciseWrapper {
+  background-color: rgba(var(--secondary-rgb), 0.1);
+  border-radius: var(--rounded-border);
+}
+
+.exerciseWrapper:not(:last-of-type) {
+  margin-bottom: 12px;
+}
+
+.exerciseWrapper[aria-expanded="true"] .exerciseButtonWrapper {
+  background-color: rgba(var(--secondary-rgb), 0.1);
+}
+
+.exerciseButtonWrapper {
+  background: none;
+  display: block;
+  width: 100%;
+  border-radius: var(--rounded-border);
+}
+
+.exerciseButtonWrapper:hover {
+  background-color: rgba(var(--secondary-rgb), 0.2) !important;
+}
+
+.exerciseButtonWrapper header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.exerciseButtonWrapper header span {
+  font-weight: bold;
+  color: rgba(var(--secondary-rgb), 0.7);
+}
+
+.exerciseButtonWrapper header svg {
+  fill: rgba(var(--secondary-rgb), 0.7);
+  margin-left: 4px;
+}
+
+.exerciseButtonWrapper h3 {
+  font-size: 14pt;
+  margin: 0;
+}
+
+.exerciseWrapper div {
+  position: relative;
+}
+
+.dataTable {
+  width: 100%;
+  text-align: center;
+  line-height: 1.4em;
+  padding-bottom: 12px;
+}
+
+.dataTableWrapper {
+  z-index: 0;
+}
+
+.exerciseWrapper[aria-expanded="true"] .dataTableWrapper {
+  display: block;
+  /* animation: showTable var(--bezier-animation) forwards; */
+}
+
+.exerciseWrapper[aria-expanded="false"] .dataTableWrapper {
+  display: none;
+  /* animation: hideTable var(--bezier-animation) forwards; */
+}
+
+/* @keyframes showTable {
+  from {
+    margin-top: -100%;
+    visibility: visible;
+  } to {
+    margin-top: 0;
+  }
+}
+
+@keyframes hideTable {
+  from {
+    margin-top: 0;
+  } to {
+    margin-top: -100%;
+    visibility: hidden;
+  }
+} */
