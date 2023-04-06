@@ -17,7 +17,7 @@ public class Intake {
     private int id;
     
     @Column
-    private int date;
+    private String date;
 
     @Column
     private int calorieSum;
@@ -36,7 +36,7 @@ public class Intake {
     public Intake() {
     }
 
-    public Intake(int id, int date, int calorieSum, int carbSum, int proteinSum, int fatSum) {
+    public Intake(int id, String date, int calorieSum, int carbSum, int proteinSum, int fatSum) {
         this.id = id;
         this.date = date;
         this.calorieSum = calorieSum;
@@ -53,11 +53,11 @@ public class Intake {
         this.id = id;
     }
 
-    public int getDate() {
+    public String getDate() {
         return this.date;
     }
 
-    public void setDate(int date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

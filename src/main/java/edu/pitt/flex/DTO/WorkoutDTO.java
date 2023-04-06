@@ -5,14 +5,14 @@ import java.util.List;
 public class WorkoutDTO {
     private int id;
     private String name;
-    private int date;
+    private String date;
     private List<ExerciseDTO> exercises;
 
     public WorkoutDTO() {
         // Empty constructor
     }
 
-    public WorkoutDTO(int id, String name, int date, List<ExerciseDTO> exercises) {
+    public WorkoutDTO(int id, String name, String date, List<ExerciseDTO> exercises) {
         this.id = id;
         this.name = name;
         this.date = date;
@@ -35,11 +35,11 @@ public class WorkoutDTO {
         this.name = name;
     }
 
-    public int getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(int date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

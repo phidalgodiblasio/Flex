@@ -24,7 +24,7 @@ public class Workout {
     private String name;
 
     @Column(nullable = false)
-    private int date;
+    private String date;
 
     @OneToMany(cascade = CascadeType.ALL, targetEntity = Exercise.class)
     @JoinColumn(name = "fk_workout_id", referencedColumnName = "id")
@@ -34,7 +34,7 @@ public class Workout {
         // Empty constructor
     }
 
-    public Workout(int id, String name, int date, List<Exercise> exercises) {
+    public Workout(int id, String name, String date, List<Exercise> exercises) {
         this.id = id;
         this.name = name;
         this.date = date;
@@ -57,11 +57,11 @@ public class Workout {
         this.name = name;
     }
 
-    public int getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(int date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

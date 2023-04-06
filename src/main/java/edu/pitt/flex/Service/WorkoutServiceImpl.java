@@ -1,7 +1,6 @@
 package edu.pitt.flex.Service;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +17,7 @@ import edu.pitt.flex.Entity.User;
 import edu.pitt.flex.Entity.Workout;
 import edu.pitt.flex.Repository.UserRepository;
 import edu.pitt.flex.Repository.WorkoutRepository;
+import edu.pitt.flex.Utility.Utility;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Service
@@ -33,12 +33,9 @@ public class WorkoutServiceImpl implements WorkoutService {
         // Get user
         User user = userRepository.findOneById((int) request.getSession().getAttribute("USER_ID"));
 
-        // Get today's date
-        int date = getTodaysDate();
-
         // Create list of exercises
         List<Exercise> exercises = createExercises(workoutDTO.getExercises());
-        Workout workout = new Workout(workoutDTO.getId(), workoutDTO.getName(), date, exercises);
+        Workout workout = new Workout(workoutDTO.getId(), workoutDTO.getName(), Utility.getTodaysDate(), exercises);
         user.addWorkout(workout);
 
         // Return response
@@ -66,17 +63,7 @@ public class WorkoutServiceImpl implements WorkoutService {
     public ResponseEntity<List<Workout>> getTodaysWorkouts(HttpServletRequest request) {
         // Get user and and return today's workouts
         User user = userRepository.findOneById((int) request.getSession().getAttribute("USER_ID"));
-        int date = getTodaysDate();
-        return new ResponseEntity<>(user.getWorkoutsOnDate(date), HttpStatus.OK);
-    }
-
-    private int getTodaysDate() {
-        Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH) + 1;
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-
-        return Integer.parseInt("" + year + month + day);
+        return new ResponseEntity<>(user.getWorkoutsOnDate(Utility.getTodaysDate()), HttpStatus.OK);
     }
 
     private List<Set> createSets(List<SetDTO> setDTOList) {

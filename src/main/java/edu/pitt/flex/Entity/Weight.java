@@ -15,7 +15,7 @@ public class Weight {
     private int id;
     
     @Column
-    private int date;
+    private String date;
 
     @Column
     private double weight;
@@ -23,7 +23,7 @@ public class Weight {
     public Weight(){
     }
 
-    public Weight(int id, int date, double weight){
+    public Weight(int id, String date, double weight){
         this.id=id;
         this.date=date;
         this.weight=weight;
@@ -37,11 +37,11 @@ public class Weight {
         this.id = id;
     }
 
-    public int getDate() {
+    public String getDate() {
         return this.date;
     }
 
-    public void setDate(int date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
