@@ -1,6 +1,7 @@
 package edu.pitt.flex.Service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import edu.pitt.flex.Entity.Set;
 import edu.pitt.flex.Entity.User;
 import edu.pitt.flex.Entity.Workout;
 import edu.pitt.flex.Repository.UserRepository;
+import edu.pitt.flex.Repository.WorkoutRepository;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Service
@@ -23,14 +25,20 @@ public class WorkoutServiceImpl implements WorkoutService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private WorkoutRepository workoutRepository;
+
     @Override
     public ResponseEntity<String> addWorkout(WorkoutDTO workoutDTO, HttpServletRequest request) {
         // Get user
-        User user = userRepository.findOneById((int)request.getSession().getAttribute("USER_ID"));
+        User user = userRepository.findOneById((int) request.getSession().getAttribute("USER_ID"));
 
-        // Create list of exercises and add to user
+        // Get today's date
+        int date = getTodaysDate();
+
+        // Create list of exercises
         List<Exercise> exercises = createExercises(workoutDTO.getExercises());
-        Workout workout = new Workout(workoutDTO.getId(), workoutDTO.getDate(), exercises);
+        Workout workout = new Workout(workoutDTO.getId(), workoutDTO.getName(), date, exercises);
         user.addWorkout(workout);
 
         // Return response
@@ -38,10 +46,45 @@ public class WorkoutServiceImpl implements WorkoutService {
     }
 
     @Override
-    public ResponseEntity<List<Workout>> getWorkouts(HttpServletRequest request) {
+    public ResponseEntity<String> deleteWorkout(int id, HttpServletRequest request) {
+        if (workoutRepository.findOneById(id) == null) {
+            return new ResponseEntity<>("ERROR: Workout with given id not in database", HttpStatus.BAD_REQUEST);
+        } else {
+            workoutRepository.deleteById(id);
+            return new ResponseEntity<>("Workout successfuly deleted", HttpStatus.OK);
+        }
+    }
+
+    @Override
+    public ResponseEntity<List<Workout>> getAllWorkouts(HttpServletRequest request) {
         // Get user from repository and return workouts
-        User user = userRepository.findOneById((int)request.getSession().getAttribute("USER_ID"));
+        User user = userRepository.findOneById((int) request.getSession().getAttribute("USER_ID"));
         return new ResponseEntity<>(user.getAllWorkouts(), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<List<Workout>> getTodaysWorkouts(HttpServletRequest request) {
+        // Get user
+        User user = userRepository.findOneById((int) request.getSession().getAttribute("USER_ID"));
+
+        // Get today's date
+        int date = getTodaysDate();
+
+        // Get workouts, if no workout logged for today, return empty list
+        // Else, return workout
+        List<Workout> workouts = user.getWorkoutsOnDate(date);
+        return workouts.isEmpty()
+                ? new ResponseEntity<>(workouts, HttpStatus.BAD_REQUEST)
+                : new ResponseEntity<>(workouts, HttpStatus.OK);
+    }
+
+    private int getTodaysDate() {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        return Integer.parseInt("" + year + month + day);
     }
 
     private List<Set> createSets(List<SetDTO> setDTOList) {
