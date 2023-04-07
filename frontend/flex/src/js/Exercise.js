@@ -25,7 +25,7 @@ export default class Exercise extends Component {
     let exerciseDataRender = exercise.sets.map((set, index) => {
       return (
         <tr>
-          <td>{index}</td>
+          <td>{index + 1}</td>
           <td>{set.weight} lbs</td>
           <td>{set.reps}</td>
         </tr>
