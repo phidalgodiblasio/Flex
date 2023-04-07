@@ -7,9 +7,46 @@ import Workout from './Workout'
 
 export default class WorkoutSection extends Component {  
   componentDidMount() {
-    // // Get today's workouts
-    fetch('http://localhost:8080/flex/workout-today', 
-      {
+    /*
+    // Delete workout
+    fetch('http://localhost:8080/flex/workout-delete', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: 1 // This is just the id for the workout to be deleted
+      }
+    ).then(response => {
+      if (response.status != 200) {
+        response.text().then(body => {
+          this.props.showErrorMessage(body);
+        });
+      }
+    })
+    */
+
+    /*
+    // Add workout
+    fetch('http://localhost:8080/flex/workout', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify() // Add JSON here
+      }
+    ).then(response => {
+      if (response.status != 200) {
+        response.text().then(body => {
+          this.props.showErrorMessage(body);
+        });
+      }
+    })
+    */
+    
+    // Get today's workouts
+    fetch('http://localhost:8080/flex/workout-today', {
         method: 'GET',
         credentials: 'include'
       }
