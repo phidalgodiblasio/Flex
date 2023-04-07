@@ -16,7 +16,6 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "users")
 public class User {
-
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -99,13 +98,13 @@ public class User {
         return workouts;
     }
 
-    public List<Workout> getWorkoutsOnDate(int workoutDate) {
+    public List<Workout> getWorkoutsOnDate(String date) {
         // Create empty workout array list to return
         List<Workout> output = new ArrayList<>();
 
         // Add workouts on date
         for (Workout workout : workouts) {
-            if (workout.getDate() == workoutDate) {
+            if (workout.getDate().compareTo(date) == 0) {
                 output.add(workout);
             } 
         }

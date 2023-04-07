@@ -5,50 +5,37 @@ import SecondaryButton from './SecondaryButton'
 import styles from '../style/WorkoutSection.module.css'
 import Workout from './Workout'
 
-export default class WorkoutSection extends Component {
+export default class WorkoutSection extends Component {  
   componentDidMount() {
-    // TODO: fetch user's workouts from today
+    // // Get today's workouts
+    fetch('http://localhost:8080/flex/workout-today', 
+      {
+        method: 'GET',
+        credentials: 'include'
+      }
+    ).then(response => {
+      if (response.status == 200) {
+        response.json().then(workouts => {
+          this.setState({
+            todaysWorkouts: workouts
+          });
+        })
+      } else {
+        response.text().then(body => {
+          this.props.showErrorMessage(body);
+        });
+      }
+    })
   }
 
   constructor(props) {
     super(props)
-
-    // TODO: get todaysWorkouts from DB instead (in componentDidMount())
-    let todaysWorkouts = [
-      {
-        name: "Chest & Back",
-        date: 40623,
-        id: 0,
-        exercises: [
-          {
-            id: 0,
-            name: "Bench Press",
-            sets: [
-              { weight: 145, reps: 10 },
-              { weight: 145, reps: 10 },
-              { weight: 150, reps: 10 },
-              { weight: 150, reps: 8 }
-            ]
-          },
-          {
-            id: 1,
-            name: "Fly Machine",
-            sets: [
-              { weight: 115, reps: 10 },
-              { weight: 115, reps: 10 },
-              { weight: 115, reps: 10 },
-              { weight: 115, reps: 8 }
-            ]
-          }
-        ]
-      },
-    ]
   
     this.state = {
       editing: false,
       workoutMenuOpen: false,
       workoutMenuHasBeenOpened: false,
-      todaysWorkouts: todaysWorkouts
+      todaysWorkouts: []
     }
   }
 
@@ -102,7 +89,9 @@ export default class WorkoutSection extends Component {
           </div>
           <SecondaryButton onClick={() => this.pushTemplatesPage(true)}>Edit Templates</SecondaryButton>
         </div>
-        <h4 id={styles.today}>Today</h4>
+        <h4 id={styles.today}>
+          {this.state.todaysWorkouts.length == 0 ? "No workouts logged today" : "Today"}
+        </h4>
         {todaysWorkoutsRender}
         <SecondaryButton className="left-secondary-button" onClick={() => this.pushExerciseLogPage()}>View Exercise Log <FaArrowRight /></SecondaryButton>
       </div>

@@ -1,6 +1,5 @@
 package edu.pitt.flex.Service;
 
-import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +11,7 @@ import edu.pitt.flex.DTO.IntakeDTO;
 import edu.pitt.flex.Entity.Intake;
 import edu.pitt.flex.Entity.User;
 import edu.pitt.flex.Repository.UserRepository;
+import edu.pitt.flex.Utility.Utility;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Service
@@ -26,18 +26,13 @@ public class IntakeServiceImpl implements IntakeService {
         HttpStatus status;
 
         //get today's date
-        Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH) + 1;
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        String stringDate = "" + year + month + day;
-        int date = Integer.parseInt(stringDate);
+        String date = Utility.getTodaysDate();
 
         User user = userRepository.findOneById((int)request.getSession().getAttribute("USER_ID"));
         Intake lastIntake = user.getLastIntake();
 
         //if there is already an intake looged today
-        if(lastIntake != null && lastIntake.getDate() == date){
+        if(lastIntake != null && date.compareTo(lastIntake.getDate()) == 0){
             //update today's intake values
             lastIntake.setCalorieSum(intakeDTO.getCalorieSum());
             lastIntake.setCarbSum(intakeDTO.getCarbSum());
@@ -64,23 +59,17 @@ public class IntakeServiceImpl implements IntakeService {
     @Override
     public Intake getIntake(HttpServletRequest request) {
         //get today's date
-        Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH) + 1;
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        String stringDate = "" + year + month + day;
-        int date = Integer.parseInt(stringDate);
+        String date = Utility.getTodaysDate();
 
         User user = userRepository.findOneById((int)request.getSession().getAttribute("USER_ID"));
         Intake lastIntake = user.getLastIntake();
 
         //if there is already an intake looged today
-        if(lastIntake != null && lastIntake.getDate() == date){
+        if(lastIntake != null && date.compareTo(lastIntake.getDate()) == 0){
             return lastIntake;
         }
         else{
             return new Intake();
         }
     }
-    
 }

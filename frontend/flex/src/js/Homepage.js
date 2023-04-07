@@ -11,6 +11,12 @@ class Homepage extends Component {
 
   constructor(props) {
     super(props)
+
+    // Add username to session storage
+    // This is so that refreshing the page will not result in a blank the username at top of the page
+    if (this.props.username !== "") {
+      sessionStorage.setItem("username", this.props.username);
+    }
   
     this.state = {
       showErrorMessage: false,
@@ -74,7 +80,7 @@ class Homepage extends Component {
           <Logo id="logo" />
           <button className="primary-button" onClick={() => this.handleLogout()}>Logout</button>
         </header>
-        <h1 className={styles.h1}>Hi, {this.props.username}!</h1>
+        <h1 className={styles.h1}>Hi, {sessionStorage.getItem("username")}!</h1>
 
         <div id={styles.innerBody}>
           <IntakeSection showErrorMessage={msg => this.showErrorMessage(msg)} />

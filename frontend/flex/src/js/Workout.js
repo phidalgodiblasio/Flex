@@ -5,7 +5,6 @@ import Exercise from './Exercise';
 import intDateToString from './intDateToString';
 
 export default function Workout({workout}) {
-
   let { exercises, name, date } = workout;
 
   let exercisesRender = exercises.map(exercise => {
@@ -16,7 +15,7 @@ export default function Workout({workout}) {
     <div className={`${styles.workoutWrapper} small-padding`}>
       <header>
         <h3>{name}</h3>
-        <span>{intDateToString(date)}</span>
+        <span>{date}</span>
       </header>
       <div>
         {exercisesRender}
