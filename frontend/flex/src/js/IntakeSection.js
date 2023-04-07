@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FaArrowRight } from 'react-icons/fa';
+import { FaArrowRight, FaPen } from 'react-icons/fa';
 import styles from '../style/Homepage.module.css';
 import IntakePopUp from './IntakePopUp';
 import IntakeType from './IntakeType';
@@ -8,6 +8,10 @@ import SectionHeader from './SectionHeader';
 import Cookies from 'js-cookie';
 
 export default class IntakeSection extends Component {
+  // Since the intake goals are edited directly in the state object, I have to back them up before editing,
+  // so I can restore them if the user chooses to cancel
+  backupIntakes;
+
   componentDidMount() {
     // TODO: fetch user's intake goals
     // fetch user's intake for today
@@ -96,7 +100,7 @@ export default class IntakeSection extends Component {
     }
   
     this.state = {
-      editing: false,
+      editingGoals: false,
       popUpState: {
         active: false,
         adding: false,
@@ -108,9 +112,51 @@ export default class IntakeSection extends Component {
     }
   }
 
-  edit() {
+  toggleEditingGoals() {
+    // backup the intakes when starting to edit and restore them if no longer editing
+    // Explanation is above backupIntakes declaration
+    if(this.state.editingGoals) {
+      this.setState({
+        intakeValues: this.backupIntakes,
+      })
+    } else {
+      this.backupIntakes = JSON.parse(JSON.stringify(this.state.intakeValues)) // use spread operator to create a deep copy
+    }
+
     this.setState({
-      editing: !this.state.editing
+      editingGoals: !this.state.editingGoals
+    })
+  }
+
+  saveGoals() {
+    // TODO: fetch() to POST new goals
+    this.setState({
+      editingGoals: !this.state.editingGoals
+    })
+  }
+
+  handleEditGoal(type, goal) {
+    let intakeValues = this.state.intakeValues;
+
+    switch(type) {
+      case "Calories":
+        intakeValues.calories.goal = goal;
+        break;
+      case "Protein":
+        intakeValues.protein.goal = goal;
+        break;
+      case "Carbs":
+        intakeValues.carbs.goal = goal;
+        break;
+      case "Fats":
+        intakeValues.fats.goal = goal;
+        break;
+      default:
+        console.log("SOMETHING WENT VERY WRONG (Intake goal update attempted with unknown type (not Calories, Protein, Carbs, or Fats?))");
+    }
+
+    this.setState({
+      intakeValues: intakeValues
     })
   }
 
@@ -200,16 +246,23 @@ export default class IntakeSection extends Component {
       this.props.showErrorMessage(error.toString());
     })
 
-    this.setState({
-      intakeValues: intakeValues
-    })
-
     this.closePopUp();
   }
 
   render() {
+    // Using a key so that react doesn't think the cancel and the editing goals buttons are the same (b/c it causes a css transition)
+    // I could avoid this by just changing the css transition but whatever lol
+    let headerButtons = this.state.editingGoals ? (
+      <>
+        <button key={"cancel"} className="secondary-button" onClick={() => this.toggleEditingGoals()}><span>Cancel</span></button>
+        <button className="primary-button" onClick={() => this.saveGoals()}>Save</button>
+      </>
+    ) : (
+      <button key={"editGoals"} className="secondary-button right-secondary-button" onClick={() => this.toggleEditingGoals()}><span>Edit Goals</span></button>
+    )
     
     let pushPopUp = (adding, type, current) => this.pushPopUp(adding, type, current);
+    let handleEditGoal = (type, goal) => this.handleEditGoal(type, goal);
 
     return (
       <>
@@ -222,29 +275,39 @@ export default class IntakeSection extends Component {
           updateIntake={(adding, type, amount) => this.updateIntake(adding, type, amount)} 
         />
         <div className="section large-padding">
-          <SectionHeader title="Intake" edit={() => this.edit()} editing={this.state.editing} />
+          <SectionHeader title="Intake">
+            {headerButtons}
+          </SectionHeader>
           <IntakeType 
             type="Calories" 
             current={this.state.intakeValues.calories.current} 
-            goal={this.state.intakeValues.calories.goal} 
+            goal={this.state.intakeValues.calories.goal}
+            editingGoal={this.state.editingGoals}
+            handleEditGoal={handleEditGoal}
             pushPopUp={pushPopUp}
           />
           <IntakeType 
             type="Protein" 
             current={this.state.intakeValues.protein.current} 
             goal={this.state.intakeValues.protein.goal} 
+            editingGoal={this.state.editingGoals}
+            handleEditGoal={handleEditGoal}
             pushPopUp={pushPopUp}
           />
           <IntakeType 
             type="Carbs" 
             current={this.state.intakeValues.carbs.current} 
             goal={this.state.intakeValues.carbs.goal} 
+            editingGoal={this.state.editingGoals}
+            handleEditGoal={handleEditGoal}
             pushPopUp={pushPopUp}
           />
           <IntakeType 
             type="Fats" 
             current={this.state.intakeValues.fats.current} 
             goal={this.state.intakeValues.fats.goal} 
+            editingGoal={this.state.editingGoals}
+            handleEditGoal={handleEditGoal}
             pushPopUp={pushPopUp}
           />
           <SecondaryButton className="left-secondary-button" onClick={() => this.pushIntakeGraphsPage()}>View Progress <FaArrowRight /></SecondaryButton>

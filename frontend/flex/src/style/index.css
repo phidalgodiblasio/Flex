@@ -72,20 +72,6 @@ body {
   margin: 0;
 }
 
-.section-header button {
-  background: none;
-  font-size: var(--semi-large-text);
-  line-height: 0.5em;
-  padding: 0.25em;
-  border-radius: var(--rounded-border);
-  transform: translateX(0.25em);
-}
-
-.section-header button svg {
-  transition: 0.2s linear;
-  fill: var(--on-background-color);
-}
-
 .large-padding {
   padding: 25px;
 }
@@ -182,7 +168,7 @@ button svg {
 }
 
 .secondary-button svg {
-  fill: var(--primary-color);
+  fill: rgb(65, 0, 229);
   transform: translate(0, .075em);
 }
 
