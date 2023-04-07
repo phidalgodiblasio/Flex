@@ -167,7 +167,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String getWeightGoal(UserDTO userDTO, HttpServletRequest request) {
+    public String getWeightGoal(HttpServletRequest request) {
 
         User currUser = userRepository.findOneById((int) request.getSession().getAttribute("USER_ID"));
         return "{\"weightGoal\":\"" + currUser.getWeightGoal() + "\"}";

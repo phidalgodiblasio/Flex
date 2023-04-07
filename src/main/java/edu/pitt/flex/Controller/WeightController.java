@@ -43,7 +43,7 @@ public class WeightController {
     }
 
     @GetMapping("/weight-goal")
-    public String getWeightGoals(@RequestBody UserDTO userDTO, HttpServletRequest request) {
-        return userService.getWeightGoal(userDTO, request);
+    public String getWeightGoals(HttpServletRequest request) {
+        return userService.getWeightGoal(request);
     }
 }

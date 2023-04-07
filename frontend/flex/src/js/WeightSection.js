@@ -8,7 +8,7 @@ export default class WeightSection extends Component {
   componentDidMount() {
     // TODO: fetch user's weight goal
     fetch(
-      'http://localhost:8080/weight-goal',
+      'http://localhost:8080/flex/weight-goal',
       {
         method: 'GET',
         credentials: 'include'
@@ -19,7 +19,6 @@ export default class WeightSection extends Component {
           let weightGoal = weights.weightGoal;
           //decided to use a tilde if there is no current set intake goal
           if(weights.weightGoal == 0) weights.weightGoal = '~';
-          console.log(weightGoal);
           this.setState({
             weightGoal: weightGoal
           })
@@ -27,7 +26,6 @@ export default class WeightSection extends Component {
       } else {
         response.text().then(body => {
           this.props.showErrorMessage(body);
-          console.log("WTF");
         })
       }
     }).catch(error => {
