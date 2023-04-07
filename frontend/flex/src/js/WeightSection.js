@@ -7,6 +7,32 @@ import styles from '../style/WeightSection.module.css'
 export default class WeightSection extends Component {
   componentDidMount() {
     // TODO: fetch user's weight goal
+    fetch(
+      'http://localhost:8080/weight-goal',
+      {
+        method: 'GET',
+        credentials: 'include'
+      }
+    ).then(response => {
+      if(response.status == 200) {
+        response.json().then(weights => {
+          let weightGoal = weights.weightGoal;
+          //decided to use a tilde if there is no current set intake goal
+          if(weights.weightGoal == 0) weights.weightGoal = '~';
+          console.log(weightGoal);
+          this.setState({
+            weightGoal: weightGoal
+          })
+        });
+      } else {
+        response.text().then(body => {
+          this.props.showErrorMessage(body);
+          console.log("WTF");
+        })
+      }
+    }).catch(error => {
+      this.props.showErrorMessage(error.toString());
+    })
     // TODO: fetch user's weight for today
   }
 
