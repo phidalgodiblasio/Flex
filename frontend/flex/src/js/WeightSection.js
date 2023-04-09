@@ -6,31 +6,8 @@ import styles from '../style/WeightSection.module.css'
 
 export default class WeightSection extends Component {
   componentDidMount() {
-    // TODO: fetch user's weight goal
-    fetch(
-      'http://localhost:8080/flex/weight-goal',
-      {
-        method: 'GET',
-        credentials: 'include'
-      }
-    ).then(response => {
-      if(response.status == 200) {
-        response.json().then(weights => {
-          let weightGoal = weights.weightGoal;
-          //decided to use a tilde if there is no current set intake goal
-          if(weights.weightGoal == 0) weights.weightGoal = '~';
-          this.setState({
-            weightGoal: weightGoal
-          })
-        });
-      } else {
-        response.text().then(body => {
-          this.props.showErrorMessage(body);
-        })
-      }
-    }).catch(error => {
-      this.props.showErrorMessage(error.toString());
-    })
+    // fetch user's weight goal
+    this.getWeightGoal();
     // TODO: fetch user's weight for today
   }
 
@@ -83,6 +60,35 @@ export default class WeightSection extends Component {
     console.log("TODO: Implement weight progress page");
   }
 
+  getWeightGoal()
+  {
+    fetch(
+      'http://localhost:8080/flex/weight-goal',
+      {
+        method: 'GET',
+        credentials: 'include'
+      }
+    ).then(response => {
+      if(response.status == 200) {
+        response.json().then(weights => {
+          let weightGoal = weights.weightGoal;
+          //decided to use a tilde if there is no current set intake goal
+          if(weights.weightGoal == 0) weightGoal = 'Set a goal';
+          else weightGoal = `${weightGoal} lbs`
+          this.setState({
+            weightGoal: weightGoal
+          })
+        });
+      } else {
+        response.text().then(body => {
+          this.props.showErrorMessage(body);
+        })
+      }
+    }).catch(error => {
+      this.props.showErrorMessage(error.toString());
+    })
+  }
+
   render() {
     // Render the form for the user to enter their weight if they haven't already;
     // Otherwise, show their weight today
@@ -113,7 +119,7 @@ export default class WeightSection extends Component {
         {todaysWeight}
         <div className="small-padding" id={styles.weightGoal}>
           <label>Your Goal</label>
-          <h3>{`${this.state.weightGoal} lbs`}</h3>
+          <h3>{`${this.state.weightGoal}`}</h3>
         </div>
         <SecondaryButton className="left-secondary-button" onClick={() => this.pushWeightProgressPage()}>View Progress <FaArrowRight /></SecondaryButton>
       </div>
