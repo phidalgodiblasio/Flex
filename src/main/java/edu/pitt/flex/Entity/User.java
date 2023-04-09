@@ -50,6 +50,10 @@ public class User {
     @JoinColumn(name = "fk_userId", referencedColumnName = "id")
     private List<Workout> workouts;
 
+    @OneToMany(cascade = CascadeType.ALL, targetEntity = Template.class)
+    @JoinColumn(name = "fk_userId", referencedColumnName = "id")
+    private List<Template> templates;
+
     public User() {
         // Empty constructor
     }
@@ -61,6 +65,7 @@ public class User {
         intakes = new ArrayList<>();
         weights = new ArrayList<>();
         workouts = new ArrayList<>();
+        templates = new ArrayList<>();
     }
 
     public List<Weight> getAllWeights() {
@@ -110,6 +115,14 @@ public class User {
         }
 
         return output;
+    }
+
+    public List<Template> getAllTemplates(){
+        return templates;
+    }
+
+    public void addTemplate(Template template){
+        templates.add(template);
     }
 
     public int getId() {
