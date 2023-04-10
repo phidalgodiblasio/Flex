@@ -76,7 +76,7 @@ export default function IntakeType(
     }
 
     // Hide the thing that makes the progress circle look like a border (so it'll look filled)
-    if(goal == '~' || current >= goal) {
+    if(current >= goal) {
       innerClasses += ` ${styles.goalReached}`;
     }
 
@@ -88,7 +88,7 @@ export default function IntakeType(
 
     // Calculate the arc of the progress circle
     // Make sure to catch goal == 0 to avoid divide by 0 errors
-    progressDegrees = goal != '~' && goal > 0 ? `${current / goal * 360}deg` : "360deg";
+    progressDegrees = goal > 0 ? `${current / goal * 360}deg` : "360deg";
   }
 
   return editingGoal ? (

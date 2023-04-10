@@ -13,34 +13,8 @@ export default class IntakeSection extends Component {
   backupIntakes;
 
   componentDidMount() {
-    // TODO: fetch user's intake goals
     // fetch user's intake for today
-    fetch(
-      'http://localhost:8080/flex/intake-one',
-      {
-        method: 'GET',
-        credentials: 'include'
-      }
-    ).then(response => {
-      if(response.status == 200) {
-        response.json().then(intakes => {
-          let intakeValues = this.state.intakeValues;
-          intakeValues.calories.current = intakes.calorieSum;
-          intakeValues.protein.current = intakes.proteinSum;
-          intakeValues.carbs.current = intakes.carbSum;
-          intakeValues.fats.current = intakes.fatSum;
-          this.setState({
-            intakeValues: intakeValues
-          })
-        });
-      } else {
-        response.text().then(body => {
-          this.props.showErrorMessage(body);
-        })
-      }
-    }).catch(error => {
-      this.props.showErrorMessage(error.toString());
-    })
+    this.getIntakeValues();
     //get goals
     this.getIntakeGoals();
   }
@@ -99,10 +73,38 @@ export default class IntakeSection extends Component {
   }
 
   saveGoals() {
-    // TODO: fetch() to POST new goals
-    this.setState({
-      editingGoals: !this.state.editingGoals
+    let intakeGoalsToBackend = {
+      calGoal: this.state.intakeValues.calories.goal,
+      proteinGoal: this.state.intakeValues.protein.goal,
+      carbGoal: this.state.intakeValues.carbs.goal,
+      fatGoal: this.state.intakeValues.fats.goal,
+    }
+
+    fetch(
+      'http://localhost:8080/flex/intake-goal',
+      {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(intakeGoalsToBackend)
+      }
+    ).then(response => {
+      if(response.status == 200) {
+        response.text().then(x => console.log(x));
+        this.setState({
+          editingGoals: !this.state.editingGoals
+        })
+      } else {
+        response.text().then(body => {
+          this.props.showErrorMessage(body);
+        })
+      }
+    }).catch(error => {
+      this.props.showErrorMessage(error.toString());
     })
+    
   }
 
   handleEditGoal(type, goal) {
@@ -189,8 +191,6 @@ export default class IntakeSection extends Component {
       fatSum: intakeValues.fats.current,
     }
 
-    // Not working for some reason :(
-
     fetch(
       'http://localhost:8080/flex/intake',
       {
@@ -218,6 +218,35 @@ export default class IntakeSection extends Component {
     this.closePopUp();
   }
 
+  getIntakeValues() {
+    fetch(
+      'http://localhost:8080/flex/intake-one',
+      {
+        method: 'GET',
+        credentials: 'include'
+      }
+    ).then(response => {
+      if(response.status == 200) {
+        response.json().then(intakes => {
+          let intakeValues = this.state.intakeValues;
+          intakeValues.calories.current = intakes.calorieSum;
+          intakeValues.protein.current = intakes.proteinSum;
+          intakeValues.carbs.current = intakes.carbSum;
+          intakeValues.fats.current = intakes.fatSum;
+          this.setState({
+            intakeValues: intakeValues
+          })
+        });
+      } else {
+        response.text().then(body => {
+          this.props.showErrorMessage(body);
+        })
+      }
+    }).catch(error => {
+      this.props.showErrorMessage(error.toString());
+    })
+  }
+
   getIntakeGoals()
   {
     fetch(
@@ -231,14 +260,9 @@ export default class IntakeSection extends Component {
         response.json().then(intakes => {
           let intakeValues = this.state.intakeValues;
           intakeValues.calories.goal = intakes.calGoal;
-          //decided to use a tilde if there is no current set intake goal
-          if(intakes.calGoal == 0) intakeValues.calories.goal = '~';
           intakeValues.protein.goal = intakes.proteinGoal;
-          if(intakes.proteinGoal == 0) intakeValues.protein.goal = '~';
           intakeValues.carbs.goal = intakes.carbGoal;
-          if(intakes.carbGoal == 0) intakeValues.carbs.goal = '~';
           intakeValues.fats.goal = intakes.fatGoal;
-          if(intakes.fatGoal == 0) intakeValues.fats.goal = '~';
           this.setState({
             intakeValues: intakeValues
           })
