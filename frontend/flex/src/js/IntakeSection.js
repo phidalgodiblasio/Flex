@@ -184,13 +184,19 @@ export default class IntakeSection extends Component {
         console.log("SOMETHING WENT VERY WRONG (Intake value update attempted with unknown type (not Calories, Protein, Carbs, or Fats?))");
     }
 
+    this.setIntakeValues(intakeValues);
+
+    this.closePopUp();
+  }
+
+  setIntakeValues(intakeValues) {
     let intakesToBackend = {
       calorieSum: intakeValues.calories.current,
       proteinSum: intakeValues.protein.current,
       carbSum: intakeValues.carbs.current,
       fatSum: intakeValues.fats.current,
     }
-
+    
     fetch(
       'http://localhost:8080/flex/intake',
       {
@@ -215,7 +221,6 @@ export default class IntakeSection extends Component {
     }).catch(error => {
       this.props.showErrorMessage(error.toString());
     })
-    this.closePopUp();
   }
 
   getIntakeValues() {

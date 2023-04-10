@@ -20,6 +20,22 @@
   font-size: 20pt;
 }
 
+#weightGoal button {
+  padding: 8px;
+  transform: translateX(8px);
+  font-size: var(--semi-large-text);
+  background: none;
+}
+
+#weightGoal button:hover svg {
+  fill: var(--primary-color);
+}
+
+#weightGoal button svg {
+  fill: #0004;
+  transition: 0.2s ease-out;
+}
+
 #todaysWeight {
   background-color: var(--secondary-light);
   border-radius: var(--rounded-border);
@@ -34,7 +50,8 @@
 
 #todaysWeight button {
   background: none;
-  padding: 0.5em;
+  padding: 8px;
+  transform: translateX(8px);
   font-size: var(--semi-large-text);
   line-height: 0.5em;
 }
@@ -52,4 +69,65 @@
   color: var(--on-background-color);
   margin: 0;
   font-weight: bold;
+}
+
+.cancel svg {
+  fill: rgba(var(--fourth-rgb), 0.3) !important;
+}
+
+.cancel:hover svg {
+  fill: rgba(var(--fourth-rgb), 1) !important;
+}
+
+.save svg {
+  fill: rgba(var(--tertiary-rgb), 0.3) !important;
+}
+
+.save:hover svg {
+  fill: rgba(var(--tertiary-rgb), 1) !important;
+}
+
+.editingWrapper {
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.editingInputWrapper input {
+  background: none;
+  outline: none;
+  border: none;
+  width: 80px;
+  padding: 10px;
+  font-size: var(--semi-large-text);
+  color: var(--text-color);
+  transition: color 0.2s ease-out;
+}
+
+.editingInputWrapper {
+  display: flex;
+  border: 2px solid rgba(var(--primary-rgb), 0.2);
+  border-radius: var(--rounded-border);
+  transition: border-color 0.2s ease-out;
+  transition: background-color 0.2s ease-out;
+}
+
+.editingInputWrapper:focus-within {
+  border-color: rgb(var(--primary-rgb));
+  background-color: rgba(var(--primary-rgb), 0.07);
+}
+
+.editingInputWrapper span {
+  padding: 10px;
+  align-self: flex-end;
+  color: rgba(var(--primary-rgb), 0.5);
+  transition: 0.2s ease-out;
+}
+
+.editingInputWrapper:focus-within span {
+  color: rgb(var(--primary-color));
+}
+
+.editingInputWrapper:focus-within input {
+  color: var(--on-background-color);
 }
