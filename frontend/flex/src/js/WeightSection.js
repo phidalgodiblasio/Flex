@@ -8,7 +8,9 @@ export default class WeightSection extends Component {
   componentDidMount() {
     // fetch user's weight goal
     this.getWeightGoal();
+    this.getTodaysWeight();
     // TODO: fetch user's weight for today
+
   }
 
   constructor(props) {
@@ -36,20 +38,76 @@ export default class WeightSection extends Component {
     });
   }
 
+  
+
   handleWeightSubmit(e) {
     e.preventDefault();
+    
     if(this.state.enteredWeight <= 0 || this.state.enteredWeight > 999) {
       // TODO: Display an error to the user
       return;
     }
+    let weightToBackend={weight:this.state.enteredWeight}
+    fetch(
+      'http://localhost:8080/flex/weight',
+      {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(weightToBackend)
+      }
+    ).then(response => {
+      if(response.status == 200) {
+        response.text().then(x => console.log(x));
+        this.setState({
+          todaysWeight: this.state.enteredWeight,
+          todaysWeightEntered: true
 
-    // TODO: Make a call to the DB and save the weight, then set the state once that returns successfully
-
-    this.setState({
-      todaysWeight: this.state.enteredWeight,
-      todaysWeightEntered: true
+        })
+      } else{
+        response.text().then(body => {
+          this.props.showErrorMessage(body);
+        })
+      }
+    }).catch(error => {
+      this.props.showErrorMessage(error.toString());
     })
-  }
+    }
+
+
+    //Getting todays weight, will just return null if no weight for the day is logged in DB, prompting user to enter weight for day
+    getTodaysWeight(){
+      fetch(
+        'http://localhost:8080/flex/weight-one',
+        {
+          method: 'GET',
+          credentials: 'include'
+        }
+      ).then(response => {
+        if(response.status == 200) {
+          response.json().then(weights => {
+  
+            let weight = weights.weight;
+            this.setState({
+             todaysWeight:weight
+            })
+          });
+        } else {
+          response.text().then(body => {
+            this.props.showErrorMessage(body);
+          })
+        }
+      }).catch(error => {
+        this.props.showErrorMessage(error.toString());
+      })
+    }
+
+    
+    
+    
+  
 
   pushWeightProgressPage() {
     console.log("TODO: Implement weight progress page");
@@ -67,7 +125,8 @@ export default class WeightSection extends Component {
         response.json().then(weights => {
           let weightGoal = weights.weightGoal;
           this.setState({
-            weightGoal: weightGoal
+            weightGoal: weightGoal,
+            todaysWeightEntered: true
           })
         });
       } else {
@@ -81,6 +140,7 @@ export default class WeightSection extends Component {
   }
 
   setWeightGoal(value) {
+  
     let goalToBackend = { weightGoal: value }
 
     fetch(
@@ -135,6 +195,7 @@ export default class WeightSection extends Component {
       editingGoalValue: value
     })
   }
+
 
   render() {
     // Render the form for the user to enter their weight if they haven't already;
