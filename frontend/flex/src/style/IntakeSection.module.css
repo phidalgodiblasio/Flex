@@ -112,3 +112,57 @@
 .goalReached .progressInner {
   display: none;
 }
+
+.editingWrapper {
+  display: block;
+  border-radius: 8px;
+}
+
+.editingWrapper label {
+  display: block;
+  color: var(--on-background-color);
+  font-weight: bold;
+  font-size: var(--medium-text);
+  margin: 0 0 8px 0;
+}
+
+.editingWrapper input {
+  background: none;
+  outline: none;
+  border: none;
+  flex-grow: 1;
+  padding: 10px;
+  font-size: var(--semi-large-text);
+  color: var(--text-color);
+  transition: color 0.2s ease-out;
+}
+
+.editingInputWrapper {
+  display: flex;
+  border: 2px solid rgba(var(--editing-color-rgb), 0.2);
+  border-radius: var(--rounded-border);
+  /* border-top-right-radius: var(--rounded-border);
+  border-top-left-radius: var(--rounded-border); */
+  transition: border-color 0.2s ease-out;
+  transition: background-color 0.2s ease-out;
+}
+
+.editingInputWrapper:focus-within {
+  border-color: rgb(var(--editing-color-rgb));
+  background-color: rgba(var(--editing-color-rgb), 0.07);
+}
+
+.editingInputWrapper span {
+  padding: 10px;
+  align-self: flex-end;
+  color: rgba(var(--editing-color-rgb), 0.5);
+  transition: 0.2s ease-out;
+}
+
+.editingInputWrapper:focus-within span {
+  color: rgb(var(--editing-color-rgb));
+}
+
+.editingInputWrapper:focus-within input {
+  color: var(--on-background-color);
+}

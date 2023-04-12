@@ -113,9 +113,17 @@ export default class WorkoutSection extends Component {
       return <Workout workout={workout} />
     })
 
+    let titleRender = this.state.todaysWorkouts.length == 0 ? (
+      <p id={styles.noWorkouts}>No workouts logged today.</p>
+    ) : (
+      <h4>Today</h4>
+    )
+
     return (
       <div className="section large-padding" onClick={(e) => this.checkCloseWorkoutMenu(e.target)}>
-        <SectionHeader title="Workouts" edit={() => this.edit()} editing={this.state.editing} />
+        <SectionHeader title="Workouts">
+
+        </SectionHeader>
         <div id={styles.workoutButtons}>
           <div>
             <button className="primary-button" onClick={() => this.toggleWorkoutMenu()}><FaPlus /> Add New Workout</button>
@@ -126,9 +134,7 @@ export default class WorkoutSection extends Component {
           </div>
           <SecondaryButton onClick={() => this.pushTemplatesPage(true)}>Edit Templates</SecondaryButton>
         </div>
-        <h4 id={styles.today}>
-          {this.state.todaysWorkouts.length == 0 ? "No workouts logged today" : "Today"}
-        </h4>
+        {titleRender}
         {todaysWorkoutsRender}
         <SecondaryButton className="left-secondary-button" onClick={() => this.pushExerciseLogPage()}>View Exercise Log <FaArrowRight /></SecondaryButton>
       </div>

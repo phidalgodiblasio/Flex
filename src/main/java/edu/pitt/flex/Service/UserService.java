@@ -19,5 +19,5 @@ public interface UserService {
 
     public String getIntakeGoal(HttpServletRequest request);
 
-    public String getWeightGoal(UserDTO userDTO, HttpServletRequest request);
+    public String getWeightGoal(HttpServletRequest request);
 }
