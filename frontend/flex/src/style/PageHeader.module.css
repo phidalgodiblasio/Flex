@@ -1,0 +1,24 @@
+.header {
+  position: relative;
+  background-color: var(--background-color);
+}
+
+.header button {
+  position: absolute;
+  font-size: var(--large-text);
+  /* padding: 8px; */
+  padding: 0 8px;
+  transform: translateX(-8px);
+  border-radius: var(--rounded-border);
+  line-height: 1em;
+}
+
+.header button svg {
+  height: 40px;
+}
+
+.header h2 {
+  text-align: center;
+  margin: 0;
+  line-height: 40px;
+}

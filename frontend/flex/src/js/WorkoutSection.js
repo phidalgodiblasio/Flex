@@ -4,8 +4,9 @@ import { FaPlus, FaArrowRight } from 'react-icons/fa'
 import SecondaryButton from './SecondaryButton'
 import styles from '../style/WorkoutSection.module.css'
 import Workout from './Workout'
+import { withRouter } from './withRouter'
 
-export default class WorkoutSection extends Component {  
+class WorkoutSection extends Component {  
   componentDidMount() {
     /*
     // Delete workout
@@ -128,7 +129,7 @@ export default class WorkoutSection extends Component {
           <div>
             <button className="primary-button" onClick={() => this.toggleWorkoutMenu()}><FaPlus /> Add New Workout</button>
             <nav className={workoutMenuClasses} aria-expanded={this.state.workoutMenuOpen}>
-              <button className="workout-menu-item">Start From Scratch</button>
+              <button onClick={() => this.props.navigate('/create-workout')} className="workout-menu-item">Start From Scratch</button>
               <button className="workout-menu-item">Use A Template</button>
             </nav>
           </div>
@@ -142,3 +143,4 @@ export default class WorkoutSection extends Component {
   }
 }
 
+export default withRouter(WorkoutSection);

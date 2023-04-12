@@ -4,6 +4,7 @@ import Homepage from './Homepage';
 import React, { Component } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { withRouter } from './withRouter';
+import CreateWorkout from './CreateWorkout';
 
 class App extends Component {
   constructor(props) {
@@ -39,6 +40,7 @@ class App extends Component {
     return (
       <>
         <Routes>
+          { /* TODO: Fix this with authentication from cookies */}
           <Route path="*" element={
             this.state.loggedIn ? (
               <Navigate to="/home" />
@@ -48,6 +50,7 @@ class App extends Component {
           } />
           <Route path="/auth" element={<Authentication userLogin={(username) => this.userLogin(username)} />} />
           <Route path="/home" element={<Homepage userLogout={() => this.userLogout()} username={this.state.username} />} />
+          <Route path="/create-workout" element={<CreateWorkout />} exercises={[]} />
         </Routes>
       </>
     )

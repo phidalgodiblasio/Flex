@@ -6,11 +6,12 @@
 
 body {
   margin: 0;
-  background-color: #F1F6FA;
+  background-color: var(--background-color);
   font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
+  --background-color: #F1F6FA;
   --on-background-color: #000;
   --section-color: #fff;
   --text-color: #0009;
