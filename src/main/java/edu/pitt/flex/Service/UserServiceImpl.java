@@ -33,7 +33,8 @@ public class UserServiceImpl implements UserService {
                     this.passwordEncoder.encode(userDTO.getPassword()));
             userRepository.save(user);
 
-            // Add user id to sessions
+            // Add username and id to sessions
+            request.getSession().setAttribute("USERNAME", user.getUsername());
             request.getSession().setAttribute("USER_ID", user.getId());
 
             // Update response to show success
@@ -50,6 +51,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public ResponseEntity<String> getUsername(HttpServletRequest request) {
+        User user = userRepository.findOneById((int) request.getSession().getAttribute("USER_ID"));
+        return new ResponseEntity<>(user.getUsername(), HttpStatus.OK);
+    }
+
+    @Override
     public ResponseEntity<String> loginUser(LoginDTO loginDTO, HttpServletRequest request) {
         // Response body and status
         String body;
@@ -60,7 +67,8 @@ public class UserServiceImpl implements UserService {
 
         // If user found, authenticate password
         if (user != null && passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())) {
-            // Add user id to sessions
+            // Add username and id to sessions
+            request.getSession().setAttribute("USERNAME", user.getUsername());
             request.getSession().setAttribute("USER_ID", user.getId());
 
             // Update response to show success
