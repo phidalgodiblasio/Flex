@@ -6,6 +6,7 @@ import PageHeader from './PageHeader';
 import CreateWorkoutExercise from './CreateWorkoutExercise';
 
 export default class CreateWorkout extends Component {
+  // use this to make sure every list item that's getting rendered will have its own unique ID that maintains across re-renders
   universalKey = 0;
 
   constructor(props) {
@@ -13,6 +14,7 @@ export default class CreateWorkout extends Component {
   
     // TODO: Pull exercises in as a prop (idk why i was struggling with this)
     this.state = {
+      workoutName: "",
       exercises: []
     }
   }
@@ -150,6 +152,12 @@ export default class CreateWorkout extends Component {
     })
   }
 
+  handleWorkoutNameChange(name) {
+    this.setState({
+      workoutName: name
+    })
+  }
+
   render() {
     // Yeah i know i hate that im passing in all these functions but idk how else to do this
     // I have to maintain the state in this parent object, otherwise I can't have a dynamic list of exercises with changing state
@@ -182,11 +190,10 @@ export default class CreateWorkout extends Component {
     return (
       <>
         <PageHeader title="Create a Workout" />
-        <div className="container">
+        <div className="container" id={styles.workoutContainer}>
+          <input className={styles.noBackgroundInput} placeholder="Give your workout a name..." value={this.state.workoutName} onChange={(e) => this.handleWorkoutNameChange(e.target.value)} />
           {exercisesRender}
-          <button onClick={() => this.addExercise()}>
-            Add an Exercise
-          </button>
+          <button className="primary-button" onClick={() => this.addExercise()}>Add an Exercise <FaPlus /></button>
         </div>
       </>
     )

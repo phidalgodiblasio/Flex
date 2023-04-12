@@ -1,0 +1,128 @@
+.noBackgroundInput {
+  background: none;
+  border: none;
+  outline: none;
+  border-radius: var(--rounded-border);
+  padding: 0.5em;
+}
+
+.noBackgroundInput::placeholder {
+  color: #0003;
+}
+
+.noBackgroundInput:hover {
+  background: #0000000a;
+}
+
+.noBackgroundInput:focus {
+  background: #00000011;
+}
+
+#workoutContainer {
+  min-width: 350px;
+  max-width: 550px;
+}
+
+#workoutContainer > input {
+  width: 100%;
+  font-size: var(--large-text);
+  font-weight: bold;
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+
+#workoutContainer > button {
+  width: 100%;
+  padding: 12px;
+}
+
+.exerciseWrapper {
+  background: white;
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+
+.exerciseWrapper > header {
+  margin-bottom: 25px;
+}
+
+.exerciseWrapper > header > button {
+  font-size: var(--semi-large-text);
+  padding: 0.5em;
+  line-height: 0.5em;
+}
+
+.nameInput {
+  font-size: var(--semi-large-text);
+  font-weight: bold;
+  flex-grow: 1;
+  margin-right: 12px;
+}
+
+.addSetButton {
+  display: block;
+  margin: auto;
+}
+
+.exerciseTable {
+  width: 100%;
+  table-layout: fixed;
+  border-spacing: 0;
+  text-align: center;
+}
+
+.exerciseTable td, .exerciseTable th {
+  padding: 12px;
+}
+
+.exerciseTable td:last-of-type {
+  border-radius: 0 var(--rounded-border) var(--rounded-border) 0;
+}
+
+.exerciseTable td:first-of-type {
+  border-radius: var(--rounded-border) 0 0 var(--rounded-border);
+}
+
+.exerciseTable tr input {
+  width: 100%;
+  text-align: center;
+}
+
+.exerciseDataInput {
+  background: none;
+  padding: 12px;
+  border: 1px solid transparent;
+  border-radius: var(--rounded-border);
+  outline: none;
+  transition: 0.2s ease-out;
+}
+
+.exerciseDataInput:hover {
+  background-color: rgba(var(--secondary-rgb), 0.07);
+}
+
+.exerciseDataInput:focus {
+  background-color: rgba(var(--secondary-rgb), 0.07);
+  border-color: var(--secondary-color);
+}
+
+.exerciseTable tr:nth-of-type(odd):not(:last-of-type) {
+  background-color:var(--secondary-light);
+}
+
+.exerciseTable colgroup {
+  width: 40px;
+}
+
+.deleteSetButton {
+  text-align: right;
+}
+
+.deleteSetButton button {
+  padding: 12px;
+  line-height: 0.5em;
+}
+
+.deleteSetButton button svg {
+  fill: var(--secondary-color);
+}

@@ -132,6 +132,7 @@ button svg {
 }
 
 .transparent-button {
+  border-radius: var(--rounded-border);
   background: none;
 }
 
@@ -154,8 +155,12 @@ button svg {
   box-shadow:inset 2px 2px 8px #fff5;
 }
 
-.primary-button:focus {
+.primary-button:active {
   box-shadow:inset 2px 2px 8px #0005;
+}
+
+.primary-button svg {
+  transform: translate(0, .075em);
 }
 
 .secondary-button {

@@ -4,35 +4,39 @@ import { FaPlus, FaTrash } from 'react-icons/fa'
 
 export default function CreateWorkoutExercise({id, name, sets, handleNameChange, addSet, removeSet, handleWeightChange, handleRepsChange, deleteExercise}) {
   let setRender = sets.map((set, index) => {
-    let deleteButtonRender = sets.length === 1 ? null : <button onClick={() => removeSet(id, set.id)}><FaTrash /></button>
+    let deleteButtonRender = sets.length === 1 ? (
+      null 
+    ) : (
+      <td className={styles.deleteSetButton}>
+        <button className="transparent-button" onClick={() => removeSet(id, set.id)}><FaTrash /></button>
+      </td>
+    ) 
     return (
       <tr key={set.id}>
         <td>{index + 1}</td>
-        <td><input type="number" value={set.weight} onChange={(e) => handleWeightChange(id, set.id, e.target.value)} /></td>
-        <td><input type="number" value={set.reps} onChange={(e) => handleRepsChange(id, set.id, e.target.value)} /></td>
-        <td>
-          {deleteButtonRender}
-        </td>
+        <td><input className={styles.exerciseDataInput} type="number" value={set.weight} onChange={(e) => handleWeightChange(id, set.id, e.target.value)} /></td>
+        <td><input className={styles.exerciseDataInput} type="number" value={set.reps} onChange={(e) => handleRepsChange(id, set.id, e.target.value)} /></td>
+        {deleteButtonRender}
       </tr>
     )
   })
 
   return (
-    <div className="large-padding">
-      <div>
-        <h3><input placeholder="Give this exercise a name..." value={name} onChange={(e) => handleNameChange(id, e.target.value)} /></h3>
-        <button onClick={() => deleteExercise(id)}><FaTrash /></button>
-      </div>
-      <table>
+    <div className={`large-padding ${styles.exerciseWrapper}`}>
+      <header className="spaced-apart">
+        <input className={`${styles.nameInput} ${styles.noBackgroundInput}`} placeholder="Give this exercise a name..." value={name} onChange={(e) => handleNameChange(id, e.target.value)} />
+        <button className="transparent-button" onClick={() => deleteExercise(id)}><FaTrash /></button>
+      </header>
+      <table className={styles.exerciseTable}>
+        <thead>
+          <th>Set</th>
+          <th>Weight</th>
+          <th>Reps</th>
+        </thead>
         <tbody>
-          <tr>
-            <th>Set</th>
-            <th>Weight</th>
-            <th>Reps</th>
-          </tr>
           {setRender}
           <tr>
-            <td><button onClick={() => addSet(id)}><FaPlus /> Add A Set</button></td>
+            <td colSpan={sets.length === 1 ? 3 : 4 /* Match number of columns in table */}><button className={`secondary-button ${styles.addSetButton}`} onClick={() => addSet(id)}><span>Add A Set <FaPlus /></span></button></td>
           </tr>
         </tbody>
       </table>
