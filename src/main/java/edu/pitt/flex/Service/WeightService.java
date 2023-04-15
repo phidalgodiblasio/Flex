@@ -9,4 +9,5 @@ import jakarta.servlet.http.HttpServletRequest;
 public interface WeightService {
     public ResponseEntity<String> addWeight(WeightDTO weightDTO, HttpServletRequest request);
     public List<Weight> getWeights(HttpServletRequest request);
+    public Weight getWeight(HttpServletRequest request);
 }
