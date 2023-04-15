@@ -5,6 +5,7 @@ import SecondaryButton from './SecondaryButton'
 import styles from '../style/WorkoutSection.module.css'
 import Workout from './Workout'
 import { withRouter } from './withRouter'
+import { WithErrorMessage } from './WithErrorMessage'
 
 class WorkoutSection extends Component {  
   componentDidMount() {
@@ -17,25 +18,6 @@ class WorkoutSection extends Component {
           "Content-Type": "application/json"
         },
         body: 1 // This is just the id for the workout to be deleted
-      }
-    ).then(response => {
-      if (response.status != 200) {
-        response.text().then(body => {
-          this.props.showErrorMessage(body);
-        });
-      }
-    })
-    */
-
-    /*
-    // Add workout
-    fetch('http://localhost:8080/flex/workout', {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify() // Add JSON here
       }
     ).then(response => {
       if (response.status != 200) {
@@ -143,4 +125,4 @@ class WorkoutSection extends Component {
   }
 }
 
-export default withRouter(WorkoutSection);
+export default withRouter(WithErrorMessage(WorkoutSection));

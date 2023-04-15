@@ -6,8 +6,9 @@ import IntakeType from './IntakeType';
 import SecondaryButton from './SecondaryButton';
 import SectionHeader from './SectionHeader';
 import Cookies from 'js-cookie';
+import { WithErrorMessage } from './WithErrorMessage';
 
-export default class IntakeSection extends Component {
+class IntakeSection extends Component {
   // Since the intake goals are edited directly in the state object, I have to back them up before editing,
   // so I can restore them if the user chooses to cancel
   backupIntakes;
@@ -349,3 +350,5 @@ export default class IntakeSection extends Component {
     )
   }
 }
+
+export default WithErrorMessage(IntakeSection);

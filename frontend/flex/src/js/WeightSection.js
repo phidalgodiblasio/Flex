@@ -3,8 +3,9 @@ import SecondaryButton from './SecondaryButton'
 import SectionHeader from './SectionHeader'
 import { FaPen, FaArrowRight, FaTimes, FaCheck } from 'react-icons/fa'
 import styles from '../style/WeightSection.module.css'
+import { WithErrorMessage } from './WithErrorMessage'
 
-export default class WeightSection extends Component {
+class WeightSection extends Component {
   componentDidMount() {
     // fetch user's weight goal
     this.getWeightGoal();
@@ -37,8 +38,6 @@ export default class WeightSection extends Component {
       todaysWeightEntered: false
     });
   }
-
-  
 
   handleWeightSubmit(e) {
     e.preventDefault();
@@ -74,40 +73,36 @@ export default class WeightSection extends Component {
     }).catch(error => {
       this.props.showErrorMessage(error.toString());
     })
-    }
+  }
 
 
-    //Getting todays weight, will just return null if no weight for the day is logged in DB, prompting user to enter weight for day
-    getTodaysWeight(){
-      fetch(
-        'http://localhost:8080/flex/weight-one',
-        {
-          method: 'GET',
-          credentials: 'include'
-        }
-      ).then(response => {
-        if(response.status == 200) {
-          response.json().then(weights => {
-  
-            let weight = weights.weight;
-            this.setState({
-             todaysWeight:weight
-            })
-          });
-        } else {
-          response.text().then(body => {
-            this.props.showErrorMessage(body);
+  //Getting todays weight, will just return null if no weight for the day is logged in DB, prompting user to enter weight for day
+  getTodaysWeight(){
+    fetch(
+      'http://localhost:8080/flex/weight-one',
+      {
+        method: 'GET',
+        credentials: 'include'
+      }
+    ).then(response => {
+      if(response.status == 200) {
+        response.json().then(weights => {
+
+          let weight = weights.weight;
+          this.setState({
+            todaysWeight:weight
           })
-        }
-      }).catch(error => {
-        this.props.showErrorMessage(error.toString());
-      })
-    }
+        });
+      } else {
+        response.text().then(body => {
+          this.props.showErrorMessage(body);
+        })
+      }
+    }).catch(error => {
+      this.props.showErrorMessage(error.toString());
+    })
+  }
 
-    
-    
-    
-  
 
   pushWeightProgressPage() {
     console.log("TODO: Implement weight progress page");
@@ -264,3 +259,5 @@ export default class WeightSection extends Component {
     )
   }
 }
+
+export default WithErrorMessage(WeightSection);

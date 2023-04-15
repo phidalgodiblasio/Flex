@@ -6,6 +6,7 @@ import WorkoutSection from './WorkoutSection';
 import WeightSection from './WeightSection';
 import { FaTimes } from 'react-icons/fa';
 import { withRouter } from './withRouter';
+import { WithErrorMessage } from './WithErrorMessage';
 
 class Homepage extends Component {
   componentDidMount() {
@@ -51,45 +52,17 @@ class Homepage extends Component {
         this.props.navigate('/auth');
       } else {
         response.text().then(body => {
-          this.showErrorMessage(body);
+          this.props.showErrorMessage(body);
         })
       }
     }).catch(error => {
-      this.showErrorMessage("Couldn't establish a connection to the database.")
-    })
-  }
-
-  showErrorMessage(message) {
-    this.setState({
-      showErrorMessage: true,
-      errorMessage: message
-    })
-  }
-
-  hideErrorMessage() {
-    this.setState({
-      showErrorMessage: false,
-      errorMessage: ""
+      this.props.showErrorMessage("Couldn't establish a connection to the database.")
     })
   }
 
   render() {
-    let errorMessageRender = this.state.showErrorMessage ? (
-      <div id={styles.errorContainer}>
-        <div className="error" id={styles.error}>
-          <p>{this.state.errorMessage}</p>
-          <button type="button" onClick={() => this.hideErrorMessage()}>
-            <FaTimes></FaTimes>
-          </button>
-        </div>
-      </div>
-    ) : (
-      null
-    )
-
     return (
       <div className="container">
-        {errorMessageRender}
         <header className={styles.header}>
           <Logo id="logo" />
           <button className="primary-button" onClick={() => this.handleLogout()}>Logout</button>
@@ -97,13 +70,13 @@ class Homepage extends Component {
         <h1 className={styles.h1}>Hi, {this.state.username}!</h1>
 
         <div id={styles.innerBody}>
-          <IntakeSection showErrorMessage={msg => this.showErrorMessage(msg)} />
-          <WorkoutSection showErrorMessage={msg => this.showErrorMessage(msg)} />
-          <WeightSection showErrorMessage={msg => this.showErrorMessage(msg)} />
+          <IntakeSection />
+          <WorkoutSection />
+          <WeightSection />
         </div>
       </div>
     )
   }
 }
 
-export default withRouter(Homepage);
+export default withRouter(WithErrorMessage(Homepage));

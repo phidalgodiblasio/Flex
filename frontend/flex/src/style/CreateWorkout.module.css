@@ -31,9 +31,10 @@
   margin-bottom: 12px;
 }
 
-#workoutContainer > button {
-  width: 100%;
-  padding: 12px;
+#buttonsContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .exerciseWrapper {
@@ -43,7 +44,7 @@
 }
 
 .exerciseWrapper > header {
-  margin-bottom: 25px;
+  margin-bottom: 12px;
 }
 
 .exerciseWrapper > header > button {
@@ -56,6 +57,7 @@
   font-size: var(--semi-large-text);
   font-weight: bold;
   flex-grow: 1;
+  width: 100%;
   margin-right: 12px;
 }
 
@@ -88,9 +90,13 @@
   text-align: center;
 }
 
+.exerciseTable th span {
+  font-weight: initial;
+}
+
 .exerciseDataInput {
   background: none;
-  padding: 12px;
+  padding: 8px;
   border: 1px solid transparent;
   border-radius: var(--rounded-border);
   outline: none;
@@ -110,12 +116,8 @@
   background-color:var(--secondary-light);
 }
 
-.exerciseTable colgroup {
-  width: 40px;
-}
-
 .deleteSetButton {
-  text-align: right;
+  padding: 0 12px 0 0 !important;
 }
 
 .deleteSetButton button {
@@ -125,4 +127,8 @@
 
 .deleteSetButton button svg {
   fill: var(--secondary-color);
+}
+
+.trashColumn {
+  width: 50px;
 }

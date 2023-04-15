@@ -46,15 +46,3 @@
     grid-column: 2;
   }
 }
-
-#errorContainer {
-  position: absolute;
-  left: 0;
-  width: 100%;
-  padding: 0 25px;
-}
-
-#error {
-  max-width: 450px;
-  margin: auto;
-}

@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { FaHome, FaPlus } from 'react-icons/fa';
-import { withRouter } from './withRouter';
+import { FaPlus } from 'react-icons/fa';
 import styles from '../style/CreateWorkout.module.css';
 import PageHeader from './PageHeader';
 import CreateWorkoutExercise from './CreateWorkoutExercise';
+import { WithErrorMessage } from './WithErrorMessage';
+import { withRouter } from './withRouter';
 
-export default class CreateWorkout extends Component {
+class CreateWorkout extends Component {
   // use this to make sure every list item that's getting rendered will have its own unique ID that maintains across re-renders
   universalKey = 0;
 
@@ -158,12 +159,74 @@ export default class CreateWorkout extends Component {
     })
   }
 
+  saveWorkout() {
+    if(this.state.workoutName == "") {
+      this.props.showErrorMessage("Please give your workout a name.");
+      return;
+    }
+    if(this.state.exercises.length == 0) {
+      this.props.showErrorMessage("Please add at least one exercise to your workout.");
+      return;
+    }
+    let missingExerciseName = false;
+    this.state.exercises.forEach(exercise => { if(exercise.name == "") missingExerciseName = true; })
+    if(missingExerciseName) {
+      this.props.showErrorMessage("At least one exercise is missing a name");
+      return;
+    } 
+
+    // Remove all ids from exercises and sets to have correct format for backend
+    let exercisesToBackend = this.state.exercises.map(exercise => {
+      // Remove ids from sets
+      let setsToBackend = exercise.sets.map(set => {
+        return (
+          {
+            weight: set.weight,
+            reps: set.reps,
+          }
+        )
+      })
+      return (
+        {
+          name: exercise.name,
+          sets: setsToBackend
+        }
+      )
+    })
+
+    let workout = {
+      name: this.state.workoutName,
+      exercises: exercisesToBackend,
+    }
+
+    fetch(
+      'http://localhost:8080/flex/workout', 
+      {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(workout) // Add JSON here
+      }
+    ).then(response => {
+      if (response.status != 200) {
+        response.text().then(body => {
+          this.props.showErrorMessage(body);
+        });
+        return;
+      }
+
+      this.props.navigate('/home');
+    })
+  }
+
   render() {
     // Yeah i know i hate that im passing in all these functions but idk how else to do this
     // I have to maintain the state in this parent object, otherwise I can't have a dynamic list of exercises with changing state
     // this is because when i add/remove an exercise, the state of this parent will change and cause a rerender, causing all the exercises to lose state
     // if you know a better way of doing this please tell me
-    let exercisesRender = this.state.exercises.map((exercise, index) => {
+    let exercisesRender = this.state.exercises.map(exercise => {
       let render = <CreateWorkoutExercise 
         key={exercise.id} 
         id={exercise.id} 
@@ -176,14 +239,6 @@ export default class CreateWorkout extends Component {
         removeSet={(exerciseId, setId) => this.removeSet(exerciseId, setId)}
         deleteExercise={(id) => this.deleteExercise(id)}
       />;
-      /*if(index != this.state.exercises.length - 1) {
-        render = (
-          <>
-            {render}
-            <button onClick={() => this.addExerciseAfterIndex(index)}><FaPlus /></button>
-          </>
-        )
-      }*/
       return render;
     })
 
@@ -193,9 +248,14 @@ export default class CreateWorkout extends Component {
         <div className="container" id={styles.workoutContainer}>
           <input className={styles.noBackgroundInput} placeholder="Give your workout a name..." value={this.state.workoutName} onChange={(e) => this.handleWorkoutNameChange(e.target.value)} />
           {exercisesRender}
-          <button className="primary-button" onClick={() => this.addExercise()}>Add an Exercise <FaPlus /></button>
+          <div id={styles.buttonsContainer}>
+            <button className="secondary-button left-secondary-button" onClick={() => this.addExercise()}><span>Add an Exercise <FaPlus /></span></button>
+            <button className="primary-button" onClick={() => this.saveWorkout()}>Save</button>
+          </div>
         </div>
       </>
     )
   }
 }
+
+export default withRouter(WithErrorMessage(CreateWorkout));
