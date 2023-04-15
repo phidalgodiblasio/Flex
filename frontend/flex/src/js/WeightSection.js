@@ -77,6 +77,7 @@ class WeightSection extends Component {
 
 
   //Getting todays weight, will just return null if no weight for the day is logged in DB, prompting user to enter weight for day
+  // ^^ I think it's actually returning 0 but I'm just handling that on the frontend so it's no big deal
   getTodaysWeight(){
     fetch(
       'http://localhost:8080/flex/weight-one',
@@ -87,10 +88,10 @@ class WeightSection extends Component {
     ).then(response => {
       if(response.status == 200) {
         response.json().then(weights => {
-
           let weight = weights.weight;
           this.setState({
-            todaysWeight:weight
+            todaysWeight: weight,
+            todaysWeightEntered: true,
           })
         });
       } else {
@@ -121,7 +122,6 @@ class WeightSection extends Component {
           let weightGoal = weights.weightGoal;
           this.setState({
             weightGoal: weightGoal,
-            todaysWeightEntered: true
           })
         });
       } else {
@@ -150,7 +150,6 @@ class WeightSection extends Component {
       }
     ).then(response => {
       if(response.status == 200) {
-        response.text().then(x => console.log(x));
         this.setState({
           weightGoal: this.state.editingGoalValue,
           editingWeightGoal: false,
@@ -166,6 +165,10 @@ class WeightSection extends Component {
   }
 
   saveWeightGoal() {
+    if(this.state.editingGoalValue < 1 || this.state.editingGoalValue > 999) {
+      this.props.showErrorMessage("Weight goal must be between 1 and 999 lbs");
+      return;
+    } 
     this.setWeightGoal(this.state.editingGoalValue);
   }
 
@@ -183,9 +186,6 @@ class WeightSection extends Component {
   }
 
   handleEditGoal(value) {
-    // don't allow weight goal to be > 999
-    if(value > 999) return;
-
     this.setState({
       editingGoalValue: value
     })
