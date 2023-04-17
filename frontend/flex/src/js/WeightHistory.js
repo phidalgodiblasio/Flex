@@ -148,6 +148,11 @@ class WeightHistory extends Component {
                                 }
                             }
                         }
+                        config={{
+                            displaylogo: false,
+                            displayModeBar: false,
+                            responsive: true,
+                          }}
                     />
                 </div>
             </>
