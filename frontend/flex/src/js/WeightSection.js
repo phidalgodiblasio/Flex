@@ -4,6 +4,7 @@ import SectionHeader from './SectionHeader'
 import { FaPen, FaArrowRight, FaTimes, FaCheck } from 'react-icons/fa'
 import styles from '../style/WeightSection.module.css'
 import { WithErrorMessage } from './WithErrorMessage'
+import { withRouter } from './withRouter';
 
 class WeightSection extends Component {
   componentDidMount() {
