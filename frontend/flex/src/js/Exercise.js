@@ -24,7 +24,7 @@ export default class Exercise extends Component {
 
     let exerciseDataRender = exercise.sets.map((set, index) => {
       return (
-        <tr>
+        <tr key={set.id}>
           <td>{index + 1}</td>
           <td>{set.weight} lbs</td>
           <td>{set.reps}</td>
@@ -53,7 +53,7 @@ export default class Exercise extends Component {
           <header>
             <h3>{exercise.name}</h3>
             <div>
-              <span>{exercise.sets.length} Sets</span>
+              <span>{exercise.sets.length} {exercise.sets.length > 1 ? "Sets" : "Set"}</span>
               { this.state.expanded ? <FaAngleDown /> : <FaAngleUp /> }
             </div>
           </header>

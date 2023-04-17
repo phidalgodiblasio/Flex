@@ -8,7 +8,7 @@ export default function CreateWorkoutExercise({id, name, sets, handleNameChange,
       null 
     ) : (
       <td className={styles.deleteSetButton}>
-        <button className="transparent-button" onClick={() => removeSet(id, set.id)}><FaTrash /></button>
+        <button className="transparent-button trash-button" onClick={() => removeSet(id, set.id)}><FaTrash /></button>
       </td>
     ) 
     return (
@@ -25,7 +25,7 @@ export default function CreateWorkoutExercise({id, name, sets, handleNameChange,
     <div className={`large-padding ${styles.exerciseWrapper}`}>
       <header className="spaced-apart">
         <input className={`${styles.nameInput} ${styles.noBackgroundInput}`} placeholder="Give this exercise a name..." value={name} onChange={(e) => handleNameChange(id, e.target.value)} />
-        <button className="transparent-button" onClick={() => deleteExercise(id)}><FaTrash /></button>
+        <button className="transparent-button trash-button" onClick={() => deleteExercise(id)}><FaTrash /></button>
       </header>
       <table className={styles.exerciseTable}>
         <thead>

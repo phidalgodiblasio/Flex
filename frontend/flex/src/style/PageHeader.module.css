@@ -1,23 +1,20 @@
+.headerWrapper {
+  background-color: white;
+  box-shadow: 0 0 8px #0001;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 99;
+}
+
 .header {
-  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 25px;
 }
 
-.header button {
-  position: absolute;
-  font-size: var(--large-text);
-  /* padding: 8px; */
-  padding: 0 8px;
-  transform: translateX(-8px);
-  border-radius: var(--rounded-border);
-  line-height: 1em;
-}
-
-.header button svg {
-  height: 40px;
-}
-
-.header h2 {
-  text-align: center;
-  margin: 0;
-  line-height: 40px;
+.header h3 {
+  margin: 0 0 0 10px;
+  flex-grow: 1;
 }

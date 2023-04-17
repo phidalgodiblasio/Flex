@@ -91,7 +91,7 @@ class WeightSection extends Component {
           let weight = weights.weight;
           this.setState({
             todaysWeight: weight,
-            todaysWeightEntered: true,
+            todaysWeightEntered: weight == 0 ? false : true,
           })
         });
       } else {
