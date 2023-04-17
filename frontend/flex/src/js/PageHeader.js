@@ -4,15 +4,18 @@ import styles from '../style/PageHeader.module.css';
 import { FaHome } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
-export default function PageHeader({title}) {
+export default function PageHeader({title, rightButton}) {
   const navigate = useNavigate();
 
   return (
-    <header className={`${styles.header} container`}>
-      <button className="transparent-button" onClick={() => navigate('/home')}>
-        <FaHome />
-      </button>
-      <h2>{title}</h2>
+    <header className={styles.headerWrapper}>
+      <div className={`${styles.header} container`}>
+        <button className="transparent-button header-icon-button" onClick={() => navigate('/home')}>
+          <FaHome />
+        </button>
+        <h3>{title}</h3>
+        {rightButton}
+      </div>
     </header>
   )
 }

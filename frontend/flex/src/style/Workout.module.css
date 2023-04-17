@@ -15,7 +15,31 @@
   margin-bottom: 12px;
 }
 
-.workoutWrapper > header > span {
+.workoutWrapper > header span {
   font-weight: 700;
   color: rgba(var(--secondary-rgb), 0.5);
+}
+
+.workoutWrapper > header button {
+  margin-left: 6px;
+  height: 28px;
+  aspect-ratio: 1;
+  padding: 0;
+}
+
+.workoutWrapper > header button svg {
+  fill: black;
+  transition: fill 0.2s;
+}
+
+#onLogPage {
+  padding: 25px;
+  border-radius: 12px;
+  background-color: white;
+  max-width: 450px;
+  margin: 0 auto 25px auto;
+}
+
+#onLogPage > header span {
+  color: var(--text-color);
 }

@@ -373,3 +373,53 @@ nav[aria-expanded="true"] {
   display: grid;
   align-items: center;
 }
+
+/* Used for page headers. I put it here instead of the module.css file because I had to use 
+   this class for passing in icon buttons to the page header */
+.header-icon-button {
+  line-height: 0.5em;
+  padding: 4px;
+  aspect-ratio: 1;
+  font-size: var(--large-text);
+  border-radius: var(--rounded-border);
+}
+
+.header-icon-button svg {
+  height: 20px;
+}
+
+.trash-button svg {
+  transition: 0.2s;
+}
+
+.trash-button:hover svg {
+  fill: red;
+  animation: shake 0.7s cubic-bezier(.17,.88,.29,.95) infinite;
+}
+
+@keyframes shake {
+  0% {
+    transform: rotate(0deg);
+  }
+  7.1% {
+    transform: rotate(8deg);
+  }
+  21.43% {
+    transform: rotate(-8deg);
+  }
+  35.71% {
+    transform: rotate(8deg);
+  }
+  50% {
+    transform: rotate(-8deg);
+  }
+  64.29% {
+    transform: rotate(8deg);
+  }
+  78.57% {
+    transform: rotate(-8deg);
+  }
+  92.86% {
+    transform: rotate(0deg);
+  }
+}

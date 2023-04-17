@@ -7,6 +7,7 @@ import SecondaryButton from './SecondaryButton';
 import SectionHeader from './SectionHeader';
 import Cookies from 'js-cookie';
 import { WithErrorMessage } from './WithErrorMessage';
+import { withRouter } from './withRouter';
 
 class IntakeSection extends Component {
   // Since the intake goals are edited directly in the state object, I have to back them up before editing,
@@ -134,7 +135,7 @@ class IntakeSection extends Component {
   }
 
   pushIntakeGraphsPage() {
-    console.log("TODO: Implement intake graphs page");
+    this.props.navigate('/intake-progress');
   }
 
   // adding: true if adding to the value, false if subtracting
@@ -351,4 +352,4 @@ class IntakeSection extends Component {
   }
 }
 
-export default WithErrorMessage(IntakeSection);
+export default withRouter(WithErrorMessage(IntakeSection));

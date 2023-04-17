@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import SectionHeader from './SectionHeader'
-import { FaPlus, FaArrowRight } from 'react-icons/fa'
+import { FaPlus, FaArrowRight, FaCheck } from 'react-icons/fa'
 import SecondaryButton from './SecondaryButton'
 import styles from '../style/WorkoutSection.module.css'
 import Workout from './Workout'
@@ -8,8 +8,22 @@ import { withRouter } from './withRouter'
 import { WithErrorMessage } from './WithErrorMessage'
 
 class WorkoutSection extends Component {  
-  componentDidMount() {
-    /*
+  componentDidMount() {    
+    this.getTodaysWorkouts();
+  }
+
+  constructor(props) {
+    super(props)
+  
+    this.state = {
+      editing: false,
+      workoutMenuOpen: false,
+      workoutMenuHasBeenOpened: false,
+      todaysWorkouts: []
+    }
+  }
+
+  deleteWorkout(id) {
     // Delete workout
     fetch('http://localhost:8080/flex/workout-delete', {
         method: 'POST',
@@ -17,7 +31,7 @@ class WorkoutSection extends Component {
         headers: {
           "Content-Type": "application/json"
         },
-        body: 1 // This is just the id for the workout to be deleted
+        body: id // This is just the id for the workout to be deleted
       }
     ).then(response => {
       if (response.status != 200) {
@@ -25,9 +39,12 @@ class WorkoutSection extends Component {
           this.props.showErrorMessage(body);
         });
       }
+
+      this.getTodaysWorkouts();
     })
-    */
-    
+  }
+
+  getTodaysWorkouts() {
     // Get today's workouts
     fetch('http://localhost:8080/flex/workout-today', {
         method: 'GET',
@@ -48,18 +65,7 @@ class WorkoutSection extends Component {
     })
   }
 
-  constructor(props) {
-    super(props)
-  
-    this.state = {
-      editing: false,
-      workoutMenuOpen: false,
-      workoutMenuHasBeenOpened: false,
-      todaysWorkouts: []
-    }
-  }
-
-  edit() {
+  toggleEditing() {
     this.setState({
       editing: !this.state.editing
     })
@@ -83,7 +89,7 @@ class WorkoutSection extends Component {
   }
 
   pushExerciseLogPage() {
-    console.log("TODO: Implement exercise log page");
+    this.props.navigate('/workout-log');
   }
 
   render() {
@@ -93,20 +99,33 @@ class WorkoutSection extends Component {
     if(this.state.workoutMenuHasBeenOpened) workoutMenuClasses = "hasBeenOpened";
 
     let todaysWorkoutsRender = this.state.todaysWorkouts.map(workout => {
-      return <Workout workout={workout} />
+      return <Workout key={workout.id} workout={workout} editing={this.state.editing} deleteWorkout={(id) => this.deleteWorkout(id)} />
     })
+
+    let editButtonRender = this.state.editing ? (
+      <>
+        <button className="transparent-button header-icon-button" onClick={() => this.toggleEditing()}>
+          <FaCheck style={{fill: "var(--tertiary-color)"}} />
+        </button>
+      </>
+    ) : (
+      <button className="secondary-button right-secondary-button" onClick={() => this.toggleEditing()}>
+        <span>Edit Workouts</span>
+      </button>
+    )
 
     let titleRender = this.state.todaysWorkouts.length == 0 ? (
       <p id={styles.noWorkouts}>No workouts logged today.</p>
     ) : (
-      <h4>Today</h4>
+      <div className="spaced-apart">
+        <h4>Today</h4>
+        {editButtonRender}
+      </div>
     )
 
     return (
       <div className="section large-padding" onClick={(e) => this.checkCloseWorkoutMenu(e.target)}>
-        <SectionHeader title="Workouts">
-
-        </SectionHeader>
+        <SectionHeader title="Workouts" />
         <div id={styles.workoutButtons}>
           <div>
             <button className="primary-button" onClick={() => this.toggleWorkoutMenu()}><FaPlus /> Add New Workout</button>
@@ -119,7 +138,7 @@ class WorkoutSection extends Component {
         </div>
         {titleRender}
         {todaysWorkoutsRender}
-        <SecondaryButton className="left-secondary-button" onClick={() => this.pushExerciseLogPage()}>View Exercise Log <FaArrowRight /></SecondaryButton>
+        <SecondaryButton className="left-secondary-button" onClick={() => this.pushExerciseLogPage()}>View Workout Log <FaArrowRight /></SecondaryButton>
       </div>
     )
   }
