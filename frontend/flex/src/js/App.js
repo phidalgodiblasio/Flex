@@ -6,6 +6,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { withRouter } from './withRouter';
 import CreateWorkout from './CreateWorkout';
 import WorkoutLog from './WorkoutLog';
+import IntakeGraphs from './IntakeGraphs';
 
 class App extends Component {
   constructor(props) {
@@ -53,6 +54,7 @@ class App extends Component {
           <Route path="/home" element={<Homepage userLogout={() => this.userLogout()} username={this.state.username} />} />
           <Route path="/create-workout" element={<CreateWorkout />} exercises={[]} />
           <Route path="/workout-log" element={<WorkoutLog />} />
+          <Route path="/intake-progress" element={<IntakeGraphs />} />
         </Routes>
       </>
     )
