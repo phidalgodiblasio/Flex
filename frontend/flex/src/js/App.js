@@ -7,6 +7,7 @@ import { withRouter } from './withRouter';
 import CreateWorkout from './CreateWorkout';
 import WorkoutLog from './WorkoutLog';
 import IntakeGraphs from './IntakeGraphs';
+import WeightHistory from './WeightHistory';
 
 class App extends Component {
   constructor(props) {
@@ -55,6 +56,7 @@ class App extends Component {
           <Route path="/create-workout" element={<CreateWorkout />} exercises={[]} />
           <Route path="/workout-log" element={<WorkoutLog />} />
           <Route path="/intake-progress" element={<IntakeGraphs />} />
+          <Route path="/display-weights" element={<WeightHistory/>}/>
         </Routes>
       </>
     )

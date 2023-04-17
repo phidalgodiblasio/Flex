@@ -106,7 +106,7 @@ class WeightSection extends Component {
 
 
   pushWeightProgressPage() {
-    console.log("TODO: Implement weight progress page");
+    this.props.navigate('/display-weights');
   }
 
   getWeightGoal() {
@@ -260,4 +260,4 @@ class WeightSection extends Component {
   }
 }
 
-export default WithErrorMessage(WeightSection);
+export default withRouter(WithErrorMessage(WeightSection));
