@@ -11,7 +11,7 @@ class WeightHistory extends Component {
     componentDidMount() {
         this.getWeights();
         this.getWeightGoal();
-    }
+    } 
 
     getWeights() {
         fetch(
@@ -136,23 +136,51 @@ class WeightHistory extends Component {
                         ]}
                         layout={
                             {
-                                width: 1080, height: 600, title: 'Your Weight Entries',
+                                paper_bgcolor:'rgba(0,0,0,0)',
+                                width: 1080, height: 600,
                                 xaxis: { 
-                                    title: 'date',
+                                    title: 'Date',
                                     //showgrid: false
                                 },
                                 yaxis: { 
                                     range: [yMin, yMax], 
                                     title: 'Weight',
                                     //showgrid: false
-                                }
+                                },
+                                annotations: [
+                                    {
+                                      xref: 'paper',
+                                      yref: 'paper',
+                                      x: 0.03,
+                                      xanchor: 'left',
+                                      y: 1.15,
+                                      yanchor: 'top',
+                                      text: 'Your Weight Entries',
+                                      font: {
+                                          size: 24
+                                        },
+                                      showarrow: false
+                                    }
+                                  ]
                             }
                         }
                         config={{
                             displaylogo: false,
                             displayModeBar: false,
                             responsive: true,
-                          }}
+                            // options: {
+                            //     plugins: {
+                            //       chartAreaBorder: {
+                            //         borderColor: 'red',
+                            //         borderWidth: 2,
+                            //         borderDash: [5, 5],
+                            //         borderDashOffset: 2,
+                            //       }
+                            //     }   
+                            // },
+                            // plugins: [chartAreaBorder]
+                        }
+                    }
                     />
                 </div>
             </>
