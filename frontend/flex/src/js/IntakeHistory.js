@@ -117,7 +117,7 @@ class IntakeHistory extends Component {
         //console.log(calorieHistory);
         return (
             <>
-                <PageHeader title="Intake Progress" />
+                <PageHeader title="Intake Logs" />
                 <div className={`container ${styles.graphsWrapper}`}>
                     <Plot
                         className={styles.plot}
@@ -177,7 +177,7 @@ class IntakeHistory extends Component {
                                     xanchor: 'left',
                                     y: 1.3,
                                     yanchor: 'top',
-                                    text: 'Calorie Total Entries',
+                                    text: 'Calorie Totals',
                                     font: {
                                         size: 24
                                       },
@@ -250,7 +250,7 @@ class IntakeHistory extends Component {
                                     xanchor: 'left',
                                     y: 1.3,
                                     yanchor: 'top',
-                                    text: 'Protein Intake Entries',
+                                    text: 'Protein Intake',
                                     font: {
                                         size: 24
                                       },
@@ -322,7 +322,7 @@ class IntakeHistory extends Component {
                                     xanchor: 'left',
                                     y: 1.3,
                                     yanchor: 'top',
-                                    text: 'Carbohydrate Intake Entries',
+                                    text: 'Carbohydrate Intake',
                                     font: {
                                         size: 24
                                       },
@@ -394,7 +394,7 @@ class IntakeHistory extends Component {
                                     xanchor: 'left',
                                     y: 1.3,
                                     yanchor: 'top',
-                                    text: 'Fat Intake Entries',
+                                    text: 'Fat Intake',
                                     font: {
                                         size: 24
                                       },
