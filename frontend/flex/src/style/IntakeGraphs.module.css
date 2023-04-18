@@ -1,7 +1,13 @@
 .graphsWrapper {
-  
+  margin-top: 10px;
 } 
 
 .plot {
   width: 100%;
+  background-color: white;
+  text-align: center;
+  margin-top: 10px; 
+  border-radius: 25px;
+  margin-left: 3%;
+  margin-right: 12%;
 }

@@ -135,7 +135,7 @@ class WeightHistory extends Component {
                             trace2
                         ]}
                         layout={
-                            {
+                            { 
                                 paper_bgcolor:'rgba(0,0,0,0)',
                                 width: 1080, height: 600,
                                 xaxis: { 
