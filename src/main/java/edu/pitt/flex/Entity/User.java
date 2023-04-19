@@ -1,6 +1,7 @@
 package edu.pitt.flex.Entity;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -108,18 +109,31 @@ public class User {
     }
 
     public List<Workout> getAllWorkouts() {
-        return workouts;
+        // Create empty workout linked list to return
+        List<Workout> output = new LinkedList<>();
+        
+        // Reverse workouts
+        for (Workout workout : workouts) {
+            output.add(0, workout);
+        }
+
+        return output;
     }
 
     public List<Workout> getWorkoutsOnDate(String date) {
-        // Create empty workout array list to return
-        List<Workout> output = new ArrayList<>();
+        // Create empty workout linked list to return
+        List<Workout> output = new LinkedList<>();
 
         // Add workouts on date
+        boolean dateFound = false;
         for (Workout workout : workouts) {
             if (workout.getDate().compareTo(date) == 0) {
-                output.add(workout);
-            } 
+                dateFound = true;
+                output.add(0, workout);
+            } else if (dateFound) {
+                // Break out of loop if all workouts on date found
+                break;
+            }
         }
 
         return output;
