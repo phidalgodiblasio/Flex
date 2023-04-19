@@ -135,12 +135,12 @@ class WeightHistory extends Component {
                         ]}
                         layout={
                             { 
-                                font: {
+                                  font: {
                                     family: ['Inter', 'sans-serif'],
                                     color: 'black'
                                 },
                                 paper_bgcolor:'rgba(0,0,0,0)',
-                                height: 600,
+                                height: 500,
                                 xaxis: { 
                                     title: 'Date',
                                     //showgrid: false
@@ -151,25 +151,11 @@ class WeightHistory extends Component {
                                     fixedrange: true
                                     //showgrid: false
                                 },
-                                annotations: [
-                                    {
-                                      xref: 'paper',
-                                      yref: 'paper',
-                                      x: 0.03,
-                                      xanchor: 'left',
-                                      y: 1.15,
-                                      yanchor: 'top',
-                                      text: 'Your Weight Entries',
-                                      font: {
-                                          size: 24
-                                        },
-                                      showarrow: false
-                                    }
-                                ],
                                 shapes: [
                                     {
                                         name: "Goal",
                                         type: 'line',
+                                        xref: 'paper',
                                         x0: 0,
                                         x1: 1,
                                         y0: this.state.weightGoal,
@@ -184,11 +170,25 @@ class WeightHistory extends Component {
                                     {
                                         showarrow: false,
                                         text: 'Your Goal',
+                                        xref: 'paper',
                                         x: 1,
                                         y: this.state.weightGoal,
                                         xanchor: 'left',
                                         align: 'right',
                                     },
+                                    {
+                                        xref: 'paper',
+                                        yref: 'paper',
+                                        x: 0,
+                                        xanchor: 'left',
+                                        y: 1.1,
+                                        yanchor: 'bottom',
+                                        text: '<b>Your Weight Entries</b>',
+                                        font: {
+                                            size: 24,
+                                        },
+                                        showarrow: false
+                                    }
                                 ]
                             }
                         }

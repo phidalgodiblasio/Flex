@@ -150,8 +150,9 @@ class IntakeHistory extends Component {
                                 {
                                     name: "Goal",
                                     type: 'line',
-                                    x0:xVals[0],
-                                    x1:xVals[xVals.length-1],
+                                    xref: 'paper',
+                                    x0: 0,
+                                    x1: 1,
                                     y0: goals.calGoal,
                                     y1: goals.calGoal,
                                     line: {
@@ -164,7 +165,8 @@ class IntakeHistory extends Component {
                                 {
                                     showarrow: false,
                                     text: 'Your Goal',
-                                    x: xVals[xVals.length-1],
+                                    xref: 'paper',
+                                    x: 1,
                                     y: goals.calGoal,
                                     xanchor: 'left',
                                     align: 'right',
@@ -172,16 +174,16 @@ class IntakeHistory extends Component {
                                 {
                                     xref: 'paper',
                                     yref: 'paper',
-                                    x: 0.01,
+                                    x: 0,
                                     xanchor: 'left',
-                                    y: 1.3,
-                                    yanchor: 'top',
-                                    text: 'Calorie Totals',
+                                    y: 1.15,
+                                    yanchor: 'bottom',
+                                    text: '<b>Calorie Intake</b>',
                                     font: {
-                                        size: 24
-                                      },
+                                        size: 24,
+                                    },
                                     showarrow: false
-                                  }
+                                }
 
                             ],
                             //showlegend: true
@@ -223,8 +225,9 @@ class IntakeHistory extends Component {
                             shapes: [
                                 {
                                     type: 'line',
-                                    x0:xVals[0],
-                                    x1:xVals[xVals.length-1],
+                                    xref: 'paper',
+                                    x0: 0,
+                                    x1: 1,
                                     y0: goals.proteinGoal,
                                     y1: goals.proteinGoal,
                                     line: {
@@ -237,21 +240,22 @@ class IntakeHistory extends Component {
                                 {
                                     showarrow: false,
                                     text: 'Your Goal',
-                                    x: xVals[xVals.length-1],
+                                    xref: 'paper',
+                                    x: 1,
                                     y: goals.proteinGoal,
                                     xanchor: 'left',
                                     align: 'right',
                                 },{
-                                    xref: 'paper',
+                                  xref: 'paper',
                                     yref: 'paper',
-                                    x: 0.01,
+                                    x: 0,
                                     xanchor: 'left',
-                                    y: 1.3,
-                                    yanchor: 'top',
-                                    text: 'Protein Intake',
+                                    y: 1.15,
+                                    yanchor: 'bottom',
+                                    text: '<b>Protein Intake</b>',
                                     font: {
-                                        size: 24
-                                      },
+                                        size: 24,
+                                    },
                                     showarrow: false
                                   }
                             ]
@@ -293,8 +297,9 @@ class IntakeHistory extends Component {
                             shapes: [
                                 {
                                     type: 'line',
-                                    x0:xVals[0],
-                                    x1:xVals[xVals.length-1],
+                                    xref: 'paper',
+                                    x0: 0,
+                                    x1: 1,
                                     y0: goals.carbGoal,
                                     y1: goals.carbGoal,
                                     line: {
@@ -307,7 +312,8 @@ class IntakeHistory extends Component {
                                 {
                                     showarrow: false,
                                     text: 'Your Goal',
-                                    x: xVals[xVals.length-1],
+                                    xref: 'paper',
+                                    x: 1,
                                     y: goals.carbGoal,
                                     xanchor: 'left',
                                     align: 'right',
@@ -315,14 +321,14 @@ class IntakeHistory extends Component {
                                 {
                                     xref: 'paper',
                                     yref: 'paper',
-                                    x: 0.01,
+                                    x: 0,
                                     xanchor: 'left',
-                                    y: 1.3,
-                                    yanchor: 'top',
-                                    text: 'Carbohydrate Intake',
+                                    y: 1.15,
+                                    yanchor: 'bottom',
+                                    text: '<b>Carbohydrate Intake</b>',
                                     font: {
-                                        size: 24
-                                      },
+                                        size: 24,
+                                    },
                                     showarrow: false
                                   }
                             ]
@@ -364,8 +370,9 @@ class IntakeHistory extends Component {
                             shapes: [
                                 {
                                     type: 'line',
-                                    x0:xVals[0],
-                                    x1:xVals[xVals.length-1],
+                                    xref: 'paper',
+                                    x0: 0,
+                                    x1: 1,
                                     y0: goals.fatGoal,
                                     y1: goals.fatGoal,
                                     line: {
@@ -378,7 +385,8 @@ class IntakeHistory extends Component {
                                 {
                                     showarrow: false,
                                     text: 'Your Goal',
-                                    x: xVals[xVals.length-1],
+                                    xref: 'paper',
+                                    x: 1,
                                     y: goals.fatGoal,
                                     xanchor: 'left',
                                     align: 'right',
@@ -386,14 +394,14 @@ class IntakeHistory extends Component {
                                 {
                                     xref: 'paper',
                                     yref: 'paper',
-                                    x: 0.01,
+                                    x: 0,
                                     xanchor: 'left',
-                                    y: 1.3,
-                                    yanchor: 'top',
-                                    text: 'Fat Intake',
+                                    y: 1.15,
+                                    yanchor: 'bottom',
+                                    text: '<b>Fats Intake</b>',
                                     font: {
-                                        size: 24
-                                      },
+                                        size: 24,
+                                    },
                                     showarrow: false
                                   }
                             ]

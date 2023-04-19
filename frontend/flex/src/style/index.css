@@ -43,6 +43,10 @@ body {
   --largest-text: 32pt;
 }
 
+text {
+  font-family: 'Inter', sans-serif !important;
+}
+
 .container {
   padding: 25px;
   max-width: 950px;
@@ -57,7 +61,7 @@ body {
   height: min-content;
 }
 
-.section > div:not(:last-of-type), .section > form {
+.section > div, .section > form {
   margin-bottom: 12px;
 }
 
