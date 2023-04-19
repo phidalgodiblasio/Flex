@@ -85,7 +85,7 @@ class WorkoutSection extends Component {
   }
 
   pushTemplatesPage(editing) {
-    console.log("TODO: Implement templates page");
+    this.props.navigate('/templates');
   }
 
   pushExerciseLogPage() {

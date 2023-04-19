@@ -8,6 +8,7 @@ import CreateWorkout from './CreateWorkout';
 import WorkoutLog from './WorkoutLog';
 import WeightHistory from './WeightHistory';
 import IntakeHistory from './IntakeHistory';
+import Templates from './Templates';
 
 class App extends Component {
   constructor(props) {
@@ -43,7 +44,6 @@ class App extends Component {
     return (
       <>
         <Routes>
-          { /* TODO: Fix this with authentication from cookies */}
           <Route path="*" element={
             this.state.loggedIn ? (
               <Navigate to="/home" />
@@ -56,7 +56,8 @@ class App extends Component {
           <Route path="/create-workout" element={<CreateWorkout />} exercises={[]} />
           <Route path="/workout-log" element={<WorkoutLog />} />
           <Route path="/intake-progress" element={<IntakeHistory />} />
-          <Route path="/display-weights" element={<WeightHistory/>}/>
+          <Route path="/display-weights" element={<WeightHistory/>} />
+          <Route path="/templates" element={<Templates />} />
         </Routes>
       </>
     )

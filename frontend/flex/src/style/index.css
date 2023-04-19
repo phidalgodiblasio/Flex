@@ -57,7 +57,7 @@ body {
   height: min-content;
 }
 
-.section > div, .section > form {
+.section > div:not(:last-of-type), .section > form {
   margin-bottom: 12px;
 }
 
@@ -127,15 +127,22 @@ button {
   transition: background-color 0.2s linear, 
               box-shadow 0.2s linear;
   border-radius: var(--rounded-border);
+  white-space: nowrap;
 }
 
 button svg {
   height: 0.8em;
 }
 
+.medium-icon-button {
+  font-size: var(--semi-large-text);
+  padding: 8px;
+}
+
 .transparent-button {
   border-radius: var(--rounded-border);
   background: none;
+  line-height: 0.5;
 }
 
 .transparent-button:hover {

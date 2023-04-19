@@ -1,0 +1,153 @@
+.templatesWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+}
+
+.headerButtons {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.templateWrapper {
+  flex-grow: 1;
+  min-width: 300px;
+}
+
+@media screen and (width > 400px) {
+  .templateWrapper {
+    width: 400px;
+  }
+}
+
+.exercises {
+  margin: 25px 0 0 0;
+}
+
+.exercise {
+  border-radius: var(--rounded-border);
+}
+
+.exercise:nth-of-type(odd) {
+  background-color: var(--secondary-light);
+}
+
+.sets {
+  color: rgba(var(--secondary-rgb), 0.7);
+  font-weight: bold;
+}
+
+.exerciseName {
+  color: var(--on-background);
+  font-weight: bold;
+}
+
+.templateTitle {
+  margin: 0 12px 0 0;
+  /* Fun hack that keeps long words from breaking the layout */
+  min-width: 1%;
+  overflow-wrap: break-word;
+}
+
+.templateTitle::-webkit-scrollbar {
+  display: none;
+}
+
+.templateTitleWrapper {
+  position: relative;
+}
+
+.addExerciseButton {
+  display: block;
+  margin: 12px auto 0 auto;
+}
+
+.inputWrapper {
+  margin-right: 12px;
+}
+
+.input {
+  background: none;
+  border: none;
+  outline: none;
+  font-weight: bold;
+}
+
+.templateTitleInput {
+  font-size: var(--semi-large-text);
+  width: 100%;
+}
+
+.exercise input {
+  width: 100%;
+  font-size: var(--medium-text);
+}
+
+/* Because placeholder selector will not work for text-decoration because why the hell not */
+.input[data-empty="false"] {
+  text-decoration: underline;
+}
+
+.rightSideWrapper {
+  display: flex;
+}
+
+.rightSideWrapper > button {
+  margin-left: 12px;
+  padding: 8px;
+}
+
+.editingSetsWrapper {
+  display: flex;
+  gap: 6px;
+  min-width: 130px;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.setButtons button {
+  border: 1px solid var(--secondary-color);
+  height: 22px;
+}
+
+.setButtons button:disabled {
+  border: 1px solid rgba(var(--secondary-rgb), 0.3);
+  cursor: default;
+}
+
+.setButtons button:disabled svg {
+  fill: rgba(var(--secondary-rgb), 0.3) !important;
+}
+
+.setButtons button svg {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.setButtons button:first-of-type {
+  border-radius: var(--rounded-border) 0 0 var(--rounded-border);
+  background: none;
+}
+
+.setButtons button:not(:disabled):first-of-type:hover {
+  background: rgba(var(--secondary-rgb), 0.2);
+}
+
+.setButtons button:first-of-type svg {
+  fill: var(--secondary-color);
+}
+
+.setButtons button:last-of-type {
+  border-radius: 0 var(--rounded-border) var(--rounded-border) 0;
+  background: var(--secondary-color);
+}
+
+.setButtons button:last-of-type:hover {
+  background: rgba(var(--secondary-rgb), 0.7);
+}
+
+.setButtons button:last-of-type svg {
+  fill: white;
+}
