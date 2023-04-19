@@ -277,7 +277,7 @@ button svg {
 #popup-container {
   background-color: white;
   border-radius: 12px;
-  min-width: 300px;
+  width: 300px;
 }
 
 #popup-container input {

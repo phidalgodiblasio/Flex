@@ -5,6 +5,7 @@ import PageHeader from './PageHeader';
 import CreateWorkoutExercise from './CreateWorkoutExercise';
 import { WithErrorMessage } from './WithErrorMessage';
 import { withRouter } from './withRouter';
+import SaveAsTemplatePopUp from './SaveAsTemplatePopUp';
 
 class CreateWorkout extends Component {
   // use this to make sure every list item that's getting rendered will have its own unique ID that maintains across re-renders
@@ -16,7 +17,11 @@ class CreateWorkout extends Component {
     // TODO: Pull exercises in as a prop (idk why i was struggling with this)
     this.state = {
       workoutName: "",
-      exercises: []
+      exercises: [],
+      popUpState: {
+        active: false,
+        hasBeenOpened: false,
+      }
     }
   }
 
@@ -38,28 +43,6 @@ class CreateWorkout extends Component {
       exercises: newExercises
     })
   }
-
-  /*addExerciseAfterIndex(index) {
-    let newExercise = {
-      id: this.universalKey++,
-      name: "",
-      sets: [
-        {
-          weight: 0,
-          reps: 0,
-        }
-      ]
-    }
-
-    // Create a new exercise array [all items before index, {newExercise}, all items after index]
-    let newExercises = this.state.exercises.slice(0, index + 1);
-    newExercises.push(newExercise);
-    newExercises = newExercises.concat(this.state.exercises.slice(index + 1));
-
-    this.setState({
-      exercises: newExercises
-    })
-  }*/
 
   handleNameChange(id, name) {
     // find the exercise with the given id and update its name to the new name
@@ -159,22 +142,27 @@ class CreateWorkout extends Component {
     })
   }
 
-  saveWorkout() {
+  // Check if the user has entered valid info for the workout
+  workoutStateOk() {
     if(this.state.workoutName == "") {
       this.props.showErrorMessage("Please give your workout a name.");
-      return;
+      return false;
     }
     if(this.state.exercises.length == 0) {
       this.props.showErrorMessage("Please add at least one exercise to your workout.");
-      return;
+      return false;
     }
     let missingExerciseName = false;
     this.state.exercises.forEach(exercise => { if(exercise.name == "") missingExerciseName = true; })
     if(missingExerciseName) {
       this.props.showErrorMessage("At least one exercise is missing a name");
-      return;
+      return false;
     } 
 
+    return true;
+  }
+
+  saveWorkout() {
     // Remove all ids from exercises and sets to have correct format for backend
     let exercisesToBackend = this.state.exercises.map(exercise => {
       // Remove ids from sets
@@ -221,6 +209,72 @@ class CreateWorkout extends Component {
     })
   }
 
+  saveAsTemplate() {
+    let templateToBackend = { name: this.state.workoutName, exercises: []};
+    
+    /*
+    Format: {name, Array of [exercise name, #sets]}
+    */
+
+    for(let exercise of this.state.exercises) {
+      templateToBackend.exercises.push([exercise.name, exercise.sets.length.toString()])
+    }
+    
+    fetch(
+      'http://localhost:8080/flex/template-add', 
+      {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(templateToBackend)
+      }
+    ).then(response => {
+      if (response.status != 200) {
+        response.text().then(body => {
+          this.props.showErrorMessage(body);
+        });
+        return;
+      }
+
+      response.text().then(body => {
+        console.log(body);
+      })
+    })
+  }
+
+  popUpSelection(save) {
+    this.closePopUp();
+
+    // Save the workout as a template if the user selected that they wanted to
+    if(save) {
+      this.saveAsTemplate();
+      this.saveWorkout();
+    } else {
+      this.saveWorkout();
+    }
+  }
+
+  showPopUp() {
+    if(!this.workoutStateOk()) return;
+    this.setState({
+      popUpState: {
+        active: true,
+        hasBeenOpened: true
+      }
+    })
+  }
+
+  closePopUp() {
+    this.setState({
+      popUpState: {
+        active: false,
+        hasBeenOpened: true
+      }
+    })
+  }
+
   render() {
     // Yeah i know i hate that im passing in all these functions but idk how else to do this
     // I have to maintain the state in this parent object, otherwise I can't have a dynamic list of exercises with changing state
@@ -244,13 +298,17 @@ class CreateWorkout extends Component {
 
     return (
       <>
+        <SaveAsTemplatePopUp 
+          hasBeenOpened={this.state.popUpState.hasBeenOpened}
+          active={this.state.popUpState.active} 
+          popUpSelection={(selection) => this.popUpSelection(selection)} />
         <PageHeader title="Create a Workout" />
         <div className="container" id={styles.workoutContainer}>
           <input className={styles.noBackgroundInput} placeholder="Give your workout a name..." value={this.state.workoutName} onChange={(e) => this.handleWorkoutNameChange(e.target.value)} />
           {exercisesRender}
           <div id={styles.buttonsContainer}>
             <button className="secondary-button left-secondary-button" onClick={() => this.addExercise()}><span>Add an Exercise <FaPlus /></span></button>
-            <button className="primary-button" onClick={() => this.saveWorkout()}>Save</button>
+            <button className="primary-button" onClick={() => this.showPopUp()}>Save</button>
           </div>
         </div>
       </>
