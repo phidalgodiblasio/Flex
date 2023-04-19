@@ -1,13 +1,10 @@
-.graphsWrapper {
-  margin-top: 10px;
+.graphsWrapper:not(:last-of-type) {
+  padding-bottom: 0;
 } 
 
 .plot {
   width: 100%;
   background-color: white;
   text-align: center;
-  margin-top: 10px; 
   border-radius: 25px;
-  margin-left: 3%;
-  margin-right: 12%;
 }

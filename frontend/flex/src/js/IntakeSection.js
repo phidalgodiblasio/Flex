@@ -134,7 +134,7 @@ class IntakeSection extends Component {
     })
   }
 
-  pushIntakeGraphsPage() {
+  pushIntakeHistoryPage() {
     this.props.navigate('/intake-progress');
   }
 
@@ -345,7 +345,7 @@ class IntakeSection extends Component {
             handleEditGoal={handleEditGoal}
             pushPopUp={pushPopUp}
           />
-          <SecondaryButton className="left-secondary-button" onClick={() => this.pushIntakeGraphsPage()}>View Progress <FaArrowRight /></SecondaryButton>
+          <SecondaryButton className="left-secondary-button" onClick={() => this.pushIntakeHistoryPage()}>View Progress <FaArrowRight /></SecondaryButton>
         </div>
       </>
     )

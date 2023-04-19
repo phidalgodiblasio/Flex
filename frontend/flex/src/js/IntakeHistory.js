@@ -1,7 +1,7 @@
 import React, { Component, useEffect, useState } from 'react';
 import PageHeader from './PageHeader';
 import Plot from 'react-plotly.js';
-import styles from '../style/IntakeGraphs.module.css';
+import styles from '../style/History.module.css';
 import { WithErrorMessage } from './WithErrorMessage';
 import { withRouter } from './withRouter';
 
@@ -144,8 +144,7 @@ class IntakeHistory extends Component {
                                 family: ['Inter', 'sans-serif'],
                                 color: 'black'
                             },
-                            xaxis: { fixedrange: true },
-                            yaxis: { range: [yScale[0], yScale[1]], title: 'Calories' },
+                            yaxis: { range: [yScale[0], yScale[1]], title: 'Calories', fixedrange: true },
                             autosize: true,
                             shapes: [
                                 {
@@ -219,8 +218,7 @@ class IntakeHistory extends Component {
                                 family: ['Inter', 'sans-serif'],
                                 color: 'black'
                             },
-                            xaxis: { fixedrange: true },
-                            yaxis: { range: [yScale[2], yScale[3]], title: 'Protein (g)' },
+                            yaxis: { range: [yScale[2], yScale[3]], title: 'Protein (g)', fixedrange: true },
                             autosize: true,
                             shapes: [
                                 {
@@ -290,8 +288,7 @@ class IntakeHistory extends Component {
                                 family: ['Inter', 'sans-serif'],
                                 color: 'black'
                             },
-                            xaxis: { fixedrange: true },
-                            yaxis: { range: [yScale[4], yScale[5]], title: 'Carbs (g)' },
+                            yaxis: { range: [yScale[4], yScale[5]], title: 'Carbs (g)', fixedrange: true },
                             autosize: true,
                             shapes: [
                                 {
@@ -362,8 +359,7 @@ class IntakeHistory extends Component {
                                 family: ['Inter', 'sans-serif'],
                                 color: 'black'
                             },
-                            xaxis: { fixedrange: true },
-                            yaxis: { range: [yScale[6], yScale[7]], title: 'Fat (g)' },
+                            yaxis: { range: [yScale[6], yScale[7]], title: 'Fat (g)', fixedrange: true },
                             autosize: true,
                             shapes: [
                                 {

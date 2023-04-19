@@ -6,7 +6,6 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { withRouter } from './withRouter';
 import CreateWorkout from './CreateWorkout';
 import WorkoutLog from './WorkoutLog';
-import IntakeGraphs from './IntakeGraphs';
 import WeightHistory from './WeightHistory';
 import IntakeHistory from './IntakeHistory';
 

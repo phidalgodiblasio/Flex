@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { FaPlus } from 'react-icons/fa';
-import styles from '../style/WeightHistory.module.css';
+import styles from '../style/History.module.css';
 import PageHeader from './PageHeader';
 import { WithErrorMessage } from './WithErrorMessage';
 import { withRouter } from './withRouter';
@@ -128,16 +127,20 @@ class WeightHistory extends Component {
         return (
             <>
                 <PageHeader title="Weight History" />
-                <div id = {styles.graph}>
+                <div className="container">
                     <Plot
+                        className={styles.plot}
                         data={[
-                            trace1,
-                            trace2
+                            trace1
                         ]}
                         layout={
                             { 
+                                font: {
+                                    family: ['Inter', 'sans-serif'],
+                                    color: 'black'
+                                },
                                 paper_bgcolor:'rgba(0,0,0,0)',
-                                width: 1080, height: 600,
+                                height: 600,
                                 xaxis: { 
                                     title: 'Date',
                                     //showgrid: false
@@ -145,6 +148,7 @@ class WeightHistory extends Component {
                                 yaxis: { 
                                     range: [yMin, yMax], 
                                     title: 'Weight',
+                                    fixedrange: true
                                     //showgrid: false
                                 },
                                 annotations: [
@@ -161,7 +165,31 @@ class WeightHistory extends Component {
                                         },
                                       showarrow: false
                                     }
-                                  ]
+                                ],
+                                shapes: [
+                                    {
+                                        name: "Goal",
+                                        type: 'line',
+                                        x0: 0,
+                                        x1: 1,
+                                        y0: this.state.weightGoal,
+                                        y1: this.state.weightGoal,
+                                        line: {
+                                            color: '#0003',
+                                            dash: 'dash',
+                                        }
+                                    }
+                                ],
+                                annotations: [
+                                    {
+                                        showarrow: false,
+                                        text: 'Your Goal',
+                                        x: 1,
+                                        y: this.state.weightGoal,
+                                        xanchor: 'left',
+                                        align: 'right',
+                                    },
+                                ]
                             }
                         }
                         config={{
