@@ -108,9 +108,9 @@ class IntakeHistory extends Component {
         let goals = this.state.goals;
         let histories = this.setHistories();
         let calorieHistory = histories[0];
-        let carbHistory = histories[1];
+        let proteinHistory = histories[1];
         let fatHistory = histories[2];
-        let proteinHistory = histories[3];
+        let carbHistory = histories[3];
         let xVals = this.getXVals();
         let yScale = this.getYScale();
         //console.log(xVals);
