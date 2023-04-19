@@ -5,6 +5,7 @@ import { WithErrorMessage } from './WithErrorMessage';
 import Template from './Template';
 import { FaPlus } from 'react-icons/fa';
 import styles from '../style/Template.module.css';
+import SaveAllTemplatesPopUp from './SaveAllTemplatesPopUp';
 
 /* 
 NEED TO FIGURE OUT HOW TO NAVIGATE WITH PROPS SENT IN (so i can start on the editing page if i want)
@@ -23,29 +24,7 @@ class Templates extends Component {
   globalKey = 0;
 
   componentDidMount() {
-    fetch(
-      'http://localhost:8080/flex/template-all',
-      {
-        method: 'GET',
-        credentials: 'include'
-      }
-    ).then(response => {
-      if(response.status == 200) {
-        response.json().then(templates => {
-          templates = this.addInfoToTemplates(templates);
-          console.log(templates);
-          this.setState({
-            templates: templates
-          })
-        });
-      } else {
-        response.text().then(body => {
-          this.props.showErrorMessage(body);
-        })
-      }
-    }).catch(error => {
-      this.props.showErrorMessage(error.toString());
-    })
+    this.getAllTemplates();
   }
 
   constructor(props) {
@@ -64,8 +43,51 @@ class Templates extends Component {
     */
     this.state = {
       editing: false,
-      templates: []
+      templates: [],
+      popUpState: {
+        active: false,
+        hasBeenOpened: false,
+      }
     }
+  }
+
+  getAllTemplates() {
+    fetch(
+      'http://localhost:8080/flex/template-all',
+      {
+        method: 'GET',
+        credentials: 'include'
+      }
+    ).then(response => {
+      if(response.status == 200) {
+        response.json().then(templates => {
+          templates = this.addInfoToTemplates(templates);
+          
+          this.setState({
+            templates: templates
+          })
+        });
+      } else {
+        response.text().then(body => {
+          this.props.showErrorMessage(body);
+        })
+      }
+    }).catch(error => {
+      this.props.showErrorMessage(error.toString());
+    })
+  }
+
+  async popUpSelection(selection) {
+    this.togglePopUp();
+
+    if(selection) {
+      // Don't toggle editing if unsuccessful in saving all templates
+      if(!await this.saveAllTemplates()) return;
+    } else {
+      this.getAllTemplates();
+    }
+
+    this.toggleEditing();
   }
 
   addInfoToTemplates(templates) {
@@ -85,6 +107,25 @@ class Templates extends Component {
     })
   }
 
+  togglePopUp() {
+    this.setState({
+      popUpState: {
+        active: !this.state.popUpState.active,
+        hasBeenOpened: true
+      }
+    })
+  }
+
+  finishEditing() {
+    // If there is an edited template, prompt the user to save all changes
+    // Otherwise, just toggle editing state
+    if(this.state.templates.find(template => { return template.edited == true }) != null) {
+      this.togglePopUp();
+    } else {
+      this.toggleEditing();
+    }
+  }
+
   toggleEditing() {
     // make sure to prompt the user if they want to save changes to edits
     this.setState({
@@ -92,9 +133,32 @@ class Templates extends Component {
     })
   }
 
-  saveAllTemplates() {
-    // TODO: Go through every template, and call edit and add for all the ones that need it
-    this.toggleEditing();
+  // Saves all edited templates to the backend
+  // Returns true if templates were saved successfully,
+  // Returns false if templates weren't saved successfully (templates aren't valid or fetch error)
+  async saveAllTemplates() {
+    // Go through every template, and call edit and add for all the ones that need it
+    let editedTemplates = [];
+    this.state.templates.forEach(template => {
+      if(template.edited) editedTemplates.push(template);
+    })
+
+    // Save every template; return whether or not they were all successful
+    let savePromises = editedTemplates.map(async template => {
+      // Return a promise that resolves to true if the save was successful, or false if it failed
+      return this.saveTemplate(template.id).then(success => {
+        return success;
+      })
+    });
+
+    // Check if all the templates saved successfully once they've all returned
+    return Promise.all(savePromises).then(results => {
+      if(results.includes(false)) {
+        return false;
+      } else {
+        return true;
+      }
+    })
   }
 
   // Increment/decrement the number of sets for an exercise within a template.
@@ -200,7 +264,6 @@ class Templates extends Component {
       }
     ).then(response => {
       if(response.status == 200) {
-        response.text().then(x => console.log(x));
         this.removeTemplateFromState(templateId);
       } else{
         response.text().then(body => {
@@ -222,15 +285,18 @@ class Templates extends Component {
     })
   }
 
-  saveTemplate(templateId) {
-    if(!this.validateTemplate(templateId)) return;
+  // Save a template to the backend
+  // Returns true if template was saved successfully,
+  // Returns false if template wasn't saved successfully (template isn't valid or fetch error)
+  async saveTemplate(templateId) {
+    if(!this.validateTemplate(templateId)) return false;
 
     let templateToBackend = this.getTemplateToBackend(templateId);
 
     if(this.templateIsNew(templateId)) {
       // Add a new template to DB if this is a new template
 
-      fetch(
+      return fetch(
         'http://localhost:8080/flex/template-add',
         {
           method: 'POST',
@@ -242,20 +308,23 @@ class Templates extends Component {
         }
       ).then(response => {
         if(response.status == 200) {
-          response.text().then(x => console.log(x));
+          response.text().then(id => console.log(`template-add returned ID: ${id}`));
           this.markAsAddedToDB(templateId);
+          return true;
         } else{
-          response.text().then(body => {
+          return response.text().then(body => {
             this.props.showErrorMessage(body);
+            return false;
           })
         }
       }).catch(error => {
         this.props.showErrorMessage(error.toString());
+        return false;
       })
     } else {
       // Update an existing template if this isn't a new template
 
-      fetch(
+      return fetch(
         'http://localhost:8080/flex/template-edit',
         {
           method: 'POST',
@@ -267,19 +336,22 @@ class Templates extends Component {
         }
       ).then(response => {
         if(response.status == 200) {
-          response.text().then(x => console.log(x));
           this.markAsAddedToDB(templateId);
+          return true;
         } else{
-          response.text().then(body => {
+          return response.text().then(body => {
             this.props.showErrorMessage(body);
+            return false;
           })
         }
       }).catch(error => {
         this.props.showErrorMessage(error.toString());
+        return false;
       })
     }
   }
 
+  // Check if templates are valid before saving to DB
   validateTemplate(templateId) {
     let valid = true;
 
@@ -310,10 +382,18 @@ class Templates extends Component {
       return [exercise.name, exercise.numSets];
     })
 
-    return {
-      id: template.id,
-      name: template.name,
-      exercises: exercises
+    // Don't include ID when sending a new template to the backend
+    if(template.new) {
+      return {
+        name: template.name,
+        exercises: exercises
+      }
+    } else {
+      return {
+        id: template.id,
+        name: template.name,
+        exercises: exercises
+      }
     }
   }
 
@@ -374,10 +454,9 @@ class Templates extends Component {
       id: Date.now(), // Give the template an ID that's incredibly unlikely to be used by any templates pulled from the DB
       name: "New Template",
       exercises: [{ id: this.globalKey++, name: "Exercise", numSets: 1}],
-      edited: false,
+      edited: true,
       new: true
     })
-    console.log(Date.now());
 
     this.setState({
       templates: newTemplates
@@ -385,15 +464,12 @@ class Templates extends Component {
   }
 
   render() {
-    let editingButtons = this.state.editing ? (
+    let editingButton = this.state.editing ? (
       <>
-        <SecondaryButton onClick={() => this.toggleEditing()}>Cancel</SecondaryButton>
-        <button className="primary-button" onClick={() => this.saveAllTemplates()}>
-          Save
-        </button>
+        <button className="primary-button" onClick={() => this.finishEditing()}>Finish Editing</button>
       </>
     ) : (
-      <SecondaryButton onClick={() => this.toggleEditing()}>Edit Templates</SecondaryButton>
+      <SecondaryButton className="right-secondary-button" onClick={() => this.toggleEditing()}>Edit Templates</SecondaryButton>
     )
 
     let templatesRender = this.state.templates.map(template => {
@@ -414,12 +490,17 @@ class Templates extends Component {
     })
 
     let addTemplateButton = this.state.editing ? (
-      <button style={{width: '100%', padding: '12px'}} className="primary-button" onClick={() => this.createNewTemplate()}><FaPlus /> Create a new template</button>
+      <button className={`primary-button ${styles.addTemplateButton}`} onClick={() => this.createNewTemplate()}><FaPlus /> Create a new template</button>
     ) : null;
 
     return (
       <>
-        <PageHeader title="Templates" rightButton={editingButtons} />
+      <SaveAllTemplatesPopUp 
+        popUpSelection={(selection) => this.popUpSelection(selection)} 
+        active={this.state.popUpState.active} 
+        hasBeenOpened={this.state.popUpState.hasBeenOpened} 
+      />
+        <PageHeader title="Templates" rightButton={editingButton} />
         <div className={`container ${styles.templatesWrapper}`}>
           {templatesRender}
           {addTemplateButton}

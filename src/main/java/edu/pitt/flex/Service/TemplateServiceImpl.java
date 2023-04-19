@@ -45,8 +45,9 @@ public class TemplateServiceImpl implements TemplateService{
         Template template = new Template(templateDTO.getId(), templateDTO.getName(), exerciseString);
         user.addTemplate(template);
 
-        //return message
-        body = "Template successfully added";
+        //return the ID of the template for the frontend to use
+        // System.out.println("TEMPLATE ID:" + template.getId());
+        body = String.valueOf(template.getId()); // Returning 0 for some reason?
         status = HttpStatus.OK;
         return new ResponseEntity<>(body, status);
     }

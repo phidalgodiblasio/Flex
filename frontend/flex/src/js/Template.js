@@ -30,7 +30,7 @@ export default function Template({
   const [expanded, setExpanded] = useState(false);
 
   let saveButton = template.edited ? (
-    <button className="transparent-button medium-icon-button" onClick={() => saveTemplate(template.id)}><FaCheck style={{fill:'var(--tertiary-color)'}} /></button>
+    <button title="Save template" className="transparent-button medium-icon-button" onClick={() => saveTemplate(template.id)}><FaCheck style={{fill:'var(--tertiary-color)'}} /></button>
   ) : (
     null
   )

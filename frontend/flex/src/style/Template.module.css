@@ -22,6 +22,23 @@
   }
 }
 
+.addTemplateButton {
+  width: 100%; 
+  padding: 12px;
+}
+
+/* 
+Match button width to templates width when they form a column
+Not just a magic number cutoff: templates are 400px wide + 3 gaps
+of 25px, so they turn into one column when the screen is (2*400 + 3*25)px wide
+*/
+@media screen and (width <= 875px) {
+  .addTemplateButton {
+    max-width: 450px;
+    margin: auto;
+  }
+}
+
 .exercises {
   margin: 25px 0 0 0 !important;
 }
