@@ -6,6 +6,7 @@ import Template from './Template';
 import { FaPlus } from 'react-icons/fa';
 import styles from '../style/Template.module.css';
 import SaveAllTemplatesPopUp from './SaveAllTemplatesPopUp';
+import { withLocation } from './withLocation';
 
 /* 
 NEED TO FIGURE OUT HOW TO NAVIGATE WITH PROPS SENT IN (so i can start on the editing page if i want)
@@ -29,8 +30,7 @@ class Templates extends Component {
 
   constructor(props) {
     super(props)
-  
-    // TODO: pull in editing state from props
+
     /*
     Template format:
     { id, name, exercises, edited, new }
@@ -41,8 +41,13 @@ class Templates extends Component {
     { id, name, numSets }
     id is added using globalKey, so react can render the exercises properly
     */
+
+    let editing;
+    if(props.location.state && props.location.state.editing) editing = true;
+    else editing = false;
+
     this.state = {
-      editing: false,
+      editing: editing,
       templates: [],
       popUpState: {
         active: false,
@@ -475,6 +480,7 @@ class Templates extends Component {
     let templatesRender = this.state.templates.map(template => {
       return (
         <Template 
+          key={template.id}
           template={template} 
           editing={this.state.editing} 
           incrementSets={(templateId, exerciseId) => this.incDecSets(templateId, exerciseId, true)}
@@ -510,4 +516,4 @@ class Templates extends Component {
   }
 }
 
-export default WithErrorMessage(Templates);
+export default withLocation(WithErrorMessage(Templates));

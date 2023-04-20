@@ -3,6 +3,7 @@ import { FaAngleDown, FaAngleUp, FaCheck, FaTrash } from 'react-icons/fa';
 import styles from '../style/Template.module.css';
 import TemplateExercise from './TemplateExercise';
 import SecondaryButton from './SecondaryButton';
+import { Link } from 'react-router-dom';
 
 export default function Template({
   template, 
@@ -14,7 +15,7 @@ export default function Template({
   deleteSet, 
   handleChangeTemplateName,
   deleteTemplate,
-  saveTemplate
+  saveTemplate,
 }) {
   /*
   Template format:
@@ -43,7 +44,9 @@ export default function Template({
     </>
   ) : (
     <>
-      <button className="primary-button">Start Workout</button>
+      <Link to={'/create-workout'} state={{ template: template }}>
+        <button className="primary-button">Start Workout</button>
+      </Link>
       <button className="transparent-button medium-icon-button" onClick={() => setExpanded(!expanded)}>{expanded ? <FaAngleDown /> : <FaAngleUp />}</button>
     </>
   );

@@ -6,6 +6,7 @@ import styles from '../style/WorkoutSection.module.css'
 import Workout from './Workout'
 import { withRouter } from './withRouter'
 import { WithErrorMessage } from './WithErrorMessage'
+import { Link } from 'react-router-dom'
 
 class WorkoutSection extends Component {  
   componentDidMount() {    
@@ -84,10 +85,6 @@ class WorkoutSection extends Component {
     }
   }
 
-  pushTemplatesPage(editing) {
-    this.props.navigate('/templates');
-  }
-
   pushExerciseLogPage() {
     this.props.navigate('/workout-log');
   }
@@ -131,10 +128,12 @@ class WorkoutSection extends Component {
             <button className="primary-button" onClick={() => this.toggleWorkoutMenu()}><FaPlus /> Add New Workout</button>
             <nav className={workoutMenuClasses} aria-expanded={this.state.workoutMenuOpen}>
               <button onClick={() => this.props.navigate('/create-workout')} className="workout-menu-item">Start From Scratch</button>
-              <button className="workout-menu-item">Use A Template</button>
+              <button className="workout-menu-item" onClick={() => this.props.navigate('/templates')}>Use A Template</button>
             </nav>
           </div>
-          <SecondaryButton onClick={() => this.pushTemplatesPage(true)}>Edit Templates</SecondaryButton>
+          <Link to={'/templates'} state={{ editing: true }}>
+            <SecondaryButton onClick={() => {}}>Edit Templates</SecondaryButton>
+          </Link>
         </div>
         {titleRender}
         {todaysWorkoutsRender}

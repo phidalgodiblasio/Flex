@@ -29,10 +29,12 @@ export default function CreateWorkoutExercise({id, name, sets, handleNameChange,
       </header>
       <table className={styles.exerciseTable}>
         <thead>
-          <th>Set</th>
-          <th>Weight <span>(lbs)</span></th>
-          <th>Reps</th>
-          { sets.length === 1 ? null : <th style={{width: "50px"}}></th> }
+          <tr>
+            <th>Set</th>
+            <th>Weight <span>(lbs)</span></th>
+            <th>Reps</th>
+            { sets.length === 1 ? null : <th style={{width: "50px"}}></th> }
+          </tr>
         </thead>
         <tbody>
           {setRender}

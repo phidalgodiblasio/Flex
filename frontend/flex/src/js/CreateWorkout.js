@@ -6,6 +6,7 @@ import CreateWorkoutExercise from './CreateWorkoutExercise';
 import { WithErrorMessage } from './WithErrorMessage';
 import { withRouter } from './withRouter';
 import SaveAsTemplatePopUp from './SaveAsTemplatePopUp';
+import { withLocation } from './withLocation';
 
 class CreateWorkout extends Component {
   // use this to make sure every list item that's getting rendered will have its own unique ID that maintains across re-renders
@@ -13,16 +14,43 @@ class CreateWorkout extends Component {
 
   constructor(props) {
     super(props)
+
+    let template = {
+      name: "",
+      exercises: []
+    };
+    if(props.location.state) template = props.location.state.template;
+
+    let exercises = this.getExercisesFromTemplate(template);
   
     // TODO: Pull exercises in as a prop (idk why i was struggling with this)
     this.state = {
-      workoutName: "",
-      exercises: [],
+      workoutName: template.name,
+      exercises: exercises,
       popUpState: {
         active: false,
         hasBeenOpened: false,
       }
     }
+  }
+
+  getExercisesFromTemplate(template) {
+    return template.exercises.map(exercise => {
+      let sets = [];
+      for(let i = 0; i < exercise.numSets; i++) {
+        sets.push({
+          id: this.universalKey++,
+          weight: 0,
+          reps: 0,
+        })
+      }
+
+      return {
+        id: this.universalKey++,
+        name: exercise.name,
+        sets: sets,
+      }
+    })
   }
 
   addExercise() {
@@ -316,4 +344,4 @@ class CreateWorkout extends Component {
   }
 }
 
-export default withRouter(WithErrorMessage(CreateWorkout));
+export default withLocation(withRouter(WithErrorMessage(CreateWorkout)));
