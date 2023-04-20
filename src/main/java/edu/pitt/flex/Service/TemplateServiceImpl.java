@@ -44,7 +44,8 @@ public class TemplateServiceImpl implements TemplateService{
         //create new template and save it
         Template template = new Template(templateDTO.getId(), templateDTO.getName(), exerciseString);
         user.addTemplate(template);
-
+        template = templateRepository.save(template);
+        
         //return the ID of the template for the frontend to use
         // System.out.println("TEMPLATE ID:" + template.getId());
         body = String.valueOf(template.getId()); // Returning 0 for some reason?
