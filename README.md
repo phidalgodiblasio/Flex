@@ -15,9 +15,11 @@ Flex was developed as a project for the University of Pittsburgh's CS 1530 Softw
 * Owen Wurst
 
 ## Our App
-When launching this app, the user is first taken to a login page where they can sign in or register a new user. When new users are registered, their information is added to the database and they are automatically signed in.
-![Login Page](./images/1.png)
+When launching this app, the user is first taken to a login page where they can sign in or register a new user. When new users are registered, their information is added to the database and they are automatically signed in.<br>
+<img src="./images/1.png"  width="200" height="">
+<br>
 After signing in, users are taken to the home page, where they are shown the current days macronutrient intakes, weight and the current days workout. Users can set/update macro goals and weight goals on this page, both of which are updated in the database. From this page users can log the current days weight or macro intake, and they can also navigate to the page for logging a workout.
-![Home Page](./images/2.png)
-A user can navigate to the intake or weight history pages by clicking "View Progress". These pages both graph the daily intake of the user over time with a line to show the users set goal.
-![Login Page](./images/3.png)
+<br>
+<img src="./images/2.png"  width="400" height=""><br>
+A user can navigate to the intake or weight history pages by clicking "View Progress". These pages both graph the daily intake of the user over time with a line to show the users set goal.<br>
+<img src="./images/3.png"  width="400" height="">
