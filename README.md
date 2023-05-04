@@ -14,6 +14,6 @@ Flex was developed as a project for the University of Pittsburgh's CS 1530 Softw
 * Pierce Martin
 * Owen Wurst
 
-##Our App
+## Our App
 When launching this app, you are first taken to a login page where you can sign in or register a new user. When new users are registered, their information is added to the database and they are automatically signed in.
 ![Login](images/1.jpg)
